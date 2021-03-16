@@ -1,0 +1,8 @@
+WITH allpairs AS (SELECT d1.name, d2.name FROM drinker AS d1, drinker AS d2 WHERE d1.name <> d2.name),
+hates AS ((SELECT drinker.name as drinker, beer.name as beer FROM drinker, beer) EXCEPT (SELECT * FROM likes)),
+subtract AS (SELECT likes.drinker, hates.drinker FROM likes, hates WHERE likes.beer = hates.beer)
+
+(SELECT * FROM allPairs)
+EXCEPT ALL
+(SELECT * FROM subtract)
+

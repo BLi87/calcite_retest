@@ -1,0 +1,1 @@
+SELECT beer From Serves Where Serves.bar = 'James Joyce Pub';

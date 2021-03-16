@@ -1,0 +1,20 @@
+SELECT one.abar, two.bbar FROM
+	((SELECT bar AS abar, beer AS abeer FROM serves) AS one 
+		JOIN
+	(SELECT bar AS bbar, beer AS bbeer FROM serves) AS two 
+		ON one.abar != two.bbar)
+
+EXCEPT 
+
+SELECT three.abar, three.bbar FROM (
+	(SELECT one.abar, two.bbar, one.beer FROM
+			((SELECT bar AS abar, beer FROM serves) AS one 
+				CROSS JOIN
+			(SELECT name AS bbar FROM bar) AS two))
+	EXCEPT
+
+	(SELECT two.abar, one.bbar, one.beer FROM 
+			((SELECT bar AS bbar, beer FROM serves) AS one 
+				CROSS JOIN
+			(SELECT name AS abar FROM bar) AS two)) ) AS three;
+

@@ -1,0 +1,1 @@
+SELECT DISTINCT name from drinker EXCEPT SELECT drinker from (SELECT drinker, beer FROM frequents, serves WHERE frequents.bar=serves.bar EXCEPT (SELECT * FROM likes)) as foo;

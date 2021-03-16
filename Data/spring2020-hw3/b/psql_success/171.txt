@@ -1,0 +1,34 @@
+with pairs as
+(select d1.name as drinker1, d2.name as drinker2
+from drinker d1, drinker d2
+where d1.name <> d2.name),
+
+drink1 as
+(select p.drinker1, p.drinker2, l.beer as beer1 
+from pairs p, likes l 
+where p.drinker1 = l.drinker),
+
+drink2 as
+(select p.drinker1, p.drinker2, l.beer as beer2 
+from pairs p, likes l 
+where p.drinker2 = l.drinker),
+
+nolikes as
+(select distinct d.name as drinker1, l.drinker as drinker2
+from drinker d, likes l
+where d.name not in (select l2.drinker from likes l2)),
+
+difference1 as
+((select * 
+from drink1)
+except 
+(select *
+from drink2))
+
+((select p.drinker1, p.drinker2
+from pairs p)
+except
+(select d.drinker1, d.drinker2
+from difference1 d))
+union
+(select * from nolikes)

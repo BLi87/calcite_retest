@@ -1,0 +1,14 @@
+WITH testC AS
+(WITH testA AS
+(SELECT DISTINCT l.drinker, s.beer
+FROM likes l, frequents f, serves s
+WHERE l.drinker = f.drinker AND f.bar = s.bar),
+testB AS
+(SELECT drinker, beer
+FROM likes)
+(SELECT * FROM testA a)
+EXCEPT ALL 
+(SELECT * FROM testB b))
+(SELECT name FROM drinker)
+EXCEPT ALL
+(SELECT drinker FROM testC)

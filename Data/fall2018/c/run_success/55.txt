@@ -1,0 +1,5 @@
+SELECT *
+FROM Bar
+WHERE name IN (SELECT bar AS name
+			FROM Serves
+			WHERE beer='Corona' AND price<=3);

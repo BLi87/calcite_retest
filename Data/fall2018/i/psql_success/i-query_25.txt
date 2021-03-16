@@ -1,0 +1,9 @@
+SELECT DISTINCT name
+FROM drinker as f
+WHERE NOT EXISTS (SELECT f2.bar
+	FROM frequents as f2, serves
+	WHERE f2.drinker=f.name
+	AND f2.bar=serves.bar
+	AND serves.beer NOT IN (SELECT beer FROM likes
+			WHERE likes.drinker=f.name));
+/*consulted GTA Yameng*/

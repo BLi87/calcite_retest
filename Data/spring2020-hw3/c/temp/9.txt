@@ -1,0 +1,11 @@
+(SELECT DISTINCT name FROM drinker)
+EXCEPT ALL
+(WITH Temp1 AS
+((SELECT F.drinker, F.bar, S.beer
+FROM frequents F, serves S
+WHERE F.bar = S.bar)
+EXCEPT ALL
+(SELECT F.drinker, F.bar, S.beer
+FROM frequents F, likes L, serves S
+WHERE F.drinker = L.drinker and L.beer = S.beer and F.bar = S.bar))
+SELECT DISTINCT drinker as name FROM Temp1);

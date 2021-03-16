@@ -1,0 +1,10 @@
+SELECT bar, drinker
+FROM frequents
+
+EXCEPT
+
+SELECT A.bar, A.drinker
+FROM frequents A, frequents B
+WHERE A.bar = B.bar
+AND A.drinker <> B.drinker
+AND A.times_a_week < B.times_a_week;

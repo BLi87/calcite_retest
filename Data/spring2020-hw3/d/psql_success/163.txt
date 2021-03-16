@@ -1,0 +1,7 @@
+Select beer.name, coalesce(tempy.count, 0), avg(price)
+From beer
+Left outer join serves on serves.beer=beer.name
+Left outer join likes on beer.name = likes.beer
+Left outer join (Select beer,count(*) from likes group by beer) tempy on tempy.beer=beer.name
+Group by name, tempy.count
+Order by tempy.count desc nulls last, name;

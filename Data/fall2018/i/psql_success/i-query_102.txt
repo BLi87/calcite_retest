@@ -1,0 +1,5 @@
+select name from drinker except (select drinker from
+  (select frequents.drinker, serves.beer from
+  (frequents join serves on frequents.bar=serves.bar) except
+  (select * from likes)) as f1) union (Select name from drinker except
+    (select drinker from likes));

@@ -1,0 +1,12 @@
+(SELECT bar.name
+FROM bar, frequents
+WHERE (bar.name = frequents.bar) AND
+      (frequents.drinker = 'Dan' OR frequents.drinker = 'Ben'))
+      
+EXCEPT
+
+(SELECT bar.name
+FROM bar, frequents AS f1, frequents AS f2
+WHERE (bar.name = f1.bar) AND
+      (bar.name = f2.bar) AND
+      (f1.drinker = 'Dan' AND f2.drinker = 'Ben'));

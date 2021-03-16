@@ -1,0 +1,5 @@
+Select distinct a.name, a.address
+from bar a 
+inner join serves b on a.name = b.bar
+where b.beer = 'Corona' and
+b.price <= 3;

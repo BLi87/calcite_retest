@@ -1,0 +1,6 @@
+Select distinct d1.name, d2.name
+From drinker d1, drinker d2
+Where d1.name<>d2.name except
+Select distinct l1.drinker, d2.name
+From likes l1, drinker d2
+Where l1.beer not in (select distinct beer from likes where drinker = d2.name);

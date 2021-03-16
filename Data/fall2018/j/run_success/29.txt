@@ -1,0 +1,4 @@
+--for each bar, find the beers that it serves 
+SELECT s1.beer, s1.bar
+FROM serves AS s1, serves AS s2
+WHERE s1.beer <> s2.beer;

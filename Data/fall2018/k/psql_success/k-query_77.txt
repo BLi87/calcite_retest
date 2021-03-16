@@ -1,0 +1,18 @@
+--Get all bar, amount pairs where amount > 0
+((SELECT bar, SUM(earnings) AS amount
+FROM (SELECT Frequents.drinker, Frequents.bar, Likes.beer, Serves.price*Frequents.times_a_week AS earnings
+FROM Frequents, Likes, Serves
+WHERE Frequents.drinker=Likes.drinker
+AND Frequents.bar=Serves.bar
+AND Likes.beer=Serves.beer) AS M --M contains tuples of how much a drinker spends at a bar for a certain drink per week
+GROUP BY bar)
+--Add bars with 0 as their sum, which is all bars not in the above query
+UNION
+(SELECT name AS bar, 0 AS amount
+FROM Bar
+WHERE name NOT IN (SELECT Frequents.bar
+FROM Frequents, Likes, Serves
+WHERE Frequents.drinker=Likes.drinker
+AND Frequents.bar=Serves.bar
+AND Likes.beer=Serves.beer)))
+ORDER BY amount DESC, bar;

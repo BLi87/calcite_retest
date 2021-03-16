@@ -1,0 +1,12 @@
+select br.bar, case when amount is null then 0
+  else amount
+  end
+from
+(select name as bar from bar) as br
+left outer join
+(select bar, sum(r) as amount from
+(select f.drinker, f.bar, f.times_a_week, s.beer, s.price, price*times_a_week as r
+ from frequents as f, serves as s, likes as l where
+  f.bar = s.bar and f.drinker = l.drinker and
+  s.beer = l.beer) as lfs group by bar) as t on br.bar = t.bar
+order by amount DESC, bar;

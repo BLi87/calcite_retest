@@ -1,0 +1,7 @@
+SELECT name, coalesce(pop.count, 0), AVG(price)
+FROM beer
+LEFT OUTER JOIN serves ON beer.name = serves.beer
+LEFT OUTER JOIN likes ON beer.name = likes.beer
+LEFT OUTER JOIN (SELECT beer, count(*) FROM likes GROUP BY beer) pop ON pop.beer = beer.name
+GROUP BY name, pop.count
+ORDER BY pop.count desc NULLS LAST, name;

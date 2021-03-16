@@ -1,0 +1,13 @@
+
+
+
+-- calculate amount of money per week, sort desc, alph
+
+-- drinkers will buy 1 OF EACH they like at every bar (or nothing)
+
+--for every bar $ made
+
+-- which bar, who buys what
+
+select drinker, array_agg(beer) from
+likes group by drinker

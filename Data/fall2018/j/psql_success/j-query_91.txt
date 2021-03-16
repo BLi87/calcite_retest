@@ -1,0 +1,29 @@
+WITH
+tmp1(bar1, beer1, price1) AS
+(SELECT * FROM Serves),
+
+tmp2(bar2, beer2, price2) AS
+(SELECT * FROM Serves),
+
+tmp3(bar1,bar2, beer2) AS
+(SELECT bar1, bar2, beer2 FROM (tmp1 JOIN tmp2 ON tmp1.bar1<>tmp2.bar2)),
+
+tmp4(bar1,bar2, beer1) AS
+(SELECT bar1, bar2, beer1 FROM (tmp1 JOIN tmp2 ON tmp1.bar1<>tmp2.bar2)),
+
+tmp5(bar1, bar2, beer2) AS
+(SELECT * FROM tmp3 EXCEPT SELECT * FROM tmp4),
+
+tmp6(bar1, bar2) AS
+(SELECT bar1, bar2 FROM tmp5),
+
+tmp7(bar1, bar2, beer1) AS
+(SELECT * FROM tmp4 EXCEPT SELECT * FROM tmp3),
+
+tmp8(bar1, bar2) AS
+(SELECT bar1, bar2 FROM tmp7),
+
+tmp9(bar1) AS
+(SELECT * FROM tmp6 EXCEPT SELECT * FROM tmp8)
+
+SELECT * FROM tmp9;

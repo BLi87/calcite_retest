@@ -1,0 +1,6 @@
+(SELECT DISTINCT Serves.beer, Serves.bar
+FROM Serves)
+EXCEPT
+(SELECT DISTINCT Serves.beer, Serves.bar
+FROM Serves
+INNER JOIN Serves s2 ON s2.beer = Serves.beer and s2.bar<>Serves.bar);

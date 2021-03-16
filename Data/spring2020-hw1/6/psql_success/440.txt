@@ -1,0 +1,5 @@
+select distinct serves1.bar
+from serves serves1, serves serves2
+where serves1.price - serves2.price <0 
+and serves1.bar != serves2.bar
+and serves1.beer = serves2.beer

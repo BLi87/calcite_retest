@@ -1,0 +1,9 @@
+with dislikes as ((select distinct likes.drinker, beer.name as beer
+from likes, beer
+where likes.beer != beer.name) except (select * from likes)),
+Temp2 as (
+  select likes.drinker, dislikes.drinker
+  from dislikes, likes
+  where dislikes.beer = likes.beer
+)
+(select drinker.name, likes.drinker from (drinker left join likes on drinker.name != likes.drinker)) except (select * from Temp2);

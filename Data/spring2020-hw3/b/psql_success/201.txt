@@ -1,0 +1,15 @@
+WITH Temp1 AS (
+(SELECT DISTINCT d1.name as drinker1, d2.name as drinker2, likes.beer
+FROM drinker d1, drinker d2, likes
+WHERE d1.name != d2.name and d1.name = drinker)
+EXCEPT
+(SELECT DISTINCT d1.name as drinker1, d2.name as drinker2, likes.beer
+FROM drinker d1, drinker d2, likes
+WHERE d1.name != d2.name and d2.name = drinker))
+(SELECT DISTINCT d1.name AS drinker1, d2.name AS drinker2
+FROM drinker d1, drinker d2
+WHERE d1.name != d2.name)
+EXCEPT
+(
+SELECT drinker1, drinker2 FROM Temp1
+);

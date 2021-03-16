@@ -1,0 +1,1 @@
+WITH d AS (select DISTINCT drinker, name from likes RIGHT OUTER JOIN beer on likes.beer = name), a AS (select beer, avg(price) from serves group by beer), c AS (select count(drinker), name from d group by name) Select c.name, count as cnt, avg from c LEFT OUTER JOIN a on a.beer = c.name ORDER BY count DESC, beer;

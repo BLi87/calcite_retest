@@ -1,0 +1,9 @@
+SELECT A.name AS beer, A.count as cnt, B.avg
+FROM 
+(SELECT name, COUNT(drinker)
+FROM beer LEFT OUTER JOIN likes ON beer.name=likes.beer
+GROUP BY name) as A,
+(SELECT name, AVG(price)
+FROM beer LEFT OUTER JOIN serves ON beer.name=serves.beer
+GROUP BY name) as B
+WHERE A.name=B.name;

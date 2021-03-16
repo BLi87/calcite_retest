@@ -1,0 +1,5 @@
+SELECT bar, drinker
+FROM Frequents AS u
+WHERE NOT EXISTS
+(SELECT * FROM Frequents
+WHERE bar = u.bar and drinker <> u.drinker and times_a_week > u.times_a_week);

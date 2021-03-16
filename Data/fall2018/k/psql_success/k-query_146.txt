@@ -1,0 +1,1 @@
+with profits(bars, income) as (select bar, sum(price*times_a_week) from serves natural join frequents natural join likes group by bar) ((select bars, income from profits) union (select name, 0 from bar where name not in (select bars from profits))) order by 2 desc, 1; 

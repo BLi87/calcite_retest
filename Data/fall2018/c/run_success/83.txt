@@ -1,0 +1,5 @@
+/*Find the names and addresses of bars that serve Corona for no more than $3.00*/
+
+SELECT bar.name, bar.address
+	FROM serves INNER JOIN bar ON (serves.bar = bar.name)
+	WHERE (serves.price) <= 3 AND (serves.beer = 'Corona');

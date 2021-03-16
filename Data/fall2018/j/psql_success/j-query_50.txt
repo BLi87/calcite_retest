@@ -1,0 +1,4 @@
+SELECT DISTINCT s1.bar, s2.bar FROM serves s1 CROSS JOIN serves s2 WHERE s1.bar != s2.bar EXCEPT
+(SELECT f.bar3, f.bar4 FROM
+(SELECT s3.bar bar3, s3.beer beer3, s4.bar bar4 FROM serves s3 JOIN serves s4 ON s3.bar != s4.bar EXCEPT
+(SELECT s5.bar bar5, s5.beer beer5, s6.bar bar6 FROM serves s5 JOIN serves s6 ON s5.bar != s6.bar AND s5.beer = s6.beer)) f);

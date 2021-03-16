@@ -1,0 +1,14 @@
+(SELECT name
+FROM Drinker)
+EXCEPT ALL
+(SELECT DISTINCT Frequents.drinker
+FROM Frequents, (SELECT DISTINCT Serves.bar, View1.drinker
+FROM Serves, ((SELECT DISTINCT Likes.drinker, Beer.name
+FROM Likes, Beer
+WHERE Likes.beer != Beer.name)
+EXCEPT ALL
+(SELECT drinker, beer
+FROM Likes)) AS View1
+WHERE Serves.beer = View1.name) AS View2
+WHERE Frequents.bar = View2.bar
+AND Frequents.drinker = View2.drinker);

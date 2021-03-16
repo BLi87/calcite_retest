@@ -1,0 +1,6 @@
+SELECT name, address 
+FROM Bar, (SELECT bar
+FROM SERVES
+WHERE beer = 'Corona'
+AND price <= 3) as View
+WHERE View.bar = Bar.name;

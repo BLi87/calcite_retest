@@ -1,0 +1,18 @@
+WITH numberOfLikersWith0 AS (
+WITH numberOfLikers AS(
+  SELECT beer.name AS beer, cnt
+  FROM beer LEFT JOIN (SELECT beer, COUNT(DISTINCT drinker) AS cnt FROM likes GROUP BY beer) AS likedBeers 
+  ON beer.name = beer
+)
+SELECT numberOfLikers.beer, 
+    CASE WHEN numberOfLikers.cnt IS NULL 
+            THEN 0 
+            ELSE numberOfLikers.cnt 
+    END AS cnt
+FROM numberOfLikers
+)
+SELECT numberOfLikersWith0.beer, cnt, avgPrice
+FROM numberOfLikersWith0 LEFT JOIN (SELECT beer, AVG(price) as avgPrice
+FROM serves
+GROUP BY beer) AS averagePrice ON numberOfLikersWith0.beer = averagePrice.beer
+ORDER BY cnt DESC, beer

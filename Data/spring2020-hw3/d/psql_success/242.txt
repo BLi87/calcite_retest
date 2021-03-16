@@ -1,0 +1,3 @@
+WITH popularity AS (SELECT count(drinker), beer.name FROM likes FULL OUTER JOIN beer ON likes.beer = beer.name Group By beer.name Order By count, beer.name),
+averages AS (SELECT avg(price), beer FROM serves Group By beer)
+SELECT popularity.name, popularity.count, averages.avg FROM popularity LEFT OUTER JOIN averages ON popularity.name = averages.beer;

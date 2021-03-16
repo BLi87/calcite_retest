@@ -1,0 +1,9 @@
+WITH maxFrequents AS(
+SELECT frequents.drinker, bar
+FROM frequents, (SELECT drinker, max(times_a_week) AS freq
+FROM frequents
+GROUP BY frequents.drinker) AS maxTimesByDrinker
+WHERE frequents.drinker=maxTimesByDrinker.drinker AND times_a_week=freq
+)
+SELECT drinker.name AS drinker, maxFrequents.bar
+FROM drinker LEFT JOIN maxFrequents ON drinker.name=maxFrequents.drinker

@@ -1,0 +1,6 @@
+SELECT s1.bar,s2.bar
+FROM Serves s1, Serves s2 
+WHERE (SELECT s2.beer FROM s2 INTERSECT SELECT s1.beer FROM s1) EXCEPT (SELECT s1.beer FROM s1) = null);
+
+#Find all(bar1,bar2)pairs where the set of beer served at bar1 is a proper subset of those served at
+#bar2; i.e., bar2 serves every beer that bar1 serves and plus some more.

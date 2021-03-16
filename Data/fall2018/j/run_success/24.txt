@@ -1,0 +1,20 @@
+
+
+
+--((SELECT Serves.bar, Serves.beer, Bar.name FROM Serves, Bar) 
+--EXCEPT
+--(SELECT Bar.name, Serves.beer, Serves.bar FROM Bar, Serves))
+
+(SELECT Bar.name, Serves.Bar FROM Serves, Bar 
+	WHERE NOT EXISTS 
+	(SELECT Bar2.name, Serves2.beer, Serves2.bar FROM Bar Bar2, Serves Serves2 
+		WHERE Bar2.name = Serves.bar 
+		AND Serves2.beer = Serves.beer
+		AND Serves2.bar = Bar.name))
+EXCEPT
+(SELECT Serves.bar, Bar.name FROM Serves, Bar 
+	WHERE NOT EXISTS 
+	(SELECT Bar2.name, Serves2.beer, Serves2.bar FROM Bar Bar2, Serves Serves2 
+		WHERE Bar2.name = Serves.bar 
+		AND Serves2.beer = Serves.beer
+		AND Serves2.bar = Bar.name))

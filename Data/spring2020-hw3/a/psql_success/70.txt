@@ -1,0 +1,5 @@
+SELECT DISTINCT serves.beer, serves.bar FROM serves, likes WHERE likes.drinker = 'Dan' AND likes.beer = serves.beer AND (serves.bar, serves.beer) IN (SELECT s.bar, s.beer
+FROM (
+   SELECT beer, MAX(price) as maxprice
+   FROM serves GROUP BY beer
+) as x inner join serves as s on s.beer = x.beer and s.price = x.maxprice);

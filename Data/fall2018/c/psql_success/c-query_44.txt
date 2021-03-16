@@ -1,0 +1,4 @@
+SELECT DISTINCT frequents.bar, bar.address 
+FROM frequents, bar
+WHERE frequents.bar = bar.name 
+AND frequents.bar IN (SELECT bar FROM serves where beer = 'Corona' AND price <=3);

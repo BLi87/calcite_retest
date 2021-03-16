@@ -1,0 +1,33 @@
+/*
+-----------------------------
+SOLUTION:
+-----------------------------
+Talk of the Town, Down Under Pub
+Down Under Pub, Satisfaction
+Talk of the Town, Satisfaction
+Talk of the Town, The Edge
+The Edge, Satisfaction
+*/
+SELECT s1.bar as bar1, s2.bar as bar2 FROM serves s1 INNER JOIN serves s2 ON s1.bar <> s2.bar
+EXCEPT
+SELECT A.bar1 as bar1, A.bar2 as bar2 FROM (
+
+	SELECT s1.bar as bar1, s2.bar as bar2, s1.beer as beer FROM serves s1 INNER JOIN serves s2 ON s1.bar <> s2.bar
+	EXCEPT
+	SELECT s1.bar as bar1, s2.bar as bar2, s2.beer as beer FROM serves s1 INNER JOIN serves s2 ON s1.bar <> s2.bar
+) as A
+
+EXCEPT
+/*need to remove any pairs where (bar1, bar2) AND (bar2, bar1) exist.*/
+(
+SELECT result.bar2 as bar1, result.bar1 as bar2 FROM (
+	SELECT s1.bar as bar1, s2.bar as bar2 FROM serves s1 INNER JOIN serves s2 ON s1.bar <> s2.bar
+	EXCEPT
+	SELECT B.bar1 as bar1, B.bar2 as bar2 FROM (
+
+		SELECT s1.bar as bar1, s2.bar as bar2, s1.beer as beer FROM serves s1 INNER JOIN serves s2 ON s1.bar <> s2.bar
+		EXCEPT
+		SELECT s1.bar as bar1, s2.bar as bar2, s2.beer as beer FROM serves s1 INNER JOIN serves s2 ON s1.bar <> s2.bar
+	) as B
+) as result
+);

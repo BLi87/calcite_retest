@@ -1,0 +1,42 @@
+/*(
+(
+	(\rename_{bar1} \project_{name} bar)
+	\join_{bar1 <> bar2} 
+	(\rename_{bar2: bar2} \project_{name} bar)
+)
+\diff
+(
+	\project_{bar1, bar2}
+	(
+	(
+		\project_{bar1, bar2, beer}
+		(
+			(\rename_{bar1, beer} \project_{bar, beer} serves) 
+			\cross 
+			(\rename_{bar2} \project_{name} bar)
+		)
+	)
+	\diff
+	(
+		\project_{bar1, bar2, beer}
+		(
+			(\rename_{bar1, beer} \project_{bar, beer} serves)
+			\join
+			(\rename_{serves2: bar2, beer} \project_{bar, beer} serves)
+		)
+	)
+	)
+)
+);
+*/
+
+(SELECT bar3.name AS bar1, bar4.name AS bar2 FROM bar AS bar3, bar AS bar4 WHERE bar3.name <> bar4.name)
+
+EXCEPT
+
+SELECT T.bar1, T.bar2 FROM(
+(SELECT serves.bar AS bar1, bar.name AS bar2, serves.beer FROM serves, bar
+	EXCEPT
+		SELECT serves1.bar AS bar1, serves2.bar AS bar2, serves1.beer FROM serves AS serves1, serves AS serves2 WHERE serves1.beer = serves2.beer
+)
+) AS T;

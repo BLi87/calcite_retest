@@ -1,0 +1,7 @@
+(select bar, sum(price*times_a_week) as profit from serves natural join likes natural join frequents
+group by 
+bar) 
+union 
+(select name, 0 from ((select name from bar) except (select bar from serves natural join likes natural join frequents)) as nosale)
+order by profit DESC, bar; 
+

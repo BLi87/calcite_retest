@@ -1,0 +1,8 @@
+SELECT T.name, T.address
+FROM
+  (
+    SELECT bar.name, bar.address, serves.beer, serves.price
+    FROM bar, serves
+    WHERE serves.bar = bar.name
+  ) T
+WHERE T.beer = 'Corona' AND T.price <= 3.00;

@@ -1,0 +1,19 @@
+-- first in pair does not serve some beer that the second does
+SELECT bar2, bar1
+FROM (
+  SELECT bar AS bar1, beer, name AS bar2
+  FROM Serves, Bar
+  EXCEPT
+  SELECT name AS bar1, beer, bar AS bar2
+  FROM Serves, bar
+) as t1
+EXCEPT
+-- subtract off: second in pair does not serve some beer that the first does
+SELECT bar1, bar2
+FROM (
+  SELECT bar AS bar1, beer, name AS bar2
+  FROM Serves, Bar
+  EXCEPT
+  SELECT name AS bar1, beer, bar AS bar2
+  FROM Serves, Bar
+) as t2;

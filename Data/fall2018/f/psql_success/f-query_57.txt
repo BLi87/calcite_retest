@@ -1,0 +1,6 @@
+SELECT beer, bar
+FROM serves
+EXCEPT(
+SELECT a.beer, a.bar
+FROM serves a, serves b
+WHERE (a.bar <> b.bar AND a.beer = b.beer));

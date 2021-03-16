@@ -1,0 +1,11 @@
+WITH TMP(bar, amount) AS (SELECT s.bar, SUM(times_a_week * price)
+FROM likes l, serves s, frequents f 
+WHERE l.drinker = f.drinker 
+AND s.beer = l.beer
+AND s.bar = f.bar
+GROUP BY s.bar)
+
+SELECT name bar,
+       COALESCE(TMP.amount, 0) AS amount
+FROM bar FULL OUTER JOIN TMP ON bar.name = TMP.bar
+ORDER BY amount DESC, bar; 

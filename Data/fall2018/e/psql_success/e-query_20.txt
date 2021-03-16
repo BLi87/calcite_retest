@@ -1,0 +1,20 @@
+SELECT
+bar
+FROM
+(SELECT
+bar,
+count(*) AS amountbars
+FROM
+(SELECT
+bar
+FROM
+Frequents
+WHERE
+drinker = 'Ben'
+or
+drinker = 'Dan') AS precount
+GROUP BY
+bar) thecount
+WHERE
+amountbars = 1
+;

@@ -1,0 +1,13 @@
+WITH BeerAvg AS (SELECT name, AVG(price) priceAvg
+FROM serves right OUTER JOIN beer
+ON serves.beer = beer.name
+GROUP BY name),
+DrinkerLikes AS (SELECT name,COUNT(drinker) num
+FROM likes l right OUTER JOIN beer
+ON l.beer = beer.name
+GROUP BY name)
+
+SELECT ba.name,num,priceAvg
+FROM BeerAvg ba JOIN DrinkerLikes dl
+ON ba.name = dl.name
+ORDER BY name desc

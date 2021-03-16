@@ -1,0 +1,16 @@
+--Find names of all drinkers who frequent only those bars that
+--serve only beers they like
+
+--Discussed RA translation with other students
+
+SELECT DISTINCT name FROM Drinker
+--diff
+EXCEPT (
+  SELECT h.drinker FROM
+  --Select drinker, bar from Frequents
+  (SELECT Frequents.drinker, Serves.beer FROM
+    (Frequents NATURAL JOIN Serves)
+  --diff
+  EXCEPT (
+    (SELECT * FROM Likes))) AS h
+);

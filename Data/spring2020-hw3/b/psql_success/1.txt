@@ -1,0 +1,10 @@
+select d1.name as drinker1, d2.name as drinker2
+from drinker d1, drinker d2
+where d1.name <> d2.name
+except
+(with temp1 as (select likes.drinker as drinker1, likes.beer as beer1, drinker.name as drinker2 from likes, drinker),
+     temp2 as (select drinker.name as drinker, beer.name as beer from drinker, beer except select* from likes)
+select temp1.drinker1 as drinker1, temp1.drinker2 as drinkers
+from temp1, temp2
+where temp1.beer1 = temp2.beer
+  and temp1.drinker2 = temp2.drinker)

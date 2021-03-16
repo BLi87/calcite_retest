@@ -1,0 +1,9 @@
+select distinct sr1.beer, sr1.bar  
+from  serves sr1
+where not exists
+(
+    select 1
+    from  serves sr2
+    where sr2.beer = sr1.beer
+    and sr1.bar != sr2.bar 
+)

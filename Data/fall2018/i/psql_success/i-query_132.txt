@@ -1,0 +1,1 @@
+(SELECT name FROM Drinker) EXCEPT ALL (SELECT f1.drinker FROM Frequents f1, Serves s1 WHERE f1.bar = s1.bar AND f1.drinker NOT IN (SELECT L1.drinker FROM Likes L1 WHERE f1.drinker = L1.drinker AND s1.beer = L1.beer));

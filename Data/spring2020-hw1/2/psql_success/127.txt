@@ -1,0 +1,1 @@
+select distinct B.bar from serves B, beer A where A.brewer = 'Grupo Modelo' and B.beer = A.name 

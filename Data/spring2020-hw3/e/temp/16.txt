@@ -1,0 +1,5 @@
+With hold AS (SELECT drinker.name, max(times_a_week) AS times_a_week FROM frequents FULL OUTER JOIN drinker ON frequents.drinker = name Group By drinker.name),
+hold2 AS (SELECT drinker.name, frequents.times_a_week, frequents.bar FROM frequents FULL OUTER JOIN drinker ON frequents.drinker = name)
+Select hold.name, hold2.bar
+From hold, hold2
+Where hold.name = hold2.name AND (hold.times_a_week = hold2.times_a_week OR hold2.times_a_week IS NULL);

@@ -1,0 +1,3 @@
+SELECT beer 
+	FROM serves 
+	WHERE BAR = 'James Joyce Pub'

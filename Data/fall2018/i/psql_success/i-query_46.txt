@@ -1,0 +1,1 @@
+SELECT name FROM drinker EXCEPT SELECT drinker FROM ( SELECT drinker, beer FROM (Frequents NATURAL JOIN serves) AS Var2 EXCEPT SELECT drinker, beer FROM Likes) AS Var1;

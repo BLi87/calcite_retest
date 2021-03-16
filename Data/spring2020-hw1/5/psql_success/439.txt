@@ -1,0 +1,5 @@
+--drinkers who visit some bar less than 2 times a week, find the drinker's name, bar's name, and the bar's address
+select F.drinker as name, B.name bar, B.address
+from frequents F, bar B
+where F.times_a_week < 2
+ and B.name = F.bar

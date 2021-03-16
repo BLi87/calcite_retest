@@ -1,0 +1,8 @@
+WITH Max_Table(bar, times_a_week) AS
+(SELECT bar, MAX(times_a_week) AS times_a_week
+FROM Frequents
+GROUP BY bar)
+SELECT Frequents.bar, Frequents.drinker
+FROM Frequents, Max_Table
+WHERE Frequents.bar = Max_Table.bar
+AND Frequents.times_a_week = Max_Table.times_a_week;

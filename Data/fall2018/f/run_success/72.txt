@@ -1,0 +1,1 @@
+(SELECT beer, bar FROM serves) EXCEPT (SELECT tb1.beer, tb1.bar FROM serves tb1 INNER JOIN serves tb2 ON tb1.bar <> tb2.bar AND tb1.beer = tb2.beer);

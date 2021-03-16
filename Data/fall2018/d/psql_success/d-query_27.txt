@@ -1,0 +1,1 @@
+(select distinct drinker from frequents where frequents.bar = 'James Joyce Pub') intersect all (select distinct drinker from frequents where frequents.bar = 'Satisfaction');

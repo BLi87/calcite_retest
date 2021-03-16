@@ -1,0 +1,6 @@
+SELECT DISTINCT name FROM Drinker 
+EXCEPT
+(SELECT drinker FROM ((SELECT drinker, bar FROM Frequents)
+	EXCEPT
+	(SELECT DISTINCT Likes.drinker, bar FROM Likes, Serves
+		WHERE Likes.beer=Serves.beer)) AS Db);

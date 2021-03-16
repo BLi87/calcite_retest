@@ -1,0 +1,7 @@
+Select DISTINCT V.drinker
+From serves, (
+  Select likes.drinker, likes.beer, frequents.bar
+  From likes
+  Join frequents
+  ON likes.drinker = frequents.drinker)AS V
+  Where V.bar = serves.bar AND V.beer = serves.beer;

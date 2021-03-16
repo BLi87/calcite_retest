@@ -1,0 +1,1 @@
+select distinct drinker.name, frequents.bar, bar.address from drinker, frequents, bar where drinker.name = frequents.drinker and frequents.times_a_week < 2 and bar.name = frequents.bar

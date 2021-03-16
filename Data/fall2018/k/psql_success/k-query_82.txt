@@ -1,0 +1,25 @@
+(select bar, 0 as amount
+from ( (select name as bar
+from bar)
+except
+
+(select bar
+from((
+select * 
+		from frequents natural join serves)freq
+		join likes on 
+		freq.drinker = likes.drinker and freq.beer = likes.beer)newalias))newnew)
+
+
+union (
+
+(select bar , sum(times_a_week * price) as amount
+from (
+	select * from (
+		select * 
+		from frequents natural join serves)freq
+		join likes on 
+		freq.drinker = likes.drinker and freq.beer = likes.beer)alias
+group by bar
+order by amount DESC, bar))
+order by amount DESC, bar;

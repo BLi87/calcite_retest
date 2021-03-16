@@ -1,0 +1,1 @@
+Select DISTINCT drinker From Frequents Where Frequents.bar IN( Select bar FROM serves Where beer='Corona');

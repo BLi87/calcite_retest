@@ -1,0 +1,1 @@
+Select bar from serves where beer = 'Corona';

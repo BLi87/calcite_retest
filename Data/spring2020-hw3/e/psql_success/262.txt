@@ -1,0 +1,9 @@
+with temp1 as(
+select name, max(times_a_week)
+from frequents right  join drinker
+on frequents.drinker = drinker.name
+group by name)
+
+select temp1.name, bar
+from temp1 left join frequents
+on temp1.name=frequents.drinker and temp1.max=frequents.times_a_week

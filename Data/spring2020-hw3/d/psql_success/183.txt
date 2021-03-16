@@ -1,0 +1,13 @@
+WITH Temp1 as
+    (SELECT beer.name as beer, serves.price
+    FROM serves
+    FULL OUTER JOIN beer on beer.name = serves.beer),
+    Temp2 as
+    (
+    SELECT likes.drinker, Temp1.beer, Temp1.price
+    FROM likes
+    RIGHT OUTER JOIN Temp1 on likes.beer = Temp1.beer)
+SELECT beer, COUNT(DISTINCT drinker) as cnt, AVG(price)
+FROM Temp2
+GROUP BY beer
+ORDER BY cnt DESC, beer

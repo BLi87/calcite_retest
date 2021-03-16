@@ -1,0 +1,5 @@
+SELECT DISTINCT frequents.drinker
+FROM frequents 
+JOIN
+frequents as frequentsTwo ON frequents.drinker = frequentsTwo.drinker WHERE
+frequents.bar = 'James Joyce Pub' AND frequentsTwo.bar = 'Satisfaction';

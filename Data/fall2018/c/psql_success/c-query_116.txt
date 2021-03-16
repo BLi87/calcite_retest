@@ -1,0 +1,1 @@
+select serv.bar, addy.address from serves serv, bar addy where serv.beer = 'Corona' and serv.price<=3.00 and serv.bar = addy.name;

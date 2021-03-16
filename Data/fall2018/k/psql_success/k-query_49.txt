@@ -1,0 +1,19 @@
+SELECT bar, sum(total_week_earnings) AS final_total_week_earnings
+FROM
+(SELECT name AS bar, 0.0 AS total_week_earnings 
+FROM bar
+UNION
+
+
+SELECT bar, sum(drinker_pay_per_drink) AS total_week_earnings
+FROM (
+SELECT bar, times_a_week*price AS drinker_pay_per_drink
+FROM 
+(SELECT likes.drinker, frequents.times_a_week, serves.bar, serves.beer, serves.price
+FROM likes, frequents, serves
+WHERE likes.drinker = frequents.drinker AND likes.beer = serves.beer AND frequents.bar = serves.bar) AS drinker_pay_table
+) AS week_earnings_table
+GROUP BY bar) AS bar_total_week_earnings
+
+GROUP BY bar
+ORDER BY final_total_week_earnings DESC, bar;

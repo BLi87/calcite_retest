@@ -1,0 +1,9 @@
+(SELECT bar, drinker
+FROM Frequents)
+EXCEPT
+(SELECT Frequents2.bar AS bar, Frequents2.drinker AS drinker
+FROM Frequents AS Frequents2
+INNER JOIN Frequents ON Frequents2.times_a_week < Frequents.times_a_week
+AND Frequents2.bar = Frequents.bar);
+
+

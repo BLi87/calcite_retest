@@ -1,0 +1,18 @@
+WITH dl AS
+(SELECT l.drinker, s.bar, l.beer
+ FROM likes l, serves s
+ WHERE l.beer = s.beer),
+
+db AS
+(SELECT f.drinker, f.bar, s.beer
+ FROM frequents f, serves s
+ WHERE f.bar = s.bar),
+
+difference AS
+(SELECT * 
+ FROM db
+ EXCEPT (SELECT * FROM dl))
+
+SELECT d.name
+FROM drinker d
+EXCEPT (SELECT difference.drinker FROM difference)

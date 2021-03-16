@@ -1,0 +1,1 @@
+SELECT bar.name, bar.address FROM bar, serves WHERE serves.bar=bar.name and serves.beer='Corona' and serves.price<=3.00;

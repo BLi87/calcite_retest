@@ -1,0 +1,8 @@
+SELECT DISTINCT beer, bar
+FROM serves AS s1
+WHERE NOT EXISTS 
+	(
+	SELECT *
+	FROM serves AS s2
+	WHERE s1.bar != s2.bar AND s1.beer = s2.beer
+	);

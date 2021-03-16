@@ -1,0 +1,9 @@
+(SELECT DISTINCT name
+FROM Drinker)
+EXCEPT
+(SELECT foo.drinker
+FROM (	(SELECT DISTINCT f.drinker, f.bar, s.beer FROM Frequents f, Serves s
+		WHERE f.bar = s.bar)
+		EXCEPT
+		(SELECT DISTINCT f.drinker, f.bar, s.beer FROM Frequents f, Serves s, Likes l
+		WHERE f.bar = s.bar AND s.beer = l.beer AND f.drinker = l.drinker)	) foo);

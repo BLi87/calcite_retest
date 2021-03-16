@@ -1,0 +1,8 @@
+(select name from drinker)
+except
+(select p.drinker from
+((select * from serves natural join frequents)
+except
+(select t.bar,t.beer,t.price,t.drinker,t.times_a_week from
+likes join (select serves.bar,serves.beer,serves.price,frequents.drinker,frequents.times_a_week from 
+serves natural join frequents) as t on likes.drinker = t.drinker and likes.beer = t.beer)) as p);

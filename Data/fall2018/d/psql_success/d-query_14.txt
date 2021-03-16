@@ -1,0 +1,5 @@
+SELECT A.drinker 
+FROM frequents A, frequents B
+WHERE A.bar = 'James Joyce Pub'
+AND B.bar = 'Satisfaction'
+AND A.drinker = B.drinker;

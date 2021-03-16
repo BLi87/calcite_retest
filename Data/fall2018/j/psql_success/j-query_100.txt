@@ -1,0 +1,27 @@
+SELECT bar1, secondbar.bar2
+FROM
+	(SELECT temp1.bar1 as bar1, count1, countboth, bar2
+	FROM
+	(SELECT bar as bar1, count(DISTINCT beer) as count1
+		FROM serves
+		group by bar) as temp1
+	inner join 
+	(SELECT bar1, bar2, count(DISTINCT beer) as countboth
+	FROM
+		(SELECT bar1, beer1 as beer, bar2
+			FROM(
+				(SELECT bar as bar1, beer as beer1 from serves) as s1
+				inner join (select bar as bar2, beer as beer2 from serves) as s2
+				on beer1 = beer2
+				)
+			WHERE not bar1 = bar2) as temp
+		group by bar1, bar2) as temp2
+		on temp1.bar1 = temp2.bar1) as firstBar
+	inner join
+	(SELECT bar as bar2, count(DISTINCT beer) as count2
+	FROM
+		serves
+	group by bar) as secondbar
+	on firstBar.bar2 = secondbar.bar2
+WHERE count1 = countboth
+	and countboth < count2

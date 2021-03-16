@@ -1,0 +1,49 @@
+(
+  SELECT
+    DISTINCT *
+  FROM
+  (
+    (
+      SELECT
+        bar
+      FROM
+        frequents
+      WHERE
+        drinker = 'Ben'
+    )
+    UNION
+    (
+      SELECT
+        bar
+      FROM
+        frequents
+      WHERE
+        drinker = 'Dan'
+    )
+  ) AS temp1
+)
+EXCEPT
+(
+  SELECT
+    DISTINCT *
+  FROM
+  (
+    (
+      SELECT
+        bar
+      FROM
+        frequents
+      WHERE
+        drinker = 'Ben'
+    )
+    INTERSECT
+    (
+      SELECT
+        bar
+      FROM
+        frequents
+      WHERE
+        drinker = 'Dan'
+    )
+  ) AS temp2
+);

@@ -1,0 +1,1 @@
+select beer, bar from serves where beer in (select beer from serves group by beer having count(beer) = 1);

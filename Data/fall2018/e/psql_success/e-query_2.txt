@@ -1,0 +1,7 @@
+SELECT DISTINCT bar FROM Frequents
+WHERE drinker='Dan' AND bar NOT IN
+(SELECT DISTINCT bar FROM Frequents WHERE drinker='Ben')
+UNION
+SELECT DISTINCT bar FROM Frequents
+WHERE drinker='Ben' AND bar NOT IN
+(SELECT DISTINCT bar FROM Frequents WHERE drinker='Dan');

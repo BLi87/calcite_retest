@@ -1,0 +1,1 @@
+(select distinct beer, bar from serves) except (select distinct serves1.beer, serves1.bar from serves serves1, serves serves2 where serves1.beer = serves2.beer and serves1.bar != serves2.bar);

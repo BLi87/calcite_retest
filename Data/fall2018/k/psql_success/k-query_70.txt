@@ -1,0 +1,8 @@
+WITH foo1 AS (SELECT DISTINCT name bar from Bar)
+, foo2 AS (SELECT f.bar, SUM(s.price * f.times_a_week) amount
+FROM Frequents f, Serves s, Likes l
+WHERE f.bar = s.bar AND s.beer = l.beer AND f.drinker = l.drinker
+GROUP BY f.bar)
+SELECT DISTINCT bar, COALESCE(amount, 0) amount
+FROM foo1 NATURAL LEFT OUTER JOIN foo2
+ORDER BY amount DESC, bar ASC;

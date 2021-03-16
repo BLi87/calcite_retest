@@ -1,0 +1,17 @@
+((SELECT bar FROM frequents WHERE drinker = 'Dan')
+
+EXCEPT ALL
+
+(SELECT bar FROM frequents WHERE drinker = 'Ben'))
+
+UNION ALL 
+
+
+((SELECT bar FROM frequents WHERE drinker = 'Ben')
+
+EXCEPT ALL
+
+(SELECT bar FROM frequents WHERE drinker = 'Dan'));
+
+
+/* Worked with Trilok Sadarangani */

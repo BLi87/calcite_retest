@@ -1,0 +1,7 @@
+select jjb.drinker from 
+(select drinker from frequents where bar = 'James Joyce Pub') as jjb
+join  
+(select drinker from frequents where bar = 'Satisfaction') as satis 
+on jjb.drinker = satis.drinker; 
+
+

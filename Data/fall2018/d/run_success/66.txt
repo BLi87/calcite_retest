@@ -1,0 +1,5 @@
+SELECT Frequents.drinker
+FROM Frequents
+JOIN
+Frequents as freq2 ON Frequents .drinker = freq2.drinker
+WHERE Frequents.bar = 'James Joyce Pub' and freq2.bar = 'Satisfaction';

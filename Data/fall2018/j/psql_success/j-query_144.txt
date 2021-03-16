@@ -1,0 +1,10 @@
+select bar, bar1 from (
+(select t.bar as bar1, t.beer, s.bar from (select * from serves) as t cross join (select * from serves) as s)
+except
+(select s.bar as bar1, t.beer, t.bar from (select * from serves) as t cross join (select * from serves) as s)
+) as p 
+except
+(select bar1, bar from
+((select t.bar as bar1, t.beer, s.bar from (select * from serves) as t cross join (select * from serves) as s)
+except 
+(select s.bar as bar1, t.beer, t.bar from (select * from serves) as t cross join (select * from serves) as s)) as r);

@@ -1,0 +1,16 @@
+with allsum as (
+	select frequents.bar, sum(times_a_week*price) 
+	from frequents join serves 
+	on frequents.bar=serves.bar 
+	join likes on likes.beer=serves.beer and likes.drinker=frequents.drinker 
+	group by frequents.bar) 
+select bar, 0 as sum 
+from (
+	select name as bar 
+	from bar 
+	except 
+	select bar 
+	from allsum
+	) as t 
+union select * from allsum 
+order by sum desc, bar asc;

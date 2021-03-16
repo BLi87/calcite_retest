@@ -1,0 +1,6 @@
+SELECT DISTINCT beer, bar FROM serves
+EXCEPT
+SELECT DISTINCT s1.beer AS beer, s1.bar AS bar
+		FROM serves AS s1, serves AS s2
+		WHERE s1.beer = s2.beer
+		AND NOT s1.bar = s2.bar

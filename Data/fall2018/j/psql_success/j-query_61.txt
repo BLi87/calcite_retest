@@ -1,0 +1,18 @@
+WITH trip1(bar1, bar2, beer) AS
+	(SELECT serves.bar, bar.name, beer FROM serves, bar),
+	trip2(bar1, bar2, beer) AS
+	(SELECT bar.name, serves.bar, beer FROM serves, bar)
+SELECT DISTINCT bar2, bar1
+FROM (SELECT bar1, bar2
+	  FROM (SELECT bar1, bar2, beer
+			FROM trip1
+ 			EXCEPT
+ 			SELECT bar1, bar2, beer
+ 			FROM trip2) as first
+	  EXCEPT 
+	 (SELECT bar1, bar2
+	  FROM (SELECT bar1, bar2, beer
+ 			FROM trip2
+ 			EXCEPT
+ 			SELECT bar1, bar2, beer
+			FROM trip1) as second)) AS total;

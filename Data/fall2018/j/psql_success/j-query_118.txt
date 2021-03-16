@@ -1,0 +1,5 @@
+SELECT distinct s1.bar, s2.bar
+FROM serves s1, serves s2
+WHERE EXISTS((SELECT s4.beer from serves s4 where s4.bar = s2.bar) EXCEPT ALL (SELECT s3.beer from serves s3 where s3.bar = s1.bar))
+	
+AND NOT EXISTS((SELECT s5.beer from serves s5 where s5.bar = s1.bar) EXCEPT ALL (SELECT s6.beer from serves s6 where s6.bar = s2.bar));

@@ -1,0 +1,2 @@
+SELECT name FROM drinker EXCEPT ALL (SELECT frequents.drinker FROM frequents, serves WHERE frequents.bar=serves.bar AND serves.beer NOT IN (SELECT beer FROM likes WHERE frequents.drinker=likes.drinker));
+

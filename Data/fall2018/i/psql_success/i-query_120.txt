@@ -1,0 +1,17 @@
+-- (i) Find names of all drinkers who frequent only those bars that serve only beers they like.
+
+--Find drinkers who frequent bars that serve some beers they don't like
+
+
+--ALL drinkers - people who go to bars that serve some beer they don't like
+
+SELECT DISTINCT name FROM drinker
+
+EXCEPT
+
+SELECT a.drinker FROM (
+  (SELECT drinker, beer FROM
+    frequents JOIN serves ON frequents.bar = serves.bar)
+    EXCEPT
+  (SELECT drinker, beer FROM likes)
+) a;

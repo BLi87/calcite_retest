@@ -1,0 +1,1 @@
+WITH m as (select * from frequents as f where not exists (select * from frequents where times_a_week > f.times_a_week and f.drinker = drinker)), d as (select name from drinker) select name, bar from m RIGHT OUTER JOIN d ON m.drinker = d.name;

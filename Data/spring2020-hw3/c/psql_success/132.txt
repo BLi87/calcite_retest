@@ -1,0 +1,5 @@
+select name from drinker
+except all (select F.drinker from 
+(select C.drinker, C.bar, A.beer from frequents as C, serves as A where C.bar = A.bar
+except all  
+(select  B.drinker, B.bar, C.beer from frequents as B, likes as C where B.drinker = C.drinker)) as F)

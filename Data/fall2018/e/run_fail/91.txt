@@ -1,0 +1,4 @@
+select distinct bar from frequents where drinker = 'Ben' or drinker = 'Dan'
+EXCEPT
+select distinct x.bar from frequents x, frequents y where x.bar = y.bar AND
+	((x.drinker = 'Ben' AND y.drinker = 'Dan') OR (x.drinker = 'Dan' AND y.drinker = 'Ben'));

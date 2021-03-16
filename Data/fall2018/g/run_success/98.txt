@@ -1,0 +1,11 @@
+/*For each bar, find the drinker who frequents it the greatest number of times. Your output should be
+a list of (bar, drinker) pairs. If multiple drinkers tie for the most frequent visitor to a bar, list them all
+as separate pairs. */
+
+(SELECT DISTINCT bar, drinker 
+FROM frequents)
+EXCEPT
+(SELECT DISTINCT A.bar, A.drinker
+FROM frequents A, frequents B
+WHERE A.bar = B.bar
+AND A.times_a_week < B.times_a_week); 

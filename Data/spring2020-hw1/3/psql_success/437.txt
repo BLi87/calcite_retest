@@ -1,0 +1,7 @@
+--different drinkers who like the same beer
+select table1.drinker drinker1, table2.drinker drinker2, table1.beer
+from likes table1, likes table2
+where table1.beer = table2.beer
+  and table1.drinker != table2.drinker
+  and table1.drinker < table2.drinker
+order by drinker1 asc

@@ -1,0 +1,17 @@
+SELECT q.name, q.amount FROM (
+
+
+(
+SELECT join1.bar AS name, SUM(join1.times_a_week * join1.price) AS amount FROM
+(SELECT frequents.drinker, frequents.times_a_week, serves.beer, serves.price, frequents.bar FROM serves JOIN frequents ON serves.bar = frequents.bar JOIN likes ON likes.drinker = frequents.drinker AND likes.beer = serves.beer) join1
+GROUP BY name ORDER BY amount DESC, name)
+
+
+
+UNION
+(SELECT name, 0.0 AS amount FROM bar
+EXCEPT
+SELECT DISTINCT frequents.bar, 0.0 AS amount FROM serves JOIN frequents ON serves.bar = frequents.bar JOIN likes ON likes.drinker = frequents.drinker AND likes.beer = serves.beer
+)
+
+) q GROUP BY q.name, q.amount ORDER BY q.amount DESC, q.name;

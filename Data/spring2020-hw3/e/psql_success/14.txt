@@ -1,0 +1,20 @@
+
+with most_frequent as (
+  select f.drinker, max(f.times_a_week) as times_a_week
+    from frequents f
+    group by f.drinker
+),
+
+drinkers_favorite as (
+  select f.drinker, f.bar
+    from frequents f
+    where f.times_a_week in (
+      select mf.times_a_week
+        from most_frequent mf
+        where mf.drinker = f.drinker
+    )
+)
+
+select drinker.name, drinkers_favorite.bar
+  from drinker left join drinkers_favorite
+  on drinker.name = drinkers_favorite.drinker

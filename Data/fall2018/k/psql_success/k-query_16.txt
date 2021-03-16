@@ -1,0 +1,6 @@
+SELECT bar, SUM(times_a_week * price) AS total
+FROM (SELECT Frequents.drinker, Frequents.bar, Likes.beer, Frequents.times_a_week, Serves.price
+FROM Frequents, Likes, Serves
+WHERE Frequents.drinker = Likes.drinker AND Frequents.bar = Serves.bar AND Serves.beer = Likes.beer) AS foo
+GROUP BY bar
+ORDER BY total DESC, bar;

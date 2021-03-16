@@ -1,0 +1,6 @@
+(SELECT beer,bar
+	FROM serves)
+EXCEPT
+(SELECT serve1.beer,serve1.bar 
+	FROM serves AS serve1, serves AS serve2 
+	WHERE serve1.beer=serve2.beer AND serve1.bar<>serve2.bar);

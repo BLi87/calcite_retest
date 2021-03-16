@@ -1,0 +1,14 @@
+WITH 
+maxTimes AS
+(SELECT drinker, MAX(times_a_week) AS times_a_week
+FROM frequents
+GROUP BY drinker),
+
+drinkerBar AS
+(SELECT F.drinker, bar
+FROM frequents F, maxTimes M
+WHERE F.drinker = M.drinker AND F.times_a_week = M.times_a_week)
+
+SELECT name, bar
+FROM drinkerBar FULL OUTER JOIN drinker
+ON drinker.name = drinkerBar.drinker;

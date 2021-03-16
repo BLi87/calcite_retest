@@ -1,0 +1,11 @@
+WITH myView AS(SELECT freq.drinker, freq.bar, freq.times_a_week, sum(serv.price) AS theSum
+FROM serves serv, frequents freq, likes WHERE freq.bar = serv.bar AND likes.beer = serv.beer AND freq.drinker = likes.drinker
+GROUP BY freq.bar, freq.drinker, freq.times_a_week)
+
+SELECT allbars, emoney FROM
+(SELECT DISTINCT case WHEN bar.name NOT IN (SELECT myView.bar FROM myView) then bar.name else myView.bar end as allbars,
+case WHEN bar.name NOT IN (SELECT myVIEW.bar FROM myView) then 0
+WHEN bar.name in (SELECT myView.bar from myView) then sum(myView.theSum *myView.times_a_week) end as emoney
+FROM myView, bar
+GROUP BY allbars, bar.name
+ORDER BY emoney desc, allbars asc) AS r;

@@ -1,0 +1,25 @@
+select bar1.bar bar1, bar2.bar bar2
+from 
+(
+	select distinct bar, count(*) count
+    from serves
+    group by bar
+)  bar1,
+( 
+	select distinct bar, count(*) count
+    from serves
+    group by bar
+) bar2
+where bar1.bar != bar2.bar
+and bar1.count < bar2.count
+and not exists 
+(
+	select beer
+	from serves 
+	where serves.bar = bar1.bar
+	except
+	select beer
+	from   serves
+	where serves.bar = bar2.bar
+)
+

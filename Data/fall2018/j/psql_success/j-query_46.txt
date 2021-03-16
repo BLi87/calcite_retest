@@ -1,0 +1,8 @@
+(select distinct s1.bar,s.bar from serves s1, serves s where s.bar<>s1.bar)
+EXCEPT
+(select distinct b,c from (
+	(select distinct s.bar b,s1.bar c,s.beer from serves s1, serves s where s.bar<>s1.bar)
+	EXCEPT
+	(select distinct s1.bar b,s.bar c,s.beer from serves s1, serves s where s.bar<>s1.bar)
+) foo
+);

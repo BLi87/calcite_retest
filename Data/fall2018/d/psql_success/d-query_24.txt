@@ -1,0 +1,4 @@
+SELECT a.drinker FROM
+(select q1.drinker as drinker, COUNT(q1.drinker) as count from
+((select drinker from frequents where bar = 'James Joyce Pub')  union all
+(select drinker from frequents where bar = 'Satisfaction') )q1 group by q1.drinker) a where a.count = 2;

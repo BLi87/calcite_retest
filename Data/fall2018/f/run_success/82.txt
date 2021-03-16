@@ -1,0 +1,5 @@
+SELECT beer, bar
+FROM Serves AS u
+WHERE NOT EXISTS
+(SELECT * FROM Serves
+WHERE bar <> u.bar and beer = u.beer);

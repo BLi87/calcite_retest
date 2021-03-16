@@ -1,0 +1,7 @@
+WITH DanBeer AS 
+  (SELECT beer
+   FROM likes
+   WHERE drinker='Dan')
+SELECT DISTINCT s1.beer AS beer, s1.bar AS bar
+FROM serves s1
+WHERE ((s1.beer IN (SELECT beer from DanBeer)) AND (s1.price >= ALL(SELECT price FROM serves s2 WHERE s2.beer = s1.beer) ));

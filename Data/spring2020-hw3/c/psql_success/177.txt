@@ -1,0 +1,16 @@
+WITH 
+	freserves(drinker, beer) AS
+	(SELECT f.drinker, s.beer
+	FROM serves s, frequents f
+	WHERE s.bar = f.bar),
+
+	differ(drinker, beer) AS 
+	((SELECT * FROM freserves)
+	EXCEPT
+	(SELECT * FROM likes))
+
+(SELECT name FROM drinker)
+EXCEPT
+(SELECT drinker FROM differ);
+
+

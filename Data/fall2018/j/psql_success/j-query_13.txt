@@ -1,0 +1,12 @@
+(select a.bar1, a.bar2
+from 
+((select distinct z.bar as bar1, y.beer as beer1, y.bar as bar2, y.beer as beer2 from (serves as z cross join serves as y)  where z.bar<>y.bar and z.beer<>y.beer) except (select distinct z.bar as bar1, y.beer as beer1, y.bar as bar2, y.beer as beer2 from (serves as z cross join serves as y)  where z.bar<>y.bar and z.beer=y.beer)) as a
+)
+
+except 
+
+(select b.bar1, b.bar2
+from 
+((select distinct z.bar as bar1, z.beer as beer1, y.bar as bar2, z.beer as beer2 from (serves as z cross join serves as y)  where z.bar<>y.bar and z.beer<>y.beer) except (select distinct z.bar as bar1, y.beer as beer1, y.bar as bar2, y.beer as beer2 from (serves as z cross join serves as y)  where z.bar<>y.bar and z.beer=y.beer)) as b
+);
+

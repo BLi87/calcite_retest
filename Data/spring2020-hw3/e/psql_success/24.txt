@@ -1,0 +1,11 @@
+SELECT d.name, f.bar 
+FROM drinker d 
+LEFT OUTER JOIN frequents f
+ON f.drinker = d.name
+AND (f.drinker, f.times_a_week) IN
+(
+	SELECT drinker, MAX(times_a_week)
+	FROM frequents
+	GROUP BY drinker
+)
+

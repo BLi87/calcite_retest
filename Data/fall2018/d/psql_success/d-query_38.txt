@@ -1,0 +1,2 @@
+SELECT DISTINCT f1.drinker FROM Frequents AS f1, Frequents AS f2 WHERE
+f1.drinker = f2.drinker AND f1.bar = 'James Joyce Pub' AND f2.bar = 'Satisfaction';

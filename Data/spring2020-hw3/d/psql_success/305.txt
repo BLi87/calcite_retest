@@ -1,0 +1,13 @@
+SELECT b.name allbeers, COALESCE(t1.beercount,0) finalcount, t2.avgprice
+FROM Beer b
+LEFT JOIN 
+(SELECT L1.beer likebeer, Count(L1.beer) beercount
+FROM Likes L1
+Group By likebeer) t1 
+on t1.likebeer = b.name
+LEFT JOIN 
+(SELECT s1.beer servedbeer, Avg(s1.price) avgprice
+FROM Serves s1 
+Group By s1.beer)t2 
+ON t2.servedbeer= b.name
+ORDER BY finalcount DESC, allbeers ASC;

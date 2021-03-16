@@ -1,0 +1,9 @@
+(SELECT DISTINCT drinker
+FROM frequents
+WHERE bar = 'James Joyce Pub')
+
+INTERSECT 
+
+(SELECT DISTINCT drinker
+FROM frequents 
+WHERE bar = 'Satisfaction');

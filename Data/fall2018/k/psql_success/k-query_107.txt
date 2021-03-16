@@ -1,0 +1,60 @@
+select * from (
+select * from(
+select name as bar,
+  case when name not in (select bar from (
+    select bar, sum(price)
+    from (
+    select bar, sum(price)*avg(times_a_week) as price
+    from (
+    select t1.drinker, t1.bar, t1.times_a_week, t1.beer, t1.price
+    from (
+    select frequents.drinker, frequents.bar, frequents.times_a_week, serves.beer, serves.price
+    from frequents
+    right join serves
+    on frequents.bar = serves.bar) as t1
+    full join likes
+    on t1.beer = likes.beer
+    where t1.drinker = likes.drinker) as t2
+    group by t2.drinker, t2.bar) as t3
+    group by t3.bar
+    order by sum(t3.price) desc, t3.bar asc) as v1)
+    then 0
+    else null
+  end as sum
+from bar) as v2
+where v2.bar not in ((select bar from (
+  select bar, sum(price)
+  from (
+  select bar, sum(price)*avg(times_a_week) as price
+  from (
+  select t1.drinker, t1.bar, t1.times_a_week, t1.beer, t1.price
+  from (
+  select frequents.drinker, frequents.bar, frequents.times_a_week, serves.beer, serves.price
+  from frequents
+  right join serves
+  on frequents.bar = serves.bar) as t1
+  full join likes
+  on t1.beer = likes.beer
+  where t1.drinker = likes.drinker) as t2
+  group by t2.drinker, t2.bar) as t3
+  group by t3.bar
+  order by sum(t3.price) desc, t3.bar asc) as v1))
+union (select * from (
+  select bar, sum(price)
+  from (
+  select bar, sum(price)*avg(times_a_week) as price
+  from (
+  select t1.drinker, t1.bar, t1.times_a_week, t1.beer, t1.price
+  from (
+  select frequents.drinker, frequents.bar, frequents.times_a_week, serves.beer, serves.price
+  from frequents
+  right join serves
+  on frequents.bar = serves.bar) as t1
+  full join likes
+  on t1.beer = likes.beer
+  where t1.drinker = likes.drinker) as t2
+  group by t2.drinker, t2.bar) as t3
+  group by t3.bar
+  order by sum(t3.price) desc, t3.bar asc) as v2)) as v3
+  group by v3.bar, v3.sum
+  order by sum(v3.sum) desc, v3.bar asc;

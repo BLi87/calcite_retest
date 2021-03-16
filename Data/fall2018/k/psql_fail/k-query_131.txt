@@ -1,0 +1,21 @@
+ALTER TABLE drinker
+ADD earnings INTEGER
+
+(SELECT drinker.name
+FROM drinker
+
+EXCEPT
+
+SELECT frequents.drinker
+FROM frequents)
+
+UNION
+
+(SELECT foo1.bar1, SUM(earnings) AS money
+FROM (
+  SELECT bar1, prices.times * prices.cost AS earnings
+  FROM (SELECT frequents.times_a_week as times, serves.price as cost, frequents.bar as bar1
+      FROM frequents, serves, likes
+      WHERE frequents.bar = serves.bar) AS prices)
+  AS foo1 GROUP BY bar1)
+ORDER BY money DESC;

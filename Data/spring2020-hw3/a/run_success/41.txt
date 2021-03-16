@@ -1,0 +1,4 @@
+SELECT distinct S.beer, S.bar
+FROM likes L, serves S 
+WHERE L.drinker = 'Dan' and L.beer = S.beer and NOT EXISTS (SELECT * FROM serves 
+WHERE L.drinker = 'Dan' and L.beer = S.beer and L.beer = beer and price > S.price)

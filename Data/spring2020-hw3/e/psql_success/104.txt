@@ -1,0 +1,10 @@
+-- for each drinker the bar(s) they frequent the most  
+-- output (drinker, bar)
+WITH drinkers as (SELECT name as drinker FROM drinker),
+  result as (SELECT DISTINCT drinker, bar
+    FROM frequents f2
+    WHERE NOT EXISTS (SELECT *
+      FROM frequents
+      WHERE times_a_week > f2.times_a_week and drinker = f2.drinker))
+SELECT drinkers.drinker as drinker, bar
+FROM drinkers LEFT OUTER JOIN result ON drinkers.drinker = result.drinker;

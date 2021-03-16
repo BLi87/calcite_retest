@@ -1,0 +1,16 @@
+SELECT name
+FROM drinker
+
+EXCEPT
+
+SELECT drinker
+FROM frequents
+WHERE NOT EXISTS (
+	SELECT *
+	FROM likes
+	WHERE likes.drinker = frequents.drinker AND likes.beer IN (
+		SELECT beer
+		FROM serves
+		WHERE serves.bar = frequents.bar
+		)
+);

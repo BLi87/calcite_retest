@@ -1,0 +1,7 @@
+((SELECT DISTINCT bar FROM Frequents WHERE drinker = 'Dan')
+	UNION ALL
+(SELECT DISTINCT bar FROM Frequents WHERE drinker = 'Ben'))
+EXCEPT
+((SELECT DISTINCT bar FROM Frequents WHERE drinker = 'Dan')
+	INTERSECT ALL
+(SELECT DISTINCT bar FROM Frequents WHERE drinker = 'Ben'));

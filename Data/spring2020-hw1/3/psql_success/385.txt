@@ -1,0 +1,5 @@
+SELECT L.drinker as drinker1, X.drinker as drinker2, L.beer
+FROM likes L, likes X
+WHERE L.drinker <> X.drinker 
+  AND L.beer = X.beer
+  AND L.drinker < X.drinker

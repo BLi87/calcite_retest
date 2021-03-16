@@ -1,0 +1,11 @@
+SELECT orange.name, orange.bar FROM (
+SELECT Serves.bar, Serves.beer, Bar.name FROM Serves CROSS JOIN Bar
+ EXCEPT
+(SELECT Bar.name, Serves.beer, Serves.bar FROM Serves CROSS JOIN Bar) ) AS orange
+
+EXCEPT (
+SELECT b.bar, b.name FROM (
+SELECT Serves.bar, Serves.beer, Bar.name FROM Serves CROSS JOIN Bar
+ EXCEPT
+(SELECT Bar.name, Serves.beer, Serves.bar FROM Serves CROSS JOIN Bar)) AS b
+);

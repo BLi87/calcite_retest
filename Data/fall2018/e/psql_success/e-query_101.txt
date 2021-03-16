@@ -1,0 +1,9 @@
+SELECT DISTINCT bar
+FROM Frequents
+WHERE (drinker = 'Ben' OR drinker = 'Dan')
+AND bar NOT IN (
+  SELECT f1.bar
+  FROM Frequents AS f1, Frequents AS f2
+  WHERE f1.bar = f2.bar
+  AND f1.drinker = 'Ben' AND f2.drinker = 'Dan'
+);

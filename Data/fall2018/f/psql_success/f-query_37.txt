@@ -1,0 +1,16 @@
+(SELECT beer, bar
+FROM serves
+)
+EXCEPT 
+(SELECT s1.beer, s1.bar
+FROM serves AS s1
+CROSS JOIN
+serves AS s2
+WHERE s1.bar <> s2.bar AND s1.beer = s2.beer
+GROUP BY s1.beer, s1.bar);
+ 
+
+
+--Find all (beer, bar) pairs where beer is served exclusively at bar; no other bar serves the same beer.
+--beer, bar pairs where beer is not served exclusively at bar 
+--beer, bar 

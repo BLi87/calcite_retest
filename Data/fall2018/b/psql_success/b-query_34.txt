@@ -1,0 +1,1 @@
+SELECT DISTINCT drinker FROM Serves, Frequents WHERE Serves.beer LIKE '%Corona%' AND Serves.bar = Frequents.bar;

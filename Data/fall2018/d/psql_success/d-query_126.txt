@@ -1,0 +1,11 @@
+-- Find the names of drinkers who frequent both
+-- James Joyce Pub and Satisfaction.
+
+SELECT drinker
+FROM frequents 
+WHERE bar = 'James Joyce Pub'
+INTERSECT
+SELECT drinker
+FROM frequents
+WHERE bar = 'Satisfaction' 
+;

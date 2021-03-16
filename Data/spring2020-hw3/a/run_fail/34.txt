@@ -1,0 +1,17 @@
+WITH Dan_likes AS (
+        SELECT beer
+        FROM likes 
+        WHERE drinker = 'Dan'
+), Serves_dans_beer AS (
+        SELECT s.bar, s.beer, s.price
+        FROM Serves s 
+        JOIN Dan_Likes d
+        ON s.beer = d.beer
+)
+
+SELECT a.beer, a.bar 
+FROM Serves_dans_beer a INNER JOIN(
+        SELECT beer, MAX(price) price
+        FROM Serves_dans_beer
+        GROUP BY beer
+) b ON a.beer = b.beer AND a.price= b.price;

@@ -1,0 +1,20 @@
+-- Suppose that each time a drinker visits a bar, he or she  always buys one glass of each beer served at this bar that he or she likes.
+-- If no such beer exists, he or she will not buy anything. Calculate, for each bar, the total amount of money it expects to get per week (over all drinkers).
+-- List (bar, amount) pairs in decreasing order of amount.
+-- In cases of ties, sort alphabetically by bar.
+-- Be sure to handle teh case when a bar doesn't expect to sell any beer to our drinkers -- you need to show an amount of 0.
+
+-- Collaborated with Rahul Sengottuvelu
+
+WITH moneys(bar, drinker, times_a_week, beer, price) 
+AS (SELECT * FROM (frequents NATURAL JOIN serves)
+s1 WHERE EXISTS (SELECT drinker, beer FROM likes WHERE s1.drinker = drinker and beer = s1.beer)),
+moneymade(bar,price) AS (SELECT bar, SUM(times_a_week * price) AS price FROM moneys AS b GROUP BY bar),
+
+un(bar,price) AS ((SELECT bar, price FROM moneymade as u)
+UNION ALL 
+(SELECT bar, 0 AS price FROM (SELECT name AS bar FROM bar) AS b))
+
+
+SELECT * FROM un u WHERE NOT EXISTS (SELECT * FROM un WHERE bar = u.bar AND  price > u.price)
+ORDER BY price DESC, bar ASC; 

@@ -1,0 +1,16 @@
+WITH PROF(name, profit) AS (
+  SELECT bar.name, 0
+  FROM bar
+  WHERE bar.name NOT IN (SELECT frequents.bar as name
+    FROM frequents, likes, serves
+    WHERE frequents.drinker = likes.drinker AND likes.beer = serves.beer AND frequents.bar = serves.bar)
+  UNION
+  SELECT T.bar, COALESCE(SUM(T.price * T.times_a_week),0) as profit
+  FROM
+  (SELECT frequents.bar, frequents.drinker, frequents.times_a_week, likes.beer, serves.price
+    FROM frequents, likes, serves
+    WHERE frequents.drinker = likes.drinker AND likes.beer = serves.beer AND frequents.bar = serves.bar) T
+  GROUP BY T.bar)
+SELECT *
+FROM PROF
+ORDER BY PROF.profit DESC, PROF.name;

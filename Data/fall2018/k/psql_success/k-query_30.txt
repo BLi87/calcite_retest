@@ -1,0 +1,33 @@
+WITH fs AS(SELECT *
+FROM frequents
+NATURAL JOIN  
+serves)
+((SELECT bar, sum(price*times_a_week) AS amount
+FROM likes
+INNER JOIN fs
+ON (likes.drinker = fs.drinker AND likes.beer = fs.beer)
+GROUP BY bar
+ORDER BY amount DESC, bar)
+UNION
+(SELECT name, 0 AS amount
+FROM bar
+EXCEPT
+(SELECT bar, 0 AS amount
+FROM likes
+INNER JOIN fs
+ON (likes.drinker = fs.drinker AND likes.beer = fs.beer)
+GROUP BY bar
+ORDER BY amount DESC, bar)
+))
+ORDER BY amount DESC, bar; 
+
+
+
+--Ben, Satisfaction, Full Sail
+--Dan, The Edge, Corona
+--Ben, JJP, Amstel 
+
+
+
+--bar, drinkers at bar and beers the bar serve First in diff: beers the bar serves but customers don't like
+--bar, drinkers at bar, beers drinkers like First in diff: beers drinkers like but not served

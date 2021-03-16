@@ -1,0 +1,11 @@
+((select bar from Frequents
+where drinker = 'Ben')
+union
+(select bar from Frequents
+where drinker = 'Dan'))
+except
+((select bar from Frequents
+	where drinker = 'Ben')
+intersect
+(select bar from Frequents 
+	where drinker = 'Dan'));

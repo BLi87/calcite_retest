@@ -1,0 +1,14 @@
+-- Find names of all drinkers who frequent only those bars that serve some beers they like.
+
+(select name as drinker from drinker)
+except
+(select distinct name from drinker as t1
+right join
+((select drinker, frequents.bar
+from frequents join serves
+on frequents.bar=serves.bar)
+except
+(select drinker, bar
+from serves join likes
+on serves.beer=likes.beer)) as t2
+on t1.name=t2.drinker);

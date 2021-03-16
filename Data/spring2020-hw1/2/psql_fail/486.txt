@@ -1,0 +1,4 @@
+from serves, beer
+select serves.bar
+where beer.brewer = 'Grupo Modelo'
+and serves.beer = beer.name

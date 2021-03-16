@@ -1,0 +1,3 @@
+SELECT DISTINCT f1.n1, bar
+from ( SELECT d1.name as n1, MAX(times_a_week) as time from frequents f2 right join drinker d1 on f2.drinker = d1.name GROUP BY d1.name ) as f1 left join frequents    
+on frequents.times_a_week = time  and f1.n1 = frequents.drinker 

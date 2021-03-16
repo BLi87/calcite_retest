@@ -1,0 +1,3 @@
+SELECT beer, bar
+FROM serves 
+WHERE serves.beer in (SELECT beer FROM serves GROUP BY beer HAVING COUNT(beer) = 1);

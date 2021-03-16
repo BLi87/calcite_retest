@@ -1,0 +1,12 @@
+WITH temp1(drinker, beer, bar) AS 
+(SELECT drinker, beer, bar FROM frequents NATURAL JOIN serves),
+
+temp2(drinker, beer)AS
+(SELECT drinker, beer FROM temp1 
+EXCEPT
+SELECT drinker, beer FROM likes)
+
+SELECT name FROM drinker 
+EXCEPT
+
+SELECT drinker FROM temp2;

@@ -1,0 +1,6 @@
+SELECT beer, bar
+FROM Serves 
+WHERE NOT EXISTS 
+(SELECT * 
+	FROM Serves s1
+	WHERE Serves.beer = s1.beer AND Serves.bar != s1.bar);

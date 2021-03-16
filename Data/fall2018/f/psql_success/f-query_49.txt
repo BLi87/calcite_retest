@@ -1,0 +1,2 @@
+SELECT beer, bar FROM Serves AS s WHERE NOT EXISTS (SELECT beer, bar FROM Serves WHERE
+s.beer = beer AND s.bar<>bar);

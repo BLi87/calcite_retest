@@ -1,0 +1,35 @@
+WITH 
+pop AS
+(SELECT COUNT(drinker) AS cnt, beer
+FROM likes
+GROUP BY beer),
+
+tempPop AS
+(SELECT name, cnt
+FROM beer FULL OUTER JOIN pop
+ON name = beer),
+
+nullPop AS
+(SELECT name, COUNT(name)-COUNT(name) AS cnt
+FROM tempPop
+WHERE cnt IS NULL
+GROUP BY name),
+
+fullPop AS
+((SELECT * FROM tempPop WHERE cnt IS NOT NULL) UNION (SELECT * FROM nullPop)),
+
+price AS
+(SELECT beer, AVG(price) AS avg
+FROM serves
+GROUP BY beer), 
+
+fullPrice AS
+(SELECT name, avg
+FROM beer FULL OUTER JOIN price
+ON name = beer)
+
+
+SELECT fullPop.name, cnt, avg
+FROM fullPop, fullPrice
+WHERE fullPop.name = fullPrice.name
+ORDER BY name asc, cnt desc;

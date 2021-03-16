@@ -1,0 +1,22 @@
+WITH 
+tmp1(bar1, beer1, price1) AS                          
+	(SELECT * FROM Serves),
+
+tmp2(bar2, beer2, price2) AS
+	(SELECT * FROM Serves),
+
+tmp0(bar, beer) AS
+	(SELECT beer,bar FROM Serves),
+ 
+tmp3(bar1, beer1, price1, bar2, beer2, price2) AS
+(
+	SELECT * FROM (tmp1 JOIN tmp2
+	ON tmp1.bar1<>tmp2.bar2 AND tmp1.beer1=tmp2.beer2)
+),
+
+tmp4(beer, bar) AS
+(SELECT DISTINCT beer1, bar1 FROM tmp3),
+
+ans(beer,bar) AS
+	(SELECT * FROM tmp0 EXCEPT SELECT * FROM tmp4)
+SELECT * FROM ans;

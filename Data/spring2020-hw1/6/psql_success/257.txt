@@ -1,0 +1,6 @@
+Select Distinct b.name
+From  bar b, serves s, serves c
+Where s.price < c.price and
+  s.beer = c.beer and
+  s.bar != c.bar and
+  s.bar = b.name

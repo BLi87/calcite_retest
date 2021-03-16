@@ -1,0 +1,10 @@
+(SELECT b3.name, s3.bar 
+FROM Bar b3 CROSS JOIN Serves s3 WHERE b3.name <> s3.bar)
+EXCEPT (
+	SELECT t.bar, t.name 
+	FROM ((
+		SELECT s2.bar, b2.name, s2.beer 
+		FROM Bar b2 CROSS JOIN Serves s2 WHERE b2.name <> s2.bar) 
+		EXCEPT (
+			SELECT b1.name, s1.bar, s1.beer 
+			FROM Bar b1 CROSS JOIN Serves s1 WHERE b1.name <> s1.bar)) AS t);

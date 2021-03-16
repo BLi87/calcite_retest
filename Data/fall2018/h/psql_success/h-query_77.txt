@@ -1,0 +1,5 @@
+  --- (h) Find names of all drinkers who frequent only those bars that serve some beers they like
+
+  SELECT distinct name as drinker FROM Drinker
+  except
+  select drinker from (select drinker, bar from Frequents except (SELECT drinker, bar FROM (Serves natural join Likes))) as d;

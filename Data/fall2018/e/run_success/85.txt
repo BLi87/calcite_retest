@@ -1,0 +1,9 @@
+ -- Find the names of bars frequented by either Ben or Dan, but not both.
+
+(select bar from frequents where drinker='Ben'
+except
+select bar from frequents where drinker='Dan')
+union
+(select bar from frequents where drinker='Dan'
+except
+select bar from frequents where drinker='Ben');

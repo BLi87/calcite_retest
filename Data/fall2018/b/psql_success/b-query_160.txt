@@ -1,0 +1,5 @@
+Select Distinct drinker
+From frequents
+Where bar IN (Select bar
+			From serves
+			Where beer = 'Corona');

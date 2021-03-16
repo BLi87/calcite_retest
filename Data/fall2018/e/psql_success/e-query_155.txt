@@ -1,0 +1,1 @@
+SELECT Frequents.bar from Frequents where Frequents.drinker='Ben' EXCEPT SELECT Frequents.bar from Frequents where Frequents.drinker='Dan' UNION SELECT Frequents.bar from Frequents where Frequents.drinker='Dan' EXCEPT SELECT Frequents.bar from Frequents where Frequents.drinker='Ben';

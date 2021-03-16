@@ -1,0 +1,1 @@
+((Select bar from frequents where drinker= 'Ben') union (select bar from frequents where drinker= 'Dan')) except ((Select bar from frequents where drinker= 'Ben') intersect (select bar from frequents where drinker= 'Dan'));

@@ -1,0 +1,32 @@
+-- Find drinker pairs (drinker1, drinker2) such that the beers liked by drinker1 is a subset of
+-- beers liked by drinker2. Format your output as list of (drinker1, drinker2) pairs (x)
+-- [Output columns: drinker1, drinker2]
+
+-- with onlyd1likes as ((select distinct l1.drinker as d1, l2.drinker as d2, l1.beer as beer
+-- from likes l1, likes l2)
+-- except
+-- (select distinct l1.drinker as d1, l2.drinker as d2, l2.beer as beer
+-- from likes l1, likes l2)),
+
+-- ans as ((select d1, d2 from onlyd1likes) except (select l1.drinker as d1, l2.drinker as d2
+-- from likes l1, likes l2
+-- where l1.beer = l2.beer and l1.drinker != l2.drinker) )
+
+-- select *
+-- from ans
+
+
+with onlyd1likes as ((select distinct l1.drinker as d1, l2.drinker as d2, l1.beer as beer
+from likes l1, likes l2
+where l1.beer = l2.beer)
+except
+(select distinct l1.drinker as d1, l2.drinker as d2, l2.beer as beer
+from likes l1, likes l2
+where l1.beer = l2.beer)),
+
+ans as ((select d1, d2 from onlyd1likes) except (select l1.drinker as d1, l2.drinker as d2
+from likes l1, likes l2
+where l1.beer = l2.beer and l1.drinker != l2.drinker))
+
+select *
+from ans

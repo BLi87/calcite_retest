@@ -1,0 +1,6 @@
+SELECT DISTINCT name, address 
+FROM Bar, Serves 
+WHERE Bar.name = Serves.bar AND beer = 'Corona' AND price <= 3.00 ; 
+
+
+/*(c) Find the names and addresses of bars that serve Corona for no more than $3.00.*/

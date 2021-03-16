@@ -1,0 +1,6 @@
+/* Find the names of drinkers who frequent any bar serving Corona. */
+
+SELECT DISTINCT frequents.drinker
+FROM frequents, serves
+WHERE frequents.bar = serves.bar 
+AND serves.beer = 'Corona';

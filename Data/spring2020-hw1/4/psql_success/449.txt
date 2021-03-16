@@ -1,0 +1,3 @@
+SELECT DISTINCT F.drinker, D.address 
+FROM drinker D, frequents F, frequents K
+WHERE F.drinker = D.name AND F.bar != K.bar AND F.drinker = K.drinker

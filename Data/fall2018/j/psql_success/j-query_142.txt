@@ -1,0 +1,56 @@
+-- Find all (bar1, bar2) pairs where the set of beer served at bar1
+-- is a proper subset of those served at bar2.
+-- i.e. bar2 serves every beer that bar1 serves, plus some more.
+
+
+
+-- 1. Relation first (bar1, bar2):
+-- Find all the bar1, bar2 pairs that are not the same 
+-- in a theta join between servefirst and servesecond 
+-- (serves cross serve). 
+
+-- 2. Relation second (bar1, beer, bar2):  
+-- Theta join of serves with itself, but you want to find where 
+-- the beers are the same and the bars are not the same.
+
+-- Collaborated with August Ning. 
+
+SELECT sixth.bar1 AS bar1, sixth.bar2 AS bar2
+FROM (
+		SELECT * FROM (SELECT bar AS bar1 FROM serves) AS first, (SELECT bar AS bar2 FROM serves) AS second
+		WHERE NOT first.bar1 = second.bar2
+
+	EXCEPT
+
+		(SELECT DISTINCT fifth.bar1, fifth.bar2
+		FROM (SELECT DISTINCT first.bar1, first.beer, second.bar2
+		FROM (SELECT bar AS bar1, beer FROM serves) AS first, (SELECT bar AS bar2 FROM serves) AS second WHERE NOT first.bar1 = second.bar2
+
+	EXCEPT
+
+		SELECT DISTINCT third.bar, third.beer, fourth.bar
+		FROM (SELECT * FROM serves) AS third,
+		(SELECT * FROM serves) AS fourth WHERE third.beer = fourth.beer AND NOT third.bar = fourth.bar) AS fifth) ) AS sixth
+
+EXCEPT
+
+SELECT sixth.bar2 AS bar1, sixth.bar1 AS bar2
+FROM (
+	SELECT * FROM (SELECT bar AS bar1 FROM serves) AS first, (SELECT bar AS bar2 FROM serves) AS second WHERE NOT first.bar1 = second.bar2
+
+	EXCEPT
+
+	(SELECT DISTINCT fifth.bar1, fifth.bar2 FROM (
+	SELECT DISTINCT first.bar1, first.beer, second.bar2
+	FROM (SELECT bar AS bar1, beer FROM serves) AS first, 
+	(SELECT bar AS bar2 FROM serves) AS second WHERE NOT first.bar1 = second.bar2
+
+	EXCEPT
+
+	SELECT DISTINCT third.bar, third.beer, fourth.bar
+	FROM (SELECT * FROM serves) AS third,
+	(SELECT * FROM serves) AS fourth
+	WHERE third.beer = fourth.beer AND NOT third.bar = fourth.bar) 
+	AS fifth) 
+) AS sixth
+;

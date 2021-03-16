@@ -1,0 +1,7 @@
+SELECT name AS drinker FROM drinker 
+EXCEPT 
+SELECT drinker FROM 
+	(SELECT drinker, bar FROM frequents 
+	EXCEPT 
+	(SELECT drinker, bar from serves, likes WHERE serves.beer = likes.beer)
+	) AS sub;

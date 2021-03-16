@@ -1,0 +1,1 @@
+select bar, drinker from frequents where frequents.times_a_week >= All(select times_a_week from frequents f1 where f1.bar =frequents.bar); 

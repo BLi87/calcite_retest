@@ -1,0 +1,9 @@
+SELECT name FROM Drinker
+WHERE NOT EXISTS
+	(SELECT bar FROM Frequents
+	WHERE drinker = name AND NOT EXISTS
+		(SELECT * FROM Serves
+		WHERE Serves.bar = Frequents.bar
+		AND Serves.beer IN
+			(SELECT beer FROM Likes
+			WHERE drinker = name)));

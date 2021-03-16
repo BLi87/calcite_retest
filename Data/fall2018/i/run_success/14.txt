@@ -1,0 +1,6 @@
+(SELECT DISTINCT name FROM Drinker)
+EXCEPT
+(SELECT DISTINCT drinker FROM Frequents, Serves 
+	WHERE Frequents.bar = Serves.bar AND NOT EXISTS -- gives what beer the bars serve they frequent
+		(SELECT * FROM Likes WHERE Likes.drinker = Frequents.drinker 
+			AND Likes.beer = Serves.beer)) -- checks if those are the beers they like

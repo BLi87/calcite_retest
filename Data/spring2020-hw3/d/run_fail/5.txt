@@ -1,0 +1,15 @@
+WITH beer_counts AS
+(SELECT name, COUNT(beer) as cnt
+FROM beer
+LEFT JOIN likes ON beer.name = likes.beer
+GROUP BY name),
+ avg_prices AS
+(SELECT beer, AVG(price) as price
+FROM serves
+LEFT JOIN beer ON beer.name = serves.beer
+GROUP BY beer)
+
+(SELECT beer_counts.name, cnt, avg_prices.price 
+FROM beer_counts
+LEFT JOIN avg_prices ON beer_counts.name = avg_prices.beer
+ORDER BY cnt DESC, beer ASC);

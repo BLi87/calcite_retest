@@ -1,0 +1,5 @@
+SELECT DISTINCT drinker
+FROM frequents
+WHERE bar IN (SELECT bar
+              FROM serves
+              WHERE beer = 'Corona');

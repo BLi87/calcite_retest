@@ -1,0 +1,7 @@
+SELECT L1.beer, bar
+FROM Likes L1, Serves S1
+WHERE drinker = 'Dan'
+AND L1.beer = S1.beer
+AND S1.price = (SELECT MAX(price)
+		    FROM Serves S2
+		    WHERE S1.beer = S2.beer)

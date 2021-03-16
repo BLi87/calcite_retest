@@ -1,0 +1,3 @@
+SELECT S.bar AS bar
+FROM Serves S, Beer B
+WHERE B.brewer='Grupo Modelo' AND S.beer=B.name

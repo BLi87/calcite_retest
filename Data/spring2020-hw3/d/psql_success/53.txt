@@ -1,0 +1,4 @@
+WITH Temp1 AS (SELECT name FROM beer),
+Temp2 AS (SELECT AVG(price), beer FROM serves GROUP BY beer),
+Temp3 AS (SELECT COUNT(DISTINCT drinker), Temp1.name FROM likes RIGHT OUTER JOIN Temp1 ON likes.beer = Temp1.name GROUP BY Temp1.name)
+SELECT name,count, avg FROM Temp3 FULL OUTER JOIN Temp2 ON Temp3.name = Temp2.beer ORDER BY count desc, name asc

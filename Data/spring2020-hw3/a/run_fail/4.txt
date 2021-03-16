@@ -1,0 +1,1 @@
+With dan as (select beer from likes where drinker = 'Dan'), b as (select serves.beer, bar, price from dan INNER JOIN serves on dan.beer = serves.beer) select beer, bar from b WHERE price >= ALL (select price from serves WHERE b.beer = serves.beer);

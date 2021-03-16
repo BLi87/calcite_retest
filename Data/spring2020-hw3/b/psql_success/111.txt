@@ -1,0 +1,1 @@
+select a.name, b.name from drinker a, drinker b where NOT EXISTS ((select c.beer from likes c where a.name = c.drinker) EXCEPT (select l.beer from likes l where l.drinker = b.name)) and a.name <> b.name;

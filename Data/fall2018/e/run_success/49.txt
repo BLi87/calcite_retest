@@ -1,0 +1,5 @@
+SELECT DISTINCT bar FROM Frequents WHERE (drinker = 'Dan' OR drinker = 'Ben')
+EXCEPT
+(SELECT DISTINCT bar FROM Frequents WHERE (drinker = 'Dan')
+INTERSECT
+SELECT DISTINCT bar FROM Frequents WHERE (drinker = 'Ben'));

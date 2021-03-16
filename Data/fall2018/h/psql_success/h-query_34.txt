@@ -1,0 +1,15 @@
+SELECT DISTINCT name
+FROM drinker
+
+EXCEPT
+
+SELECT DISTINCT s.drinker
+FROM 
+	((SELECT DISTINCT f.drinker, f.bar
+	FROM frequents AS f)
+
+	EXCEPT
+
+	(SELECT DISTINCT likes.drinker, frequents.bar
+	FROM (likes NATURAL JOIN frequents NATURAL JOIN serves))) AS s
+;

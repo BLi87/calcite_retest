@@ -1,0 +1,8 @@
+WITH maxPrice AS
+(SELECT beer, MAX(price)
+FROM serves
+GROUP BY beer)
+
+SELECT L.beer, S.bar
+FROM serves S, maxPrice M, likes L
+WHERE L.drinker = 'Dan' AND L.beer = S.beer AND S.price = M.max AND L.beer = M.beer

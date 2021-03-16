@@ -1,0 +1,5 @@
+--- Find the names of bars frequented by either Ben or Dan, but not both.
+
+select distinct bar
+from Frequents where (drinker = 'Ben' or drinker = 'Dan') and bar not in (select f1.bar from Frequents as f1, Frequents as f2
+where ((f1.bar  = f2.bar) and (f1.drinker = 'Ben' and f2.drinker = 'Dan')));

@@ -1,0 +1,11 @@
+(SELECT name 
+	FROM drinker)
+EXCEPT
+(SELECT relation.drinker 
+	FROM 
+	((SELECT bar, beer, drinker 
+		FROM serves NATURAL JOIN frequents)
+EXCEPT 
+	(SELECT bar,beer,drinker 
+		FROM serves NATURAL JOIN likes)) 
+AS relation);

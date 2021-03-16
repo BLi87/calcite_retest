@@ -1,0 +1,1 @@
+Select bar from beer, serves where brewer = 'Grupo Modelo' and name = beer

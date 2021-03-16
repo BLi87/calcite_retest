@@ -1,0 +1,6 @@
+WITH e1(drinker,bar) as (select distinct drinker,bar from 
+likes,serves where likes.beer=serves.beer),
+e2(drinker) as (select distinct drinker from 
+((select distinct drinker,bar from frequents) except 
+(select * from e1))as f)
+select distinct name from drinker except select * from e2;

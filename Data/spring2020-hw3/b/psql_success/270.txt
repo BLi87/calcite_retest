@@ -1,0 +1,19 @@
+WITH pairs AS
+(SELECT d1.name D1, d2.name D2
+FROM drinker d1, drinker d2
+WHERE d1.name <> d2.name), 
+Q1 AS
+(SELECT P.d1, P.d2, L.beer
+FROM likes L, pairs P
+WHERE P.d1 = L.drinker),
+Q2 AS
+(SELECT P.d1, P.d2, L.beer
+FROM likes L, pairs P
+WHERE P.d2 = L.drinker),
+diff AS
+(SELECT *
+FROM Q1
+EXCEPT (SELECT * FROM Q2))
+SELECT *
+FROM pairs P
+EXCEPT (SELECT diff.d1, diff.d2 FROM diff)

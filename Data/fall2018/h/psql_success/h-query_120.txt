@@ -1,0 +1,33 @@
+WITH
+tmp0(drinker) AS
+(SELECT name FROM Drinker),
+
+tmp1(bar) AS
+(SELECT name FROM Bar),
+
+tmp2(drinker, bar) AS
+(SELECT drinker, bar FROM (tmp0 CROSS JOIN tmp1)),
+
+tmp3(drinker, bar) AS
+(SELECT drinker, bar FROM (Likes NATURAL JOIN Serves)),
+
+tmp4(drinker, bar) AS
+(SELECT * FROM tmp2 EXCEPT SELECT * FROM tmp3),
+
+tmp5(drinker, bar) AS
+(SELECT drinker, bar FROM tmp4),
+
+tmp6(drinker, bar) AS
+(SELECT drinker, bar FROM Frequents),
+
+tmp6a(drinker, bar) AS
+(SELECT * FROM tmp5 INTERSECT SELECT * FROM tmp6),
+
+tmp7(drinker) AS 
+(SELECT drinker FROM tmp6a),
+
+
+tmp8(drinker) AS
+(SELECT name FROM Drinker)
+
+SELECT * FROM tmp8 EXCEPT SELECT * FROM tmp7;

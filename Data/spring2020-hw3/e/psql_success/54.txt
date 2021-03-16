@@ -1,0 +1,4 @@
+WITH alldrinkernames AS (SELECT name FROM drinker),
+drinkerfreqcounts AS (SELECT drinker, MAX(times_a_week) FROM frequents GROUP BY drinker),
+alldrinkerfreqcounts AS (SELECT A.name, B.max FROM alldrinkernames A LEFT OUTER JOIN drinkerfreqcounts B ON A.name = B.drinker)
+SELECT X.name, Y.bar FROM alldrinkerfreqcounts X LEFT OUTER JOIN frequents Y ON X.name = Y.drinker AND X.max = Y.times_a_week

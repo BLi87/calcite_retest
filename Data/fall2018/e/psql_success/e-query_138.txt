@@ -1,0 +1,1 @@
+select bar from Frequents where drinker = 'Dan' union select bar from Frequents where drinker = 'Ben' except select bar from Frequents where drinker = 'Dan' intersect select bar from Frequents where drinker = 'Ben';

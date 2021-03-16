@@ -1,0 +1,4 @@
+SELECT DISTINCT name, address
+FROM bar
+WHERE name in
+(SELECT bar FROM serves WHERE ((beer = 'Corona') AND (price<= 3.00)));

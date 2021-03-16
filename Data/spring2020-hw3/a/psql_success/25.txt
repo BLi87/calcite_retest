@@ -1,0 +1,1 @@
+select beer,bar from serves where (beer, price) in (select s1.beer, MAX(price) price from serves s1, likes l1 where drinker='Dan' and s1.beer=l1.beer group by s1.beer)

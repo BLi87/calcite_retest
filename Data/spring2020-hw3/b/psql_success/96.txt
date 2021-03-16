@@ -1,0 +1,17 @@
+with dl1 as
+    (select d1.name drinker1, d2.name drinker2, beer
+      from drinker d1, drinker d2, likes
+        where d1.name <> d2.name and d1.name = drinker),
+  dl2 as
+    (select d1.name drinker1, d2.name drinker2, beer
+      from drinker d1, drinker d2, likes
+        where d1.name <> d2.name and d2.name = drinker),
+  sp as
+    (select drinker1, drinker2
+      from ((select * from dl1) except (select * from dl2)) as P),
+  ap as
+    (select d1.name drinker1, d2.name drinker2
+      from drinker d1, drinker d2
+        where d1.name <> d2.name)
+select drinker1, drinker2
+  from ((select * from ap) except (select * from sp)) as T

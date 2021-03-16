@@ -1,0 +1,3 @@
+select w.b2, w.b1 from (select v.b1, beer, v.b2 from ((select bar b2, beer, name b1 from bar, serves) except (select name b1, beer, bar b2 from bar, serves)) v) w
+except
+select m.b1, m.b2 from (select v.b1, beer, v.b2 from ((select bar b2, beer, name b1 from bar, serves) except (select name b1, beer, bar b2 from bar, serves)) v) m;

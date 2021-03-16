@@ -1,0 +1,14 @@
+with dont_like as (
+select f.drinker, s.beer
+  from frequents f, serves s
+  where f.bar = s.bar
+  
+except
+
+select *
+  from likes
+)
+
+select d.name
+  from drinker d
+  where d.name not in (select dont_like.drinker as name from dont_like)

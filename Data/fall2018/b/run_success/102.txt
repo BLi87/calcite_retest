@@ -1,0 +1,5 @@
+select DISTINCT ending.drinker from
+(select frequents.drinker from frequents,
+(select serves.bar from serves where serves.beer = 'Corona')
+as T
+where T.bar =frequents.bar) as ending;

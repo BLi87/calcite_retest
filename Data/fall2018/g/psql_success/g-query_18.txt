@@ -1,0 +1,1 @@
+SELECT bar1, drinker from (SELECT bar AS bar1, MAX(times_a_week) AS times_1 FROM Frequents GROUP BY bar) AS table1 INNER JOIN Frequents ON bar1 = bar AND times_1 = times_a_week;

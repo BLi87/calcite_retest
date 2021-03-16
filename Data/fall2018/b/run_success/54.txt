@@ -1,0 +1,1 @@
+select distinct f.drinker from Frequents f, Serves s where f.bar = s.bar and s.beer = 'Corona';

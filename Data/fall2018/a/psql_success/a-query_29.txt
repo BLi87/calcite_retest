@@ -1,0 +1,1 @@
+select beer from serves where bar like 'James Joyce Pub';

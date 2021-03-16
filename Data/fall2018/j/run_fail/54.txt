@@ -1,0 +1,5 @@
+with s1 as (select bar, beer from serves), bar as (select name from bar),
+
+s2 as (select s1.bar, s1.beer, bar.name from s1, bar except (select bar.name, s1.beer, s1.bar from s1, bar)) 
+
+(select s2.name, s2.bar from s2) except (select s2.bar, s2.name from s2);

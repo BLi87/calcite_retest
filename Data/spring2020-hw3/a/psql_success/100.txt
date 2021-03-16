@@ -1,0 +1,7 @@
+WITH maxs AS (SELECT beer, max(price) as price
+  FROM serves as s1
+  GROUP BY beer),
+  danbeers AS (SELECT beer FROM likes WHERE drinker = 'Dan')
+SELECT serves.beer, serves.bar
+FROM serves, maxs, danbeers
+WHERE serves.beer = maxs.beer and serves.price = maxs.price and serves.beer IN(danbeers.beer);

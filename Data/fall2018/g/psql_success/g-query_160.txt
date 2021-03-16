@@ -1,0 +1,6 @@
+select f1.bar, f1.drinker
+from frequents f1, (select bar, Max(times_a_week)
+			from frequents f2
+			group by bar) as y
+where f1.bar = y.bar
+and f1.times_a_week = y.max;

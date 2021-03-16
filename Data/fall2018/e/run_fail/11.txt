@@ -1,0 +1,8 @@
+SELECT bar 
+FROM frequents
+WHERE((drinker = 'Ben' OR drinker = 'Dan')
+AND bar NOT IN
+(SELECT bar from frequents WHERE drinker = 'Ben'
+INTERSECT
+SELECT bar from frequents WHERE drinker = 'Dan'));
+

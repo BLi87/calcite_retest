@@ -1,0 +1,1 @@
+(SELECT beer, bar FROM Serves) EXCEPT (SELECT beer, bar FROM Serves, (SELECT Serves.beer AS beer1, Serves.bar AS bar1 FROM Serves) AS Sec WHERE Serves.beer = Sec.beer1 AND Serves.bar <> Sec.bar1);

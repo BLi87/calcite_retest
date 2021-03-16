@@ -1,0 +1,21 @@
+WITH TMP1(bar, amount) AS (
+	SELECT DISTINCT frequents.bar, 
+			SUM(serves.price*frequents.times_a_week) AS amount
+	FROM serves, likes, frequents
+	WHERE serves.beer = likes.beer AND 
+			likes.drinker = frequents.drinker AND
+			frequents.bar = serves.bar
+	GROUP BY frequents.bar
+	)
+	SELECT DISTINCT bar, amount 
+	FROM TMP1
+	UNION
+	(SELECT DISTINCT bar.name, 0 AS amount
+	FROM bar
+	WHERE NOT EXISTS(
+	SELECT DISTINCT bar, amount
+	FROM TMP1))
+	
+	ORDER BY amount DESC, bar ASC;
+
+

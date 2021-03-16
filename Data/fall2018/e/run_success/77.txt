@@ -1,0 +1,15 @@
+-- Find the names of bars frequented by either Ben or Dan,
+-- but not both.
+
+(SELECT bar
+FROM frequents
+WHERE drinker = 'Ben' OR drinker = 'Dan')
+EXCEPT
+(SELECT bar
+FROM frequents
+WHERE drinker = 'Ben'
+INTERSECT
+SELECT bar  
+FROM frequents
+WHERE drinker = 'Dan')
+;

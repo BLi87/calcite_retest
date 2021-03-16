@@ -1,0 +1,17 @@
+WITH entry AS (
+  SELECT f.bar, f.drinker, f.times_a_week, s.beer, s.price
+  FROM frequents f, likes l, serves s
+  WHERE f.drinker = l.drinker AND f.bar = s.bar AND s.beer = l.beer
+)
+
+(SELECT bar, sum(times_a_week * price)
+ FROM entry
+ GROUP BY bar)
+UNION
+(SELECT name, 0
+ FROM (
+   (SELECT name FROM bar)
+   EXCEPT
+   (SELECT bar FROM entry)
+ ) nosale)
+ORDER BY sum DESC, bar;

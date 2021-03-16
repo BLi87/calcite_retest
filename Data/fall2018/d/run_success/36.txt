@@ -1,0 +1,1 @@
+select distinct drinker from frequents where drinker in (select drinker from frequents where bar = 'James Joyce Pub') and drinker in (select drinker from frequents where bar = 'Satisfaction');

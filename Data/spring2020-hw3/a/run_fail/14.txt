@@ -1,0 +1,9 @@
+with beerprice as
+(select s.beer as beer , max(s.price) as price
+from serves s
+where s.beer in (select l.beer from likes l where l.drinker = 'Dan')
+group by s.beer)
+
+select x.beer, x.bar
+from beerprice f, serves x
+where f.beer = x. beer and f.price = x.price

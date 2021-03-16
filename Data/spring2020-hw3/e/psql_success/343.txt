@@ -1,0 +1,6 @@
+SELECT name, bar
+FROM (SELECT name, MAX(times_a_week)
+FROM drinker LEFT OUTER JOIN frequents ON drinker.name = frequents.drinker
+GROUP BY name) as A LEFT JOIN
+frequents ON A.name=frequents.drinker
+WHERE A.max=frequents.times_a_week OR frequents.bar IS NULL;

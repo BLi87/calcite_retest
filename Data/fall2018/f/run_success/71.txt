@@ -1,0 +1,6 @@
+(SELECT beer, bar FROM serves)
+
+EXCEPT ALL
+
+(SELECT s1.beer, s2.bar FROM serves as s1 CROSS JOIN serves as s2 WHERE s1.beer = s2.beer AND s1.bar <> s2.bar);
+

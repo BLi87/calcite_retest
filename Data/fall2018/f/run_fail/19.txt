@@ -1,0 +1,12 @@
+select distinct beer, bar
+from serves
+where beer
+in
+(select name
+from Beer
+except
+select distinct s1.beer
+from serves s1
+full join serves s2
+on s1.beer=s2.beer
+where not s1.bar=s2.bar);

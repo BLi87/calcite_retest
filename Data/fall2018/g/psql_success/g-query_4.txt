@@ -1,0 +1,2 @@
+(SELECT Frequents.bar, Frequents.drinker FROM Frequents) EXCEPT (
+  SELECT f2.bar, f2.drinker FROM (Frequents f1 JOIN Frequents f2 ON f2.bar = f1.bar AND f2.times_a_week < f1.times_a_week));

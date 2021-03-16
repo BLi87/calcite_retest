@@ -1,0 +1,3 @@
+Select Distinct l1.drinker,  l2.drinker, l1.beer
+  From likes l1, likes l2
+  Where l1.beer=l2.beer and l1.drinker!=l2.drinker and l2.drinker>=l1.drinker

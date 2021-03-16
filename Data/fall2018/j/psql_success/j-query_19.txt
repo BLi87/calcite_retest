@@ -1,0 +1,13 @@
+(select b.name as subBar, ss.bar as largeBar from Bar b, Serves ss where b.name not in (select bar from Serves))
+
+union
+
+(select distinct subBar,largeBar from (select distinct s1.bar as largeBar, s2.bar as subBar from Serves s1, Serves s2 where s1.bar<>s2.bar and s1.beer not in (select s.beer from Serves s where s.bar=s2.bar)) thirdComp except (
+
+select distinct secComp.subBar, secComp.largeBar from 
+
+(select distinct s1.bar as largeBar, s2.bar as subBar from Serves s1, Serves s2 where s1.bar<>s2.bar and s1.beer not in (select s.beer from Serves s where s.bar=s2.bar))firstComp, 
+
+(select distinct s1.bar as largeBar, s2.bar as subBar from Serves s1, Serves s2 where s1.bar<>s2.bar and s1.beer not in (select s.beer from Serves s where s.bar=s2.bar))secComp 
+
+where firstComp.largeBar=secComp.subBar and firstComp.subBar=secComp.largeBar) order by subBar);

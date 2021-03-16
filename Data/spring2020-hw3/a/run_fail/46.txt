@@ -1,0 +1,11 @@
+WITH beers AS (SELECT beer
+			   FROM likes
+			   WHERE drinker = 'Dan'),
+     options AS (Select s.beer, s.bar, s.price
+	 			 FROM serves s, beers b
+	 			 WHERE s.beer = b.beer)
+SELECT o1.beer, o1.bar
+FROM options o1
+WHERE price = (SELECT MAX(o2.price)
+	 		   FROM options o2
+	           where o1.beer = o2.beer);

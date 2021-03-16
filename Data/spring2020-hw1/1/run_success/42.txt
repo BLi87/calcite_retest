@@ -1,0 +1,4 @@
+SELECT B.name as bar
+FROM bar B, serves S
+WHERE B.name = S.bar
+AND S.beer = 'Corona'

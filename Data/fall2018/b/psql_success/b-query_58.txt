@@ -1,0 +1,1 @@
+SELECT DISTINCT drinker FROM (SELECT * FROM (frequents LEFT JOIN serves ON frequents.bar = serves.bar) WHERE beer = 'Corona') AS servces;

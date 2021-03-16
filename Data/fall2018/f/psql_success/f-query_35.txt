@@ -1,0 +1,6 @@
+select beer,bar 
+from serves 
+where beer in 
+		(select beer 
+		 from (select count(bar),beer from serves group by beer) T 
+		 where count=1);

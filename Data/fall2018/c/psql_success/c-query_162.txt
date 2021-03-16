@@ -1,0 +1,4 @@
+SELECT name, address FROM Bar
+LEFT JOIN Serves
+ON Serves.bar = Bar.name
+WHERE Serves.beer = 'Corona' and price <= 3;

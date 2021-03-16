@@ -1,0 +1,1 @@
+SELECT beer, bar FROM serves AS s WHERE beer != ALL (SELECT beer FROM serves WHERE s.bar != bar);

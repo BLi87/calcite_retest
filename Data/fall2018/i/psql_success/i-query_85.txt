@@ -1,0 +1,2 @@
+with temp1(drinker, beer) as ((select drinker, beer from (frequents natural join serves)) except (select drinker, beer from likes))
+((select name from drinker) except (select drinker from temp1));

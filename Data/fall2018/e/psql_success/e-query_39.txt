@@ -1,0 +1,4 @@
+SELECT bar FROM frequents AS f1
+WHERE drinker = 'Ben' or drinker = 'Dan'
+EXCEPT (SELECT bar FROM frequents AS f1
+WHERE drinker = 'Ben' AND EXISTS (SELECT drinker FROM frequents WHERE drinker = 'Dan' AND bar = f1.bar));;

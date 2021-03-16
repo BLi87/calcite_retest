@@ -1,0 +1,7 @@
+WITH pairs AS 
+(SELECT d1.name drinker1, d2.name drinker2 FROM drinker d1, drinker d2 WHERE d1.name <> d2.name)
+SELECT DISTINCT drinker1, drinker2 FROM pairs
+WHERE NOT EXISTS
+(SELECT * FROM likes loop2 WHERE drinker = pairs.drinker1
+AND NOT EXISTS 
+(SELECT * FROM likes loop3 WHERE drinker = pairs.drinker2 AND beer = loop2.beer))

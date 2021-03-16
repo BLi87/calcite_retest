@@ -1,0 +1,13 @@
+(select bar1.name, bar2.name
+from bar as bar1, bar as bar2
+where bar1.name <> bar2.name)
+except
+(select alias.bar1, alias.bar2
+	from (
+	(select serves1.bar as bar1, serves2.bar as bar2, serves1.beer
+	from serves as serves1, serves as serves2
+	where serves1.bar <> serves2.bar)
+	except 
+	(select serves1.bar as bar1, serves2.bar as bar1, serves2.beer
+	from serves as serves1, serves as serves2
+	where serves1.bar <> serves2.bar))alias);

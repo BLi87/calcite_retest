@@ -1,0 +1,8 @@
+SELECT DISTINCT
+drinker
+FROM
+(SELECT drinker, bar FROM Frequents) t1
+INNER JOIN 
+(SELECT bar FROM serves WHERE beer= 'Corona') t2
+ON
+t1.bar = t2.bar;

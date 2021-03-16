@@ -1,0 +1,36 @@
+With PeopleLikesBeer(drinker, name) as(
+Select
+          L1.drinker,
+          name
+        From
+          likes as L1
+          RIGHT JOIN beer as b1 ON b1.name = L1.beer
+)
+
+Select
+  counter.name,
+  counter.count,
+  avg(price)
+From
+  (
+    select
+      name,
+      count(drinker)
+    From
+      (
+        Select
+          Drinker,
+          name
+        From
+          PeopleLikesBeer
+      ) as addi
+    Group by
+      name
+  ) as counter
+  Left join serves ON serves.beer = counter.name
+Group by
+  counter.count,
+  counter.name
+Order by
+  counter.count DESC,
+  counter.name

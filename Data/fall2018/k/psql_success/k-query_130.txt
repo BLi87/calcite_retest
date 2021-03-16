@@ -1,0 +1,37 @@
+-- Suppose that each time a drinker visits a bar (according to the frequency in Frequents), he or she
+-- always buys one glass of each beer served at this bar that he or she likes; if no such beer exists, he or
+-- she will not buy anything. Calculate, for each bar, the total amount of money it expects to get per
+-- week (over all drinkers in our database). List the (bar, amount) pairs in decreasing order of amount.
+-- Be sure to handle the case when a bar doesn’t expect to sell any beer to our drinkers—you need to
+-- show an amount of 0.
+
+-- select frequents.bar,
+--           CASE WHEN frequents.bar is not null THEN sum(price * times_a_week)
+--               ELSE 0
+--           END as amount
+-- from frequents
+-- join serves on frequents.bar = serves.bar
+-- join likes on frequents.drinker = likes.drinker and serves.beer = likes.beer
+-- join beer on serves.beer = beer.name
+-- right join bar on frequents.bar=bar.name
+-- group by frequents.bar
+-- order by amount desc;
+--
+-- -------
+((select frequents.bar, sum(price * times_a_week) as amount
+from frequents
+join serves on frequents.bar = serves.bar
+join likes on frequents.drinker = likes.drinker and serves.beer = likes.beer
+join beer on serves.beer = beer.name
+group by frequents.bar)
+union
+(select distinct bar, 0 as amount
+from
+  ((select distinct name as bar from bar)
+  except
+  (select distinct frequents.bar
+  from frequents
+  join serves on frequents.bar = serves.bar
+  join likes on frequents.drinker = likes.drinker and serves.beer = likes.beer
+  join beer on serves.beer = beer.name)) as tb2)
+order by amount desc, bar asc);

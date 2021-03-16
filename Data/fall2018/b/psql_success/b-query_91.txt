@@ -1,0 +1,4 @@
+SELECT DISTINCT Frequents.drinker FROM Frequents INNER JOIN Serves ON Frequents.bar = Serves.bar WHERE beer = 'Corona';
+
+
+/*SELECT bar FROM Serves WHERE beer = 'Corona';*/

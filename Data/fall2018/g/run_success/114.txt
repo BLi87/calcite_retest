@@ -1,0 +1,1 @@
+(SELECT bar, drinker FROM frequents) EXCEPT ALL(SELECT bar, drinker FROM (SELECT* FROM frequents f1 INNER JOIN (SELECT bar AS brr, MAX(times_a_week) times_a_week FROM Frequents GROUP BY bar) f2 ON f1.bar = f2.brr AND f1.times_a_week < f2.times_a_week)t2);

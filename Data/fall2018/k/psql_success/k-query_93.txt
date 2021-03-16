@@ -1,0 +1,29 @@
+/*drinkers frequent bars that serve certain beers*/
+with frequents_serves(bar, drinker, times_a_week, beer, price) as
+(select *
+from frequents natural join serves),
+
+weekly_income(bar, amount) as
+(select bar, sum(times_a_week*price) as amount
+from frequents_serves
+
+/*keep tuples where drinker frequents bar with drinker's liked drink*/
+where beer in (
+select beer
+from likes
+where likes.drinker=frequents_serves.drinker
+)
+
+group by bar 
+)
+
+select name as bar,
+case when name not in (select bar from weekly_income) then 0
+else (
+select amount
+from weekly_income
+where bar=name)
+end
+
+from bar
+order by amount DESC, name;

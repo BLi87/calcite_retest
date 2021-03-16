@@ -1,0 +1,12 @@
+SELECT Frequents.bar
+FROM
+Frequents
+WHERE
+(Frequents.drinker = 'Dan' OR Frequents.drinker = 'Ben')
+EXCEPT
+SELECT Frequents.bar
+FROM Frequents
+JOIN
+Frequents as freq2 ON Frequents.bar = freq2.bar
+WHERE
+(freq2.drinker = 'Dan' AND Frequents.drinker = 'Ben');

@@ -1,0 +1,1 @@
+SELECT DISTINCT frequents.drinker FROM frequents JOIN serves ON frequents.bar = serves.bar AND serves.beer = 'Corona';

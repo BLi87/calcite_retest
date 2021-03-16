@@ -1,0 +1,8 @@
+select serves0.bar, serves1.bar
+from serves as serves0, serves as serves1
+where serves0.bar<>serves1.bar except
+select bar0, bar1 from
+(select serves0.bar as bar0, serves1.bar as bar1, serves0.beer as beer0
+from serves as serves0, serves as serves1 except
+select serves0.bar as bar0, serves1.bar as bar1, serves1.beer as beer1
+from serves as serves0, serves as serves1) as RES;

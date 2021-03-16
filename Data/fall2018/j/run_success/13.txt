@@ -1,0 +1,9 @@
+(select name, bar from
+((select bar, beer, name from serves, bar)
+except
+(select name, beer, bar from serves, bar)) T1)
+except
+(select bar, name from
+((select bar, beer, name from serves, bar)
+except
+(select name, beer, bar from serves, bar)) T2);

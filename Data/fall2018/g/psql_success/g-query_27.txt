@@ -1,0 +1,16 @@
+(SELECT bar, drinker
+FROM frequents
+)
+EXCEPT 
+(SELECT f1.bar, f1.drinker
+FROM frequents AS f1
+CROSS JOIN
+frequents AS f2
+WHERE f1.bar = f2.bar AND f1.times_a_week < f2.times_a_week
+GROUP BY f1.bar, f1.drinker);
+ 
+
+
+--Find all (beer, bar) pairs where beer is served exclusively at bar; no other bar serves the same beer.
+--beer, bar pairs where beer is not served exclusively at bar 
+--beer, bar 

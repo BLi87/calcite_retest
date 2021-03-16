@@ -1,0 +1,33 @@
+SELECT * FROM
+
+(
+(SELECT f1.bar, SUM(f1.price * f1.times_a_week) AS amount FROM
+(SELECT frequents.bar, frequents.drinker, serves.beer, serves.price, frequents.times_a_week
+FROM serves JOIN frequents 
+ON serves.bar = frequents.bar) AS f1, likes
+WHERE f1.drinker = likes.drinker AND f1.beer = likes.beer
+GROUP BY f1.bar) -- up to here returns all the bars and prices ecept those that don't expect to sell beer (0 dollars)
+
+UNION
+
+(SELECT DISTINCT n2, f4.money FROM
+	(SELECT name AS n2 FROM BAR
+		EXCEPT
+		SELECT f1.bar FROM
+		(SELECT frequents.bar, frequents.drinker, serves.beer, serves.price, frequents.times_a_week
+		FROM serves
+		JOIN frequents 
+		ON serves.bar = frequents.bar) AS f1, likes
+		WHERE f1.drinker = likes.drinker AND f1.beer = likes.beer
+		GROUP BY f1.bar
+	) AS f3
+
+	LEFT OUTER JOIN --get in the bars doesn’t expect to sell any beer to our drinkers
+
+	(SELECT DISTINCT frequents.bar AS f2, (frequents.times_a_week * 0) AS money
+	FROM frequents LEFT OUTER JOIN serves
+	ON serves.bar = frequents.bar) As f4
+ON n2=f4.f2)) AS f6
+WHERE bar IS NOT NULL AND amount IS NOT NULL
+ORDER BY amount DESC, trim(bar) ASC;
+

@@ -1,0 +1,9 @@
+With bars as( 
+	SELECT bar,MAX(times_a_week) 
+	FROM Frequents 
+	GROUP BY bar
+)
+SELECT DISTINCT Frequents.bar, Frequents.drinker
+FROM bars 
+Join Frequents
+on Frequents.times_a_week = bars.max and Frequents.bar = bars.bar;

@@ -1,0 +1,26 @@
+--Find all bar1 bar2 pairs where bar2 serves something bar1 doesn't
+--This doesn't include bar1 bar2 pairs where bar1 serves nothing
+((SELECT DISTINCT S1.bar, S2.bar
+FROM Serves AS S1, Serves AS S2
+WHERE S1.bar!=S2.bar
+AND S2.beer NOT IN (SELECT beer
+					FROM Serves
+					WHERE S1.bar=bar))
+--Remove bar1 bar2 pairs where bar1 serves something bar2 doesn't
+EXCEPT
+(SELECT DISTINCT S1.bar, S2.bar
+FROM Serves AS S1, Serves AS S2
+WHERE S1.bar!=S2.bar
+AND S1.beer NOT IN (SELECT beer
+					FROM Serves
+					WHERE S2.bar=bar)))
+--Add bar1 bar2 pairs where bar1 serves nothing but bar2 serves something
+UNION
+(SELECT DISTINCT name, bar
+FROM Bar, Serves
+WHERE name NOT IN (SELECT bar
+					FROM Serves)
+AND bar IN (SELECT bar
+			FROM Serves));
+
+

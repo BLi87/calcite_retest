@@ -1,0 +1,2 @@
+select price.beer, price.bar from (select * from serves except 
+select T0.bar, T0.beer, T0.price from (select * from serves) as T0,(select * from serves) as T1 where T0.beer = T1.beer and T0.bar!=T1.bar) as price;

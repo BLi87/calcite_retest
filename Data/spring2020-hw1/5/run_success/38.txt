@@ -1,0 +1,3 @@
+SELECT DISTINCT f.drinker AS "name", f.bar AS "bar", address AS "address"
+FROM frequents as f, bar as b
+WHERE f.times_a_week < 2 AND f.bar = b.name

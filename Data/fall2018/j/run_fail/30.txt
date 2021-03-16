@@ -1,0 +1,9 @@
+WITH TMP1(A, B, C) AS
+(SELECT s1.bar bar1, s2.bar bar2, s2.beer beer
+FROM serves s1, serves s2
+EXCEPT
+SELECT s1.bar bar1, s2.bar bar2, s1.beer beer
+FROM serves s1, serves s2)
+SELECT A,B FROM TMP1
+EXCEPT
+SELECT B,A FROM TMP1;

@@ -1,0 +1,1 @@
+select beer, bar from serves s where beer not in (select beer from serves where bar <> s.bar);

@@ -1,0 +1,5 @@
+with allPairs as (select one.name drinker1, two.name drinker2 from drinker one, drinker two where one.name <> two.name), 
+firstD as (select allPairs.drinker1, allPairs.drinker2, l.beer from allPairs, likes l where allPairs.drinker1 = l.drinker),
+secondD as (select allPairs.drinker1, allPairs.drinker2, l.beer from likes l, allPairs where allPairs.drinker2 = l.drinker),
+exceptions as (select * from firstD except (select * from secondD))
+select * from allPairs except (select exceptions.drinker1, exceptions.drinker2 from exceptions)

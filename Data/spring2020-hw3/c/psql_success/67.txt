@@ -1,0 +1,27 @@
+WITH drinkerBar AS (
+    SELECT f.drinker, f.bar, s.beer
+    FROM frequents AS f, serves AS s 
+    WHERE f.bar = s.bar
+),
+
+drinkerLike AS (
+    SELECT l.drinker, s.bar, s.beer 
+    FROM likes AS l, serves AS s 
+    WHERE l.beer = s.beer
+),
+
+barDislike AS ( 
+    SELECT * 
+    FROM drinkerBar 
+    EXCEPT (
+        SELECT * 
+        FROM drinkerLike
+    )
+)
+
+SELECT d.name 
+FROM drinker AS d 
+EXCEPT (
+    SELECT barDislike.drinker 
+    FROM barDislike
+)

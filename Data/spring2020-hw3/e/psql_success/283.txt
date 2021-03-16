@@ -1,0 +1,4 @@
+select D.name, F.bar
+from drinker D
+left join frequents F on D.name = F.drinker
+where F.times_a_week >= all(select times_a_week from frequents where drinker = D.name)

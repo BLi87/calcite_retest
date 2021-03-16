@@ -1,0 +1,19 @@
+with bars_frequented_Ben(bar) as
+(select bar
+from frequents
+where drinker='Ben'),
+
+bars_frequented_Dan(bar) as
+(select bar
+from frequents
+where drinker='Dan')
+
+((select * from bars_frequented_Ben)
+union
+(select * from bars_frequented_Dan))
+
+except
+
+((select * from bars_frequented_Ben)
+intersect
+(select * from bars_frequented_Dan));

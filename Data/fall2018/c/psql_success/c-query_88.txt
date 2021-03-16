@@ -1,0 +1,5 @@
+select distinct name, address
+from bar
+full join serves
+on bar.name=serves.bar
+where serves.beer = 'Corona' and serves.price<=3;

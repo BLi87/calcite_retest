@@ -1,0 +1,8 @@
+select t.bar, money from
+((select frequents.bar, sum(frequents.times_a_week * serves.price) as money from frequents join serves
+ on frequents.bar = serves.bar join likes on (likes.beer = serves.beer and likes.drinker = frequents.drinker
+) group by frequents.bar)
+union
+(select x.name, 0 as money from (select bar.name from bar except (select distinct frequents.bar from frequents join serves
+ on frequents.bar = serves.bar join likes on likes.beer = serves.beer and likes.drinker = frequents.drinker))x)) t
+ order by money desc, t.bar;

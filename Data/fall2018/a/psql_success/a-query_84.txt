@@ -1,0 +1,5 @@
+/* Find the names of beers that James Joyce Pub serves. */
+
+SELECT beer
+FROM serves
+WHERE bar = 'James Joyce Pub';

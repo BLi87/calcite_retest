@@ -1,0 +1,10 @@
+select beer, bar from serves 
+except (
+
+	select distinct s1.beer, s1.bar from (
+	(select beer, bar from serves) as s1 
+	join 
+	(select beer, bar from serves) as s2 
+	on s1.beer = s2.beer and s1.bar <> s2.bar)
+
+	);

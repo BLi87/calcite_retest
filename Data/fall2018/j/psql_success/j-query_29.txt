@@ -1,0 +1,8 @@
+select name, bar from Serves cross join Bar where name != bar
+EXCEPT
+(select sub.bar, sub.name 
+FROM 
+((select bar, name, beer from Serves CROSS JOIN Bar where name != bar) 
+EXCEPT 
+(select name, bar, beer from Serves CROSS JOIN Bar where name != bar)) 
+as sub);

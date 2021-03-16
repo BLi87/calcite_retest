@@ -1,0 +1,6 @@
+WITH DBP AS 
+(SELECT beer, MAX(price) price FROM serves
+WHERE beer IN (SELECT beer FROM likes WHERE drinker = 'Dan')  
+GROUP BY beer)
+SELECT serves.beer, serves.bar FROM DBP, serves
+WHERE serves.beer = DBP.beer AND serves.price = DBP.price

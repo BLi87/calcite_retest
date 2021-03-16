@@ -1,0 +1,7 @@
+WITH freqA AS
+(SELECT drinker as name, max(times_a_week)
+FROM frequents f RIGHT OUTER JOIN drinker d on f.drinker = d.name
+GROUP BY drinker)
+SELECT drinker as name, f.bar as bar
+FROM freqA a, frequents f
+WHERE  a.name = f.drinker AND a.max = f.times_a_week

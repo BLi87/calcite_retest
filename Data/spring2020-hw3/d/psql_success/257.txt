@@ -1,0 +1,14 @@
+SELECT c.beer AS beer, cnt, avg
+FROM
+(SELECT name AS beer, COUNT(drinker) AS cnt
+FROM beer
+FULL OUTER JOIN likes
+ON name = beer
+GROUP BY name) AS c,
+(SELECT name AS beer, AVG(price) AS avg
+FROM beer
+FULL OUTER JOIN serves
+ON name = beer
+GROUP BY name) AS a
+WHERE c.beer = a.beer
+ORDER BY cnt DESC, beer;

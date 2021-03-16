@@ -1,0 +1,1 @@
+select distinct f.drinker from Frequents f where f.bar in (select s.bar from Serves s where s.beer='Corona');

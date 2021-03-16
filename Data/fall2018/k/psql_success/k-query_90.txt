@@ -1,0 +1,8 @@
+select bar.name, coalesce(sum(foo.times_a_week * foo.price),0) 
+as amount from bar left join (select serves.bar, frequents.times_a_week, serves.price from serves, likes, frequents
+where likes.drinker = frequents.drinker
+and serves.beer = likes.beer
+and serves.bar = frequents.bar) as foo
+on bar.name = foo.bar
+group by bar.name
+ORDER BY amount DESC, bar.name ASC;

@@ -1,0 +1,19 @@
+with allPairs as 
+(select d1.name d, d2.name dd
+from drinker d1, drinker d2
+where d1.name != d2.name),
+
+d1Likes as
+(select allPairs.d, allPairs.dd, likes.beer
+from allPairs, likes
+where allPairs.d = likes.drinker),
+
+d2likes as 
+(select allpairs.d, allpairs.dd, likes.beer
+from allpairs, likes
+where allpairs.dd = likes.drinker)
+
+select allpairs.d, allpairs.dd
+from allpairs except 
+select unwanted.d, unwanted.dd 
+from (select * from d1likes except select * from d2likes) unwanted;

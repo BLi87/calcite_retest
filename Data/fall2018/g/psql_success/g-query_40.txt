@@ -1,0 +1,1 @@
+select bar, drinker from (select bar, drinker, rank() over (partition by bar order by times_a_week DESC) as r from frequents) as f where r = 1;

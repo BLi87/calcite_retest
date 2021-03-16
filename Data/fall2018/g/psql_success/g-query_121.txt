@@ -1,0 +1,6 @@
+select bar, drinker
+from Frequents f
+where not exists 
+(select bar, drinker from Frequents
+where times_a_week > f.times_a_week
+and bar = f.bar);

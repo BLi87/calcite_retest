@@ -1,0 +1,15 @@
+(SELECT beer, bar FROM serves)
+EXCEPT
+(SELECT beer1 AS beer, bar1 AS bar FROM (SELECT a.beer AS beer1, a.bar AS bar1 FROM serves AS a) AS a, (SELECT b.beer AS beer2, b.bar AS bar2 FROM serves AS b) AS b WHERE a.bar1<>b.bar2 AND a.beer1=b.beer2);
+
+/*
+
+First set of {beer, bar} pairs called 'a':
+(SELECT a.beer AS beer1, a.bar AS bar1 FROM serves AS a)
+
+Second set of {beer, bar} pairs called 'b':
+(SELECT b.beer AS beer2, b.bar AS bar2 FROM serves AS b)
+
+{beer, bar} where the bars are different but the drinks served are also served at another bar
+(SELECT beer1 AS beer, bar1 AS bar FROM (SELECT a.beer AS beer1, a.bar AS bar1 FROM serves AS a) AS a, (SELECT b.beer AS beer2, b.bar AS bar2 FROM serves AS b) AS b WHERE a.bar1<>b.bar2 AND a.beer1=b.beer2)
+*/

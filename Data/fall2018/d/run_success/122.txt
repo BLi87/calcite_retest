@@ -1,0 +1,1 @@
+SELECT DISTINCT drinker FROM Frequents WHERE drinker IN (SELECT drinker FROM Frequents WHERE bar='James Joyce Pub') AND drinker IN (SELECT drinker FROM Frequents WHERE bar='Satisfaction');

@@ -1,0 +1,13 @@
+SELECT bar,drinker
+FROM
+Frequents
+EXCEPT
+(
+  SELECT Frequents.bar,Frequents.drinker
+  FROM
+  Frequents
+  JOIN
+  Frequents as f1 ON Frequents.bar = f1.Bar
+  WHERE
+  (Frequents.times_a_week < f1.times_a_week)
+);

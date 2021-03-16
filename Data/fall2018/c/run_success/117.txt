@@ -1,0 +1,4 @@
+SELECT DISTINCT bar, address 
+FROM bar NATURAL JOIN serves 
+WHERE (beer = 'Corona') AND (price <= 3) AND (bar.name = serves.bar)
+;

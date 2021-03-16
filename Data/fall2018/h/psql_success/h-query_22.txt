@@ -1,0 +1,12 @@
+SELECT name from drinker
+EXCEPT
+SELECT DISTINCT drinker from
+(SELECT DISTINCT drinker, bar FROM frequents
+EXCEPT
+SELECT DISTINCT drinker, fbar
+	FROM ((SELECT f.drinker, bar as fBar, beer as lBeer
+				FROM frequents as f FULL OUTER JOIN likes as l
+					ON f.drinker = l.drinker) as fAndL
+			FULL OUTER JOIN serves as s
+			ON fAndL.fbar = s.bar)
+	WHERE lbeer = s.beer) as temp

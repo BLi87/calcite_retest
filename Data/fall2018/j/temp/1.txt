@@ -1,0 +1,11 @@
+
+(\project_{bar2,bar1} (\rename_{diffed:bar1,beer,bar2}((\project_{bar,beer} serves) \cross (\project_{name} bar)) \diff (\project_{bar2,beer,bar1} (\rename_{copy: bar1,beer,bar2}((\project_{bar,beer} serves) \cross (\project_{name} beer)))))) \diff (\project_{bar1,bar2} (\rename_{somanybars:bar1,beer,bar2,bar11,beerr,bar22}((\project_{bar2,beer,bar1}(\rename_{diffed:bar1,beer,bar2}((\project_{bar,beer} serves) \cross (\project_{name} bar)) \diff (\project_{bar2,beer,bar1} (\rename_{copy: bar1,beer,bar2}((\project_{bar,beer} serves) \cross (\project_{name} beer)))))) \join_{diffed.bar2=diffed2.bar2 and diffed.bar1=diffed2.bar1} (\project_{bar2,beer,bar1}(\rename_{diffed2:bar1,beer,bar2}((\project_{bar,beer} serves) \cross (\project_{name} bar)) \diff (\project_{bar2,beer,bar1} (\rename_{copy: bar1,beer,bar2}((\project_{bar,beer} serves) \cross (\project_{name} beer)))))))));
+
+
+/* 
+To begin solving J, I crossed the bar names and the beers served at certain bars with all the beers included in the beer relation. This represents all possible bar1-bar-beer combinations that could possibly exist to be subsets of one another.
+Next, I made a copy of this table, swapped the locations of bar1 and bar2 in one of the copies, and diff-ed the two. This removed any bars where bar1 and bar2 served the same beer, leaving only bar1-bar combinations that couldn't possibly be subsets.
+Next, I swapped the bar2-bar1 columns back and joined this relation with itself only when both bars are equal. This removed any unintentional duplicates. 
+Finally, I diff-ed the duplicate-free relation from the original relation of all bar1-bar2 combinations, and projected bar2 and bar1 to return the correct order.
+
+*/

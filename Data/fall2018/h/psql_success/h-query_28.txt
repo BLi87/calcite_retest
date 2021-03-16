@@ -1,0 +1,9 @@
+Select Distinct name
+From drinker
+Where name Not In (Select Distinct drinker
+					From ((Select Distinct drinker, bar
+						From frequents)
+						Except All
+						(Select Distinct drinker, bar
+						From (likes NATURAL JOIN serves)))
+						AS f1);

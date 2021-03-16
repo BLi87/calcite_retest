@@ -1,0 +1,11 @@
+SELECT DISTINCT name
+FROM drinker
+EXCEPT (
+SELECT DISTINCT t.drinker
+FROM (SELECT * FROM (SELECT f1.drinker, s1.beer, f1.bar
+FROM frequents AS f1, serves AS s1, likes AS l1
+WHERE f1.drinker = l1.drinker
+AND f1.bar = s1.bar) AS ff1 EXCEPT SELECT * FROM (SELECT drinker, beer, bar
+FROM frequents NATURAL JOIN serves NATURAL JOIN likes) AS ff2
+	) AS t
+);

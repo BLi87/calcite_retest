@@ -1,0 +1,1 @@
+select x.drinker from frequents x where exists (select * from frequents f, serves s, likes l where x.drinker = f.drinker and s.bar=f.bar and s.beer = l.beer and f.drinker = l.drinker);

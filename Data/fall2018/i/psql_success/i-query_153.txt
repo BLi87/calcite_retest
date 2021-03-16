@@ -1,0 +1,17 @@
+SELECT name
+FROM drinker
+
+EXCEPT ALL
+
+(SELECT DISTINCT t.drinker
+FROM (SELECT frequents.drinker, serves.beer
+FROM serves
+FULL OUTER JOIN frequents ON serves.bar = frequents.bar
+
+EXCEPT 
+
+SELECT *
+FROM LIKES) AS t);
+
+
+

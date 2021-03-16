@@ -1,0 +1,1 @@
+SELECT first.drinker FROM (SELECT DISTINCT drinker FROM frequents WHERE bar='James Joyce Pub') AS first, (SELECT DISTINCT drinker FROM frequents WHERE bar='Satisfaction') AS second WHERE first.drinker=second.drinker;

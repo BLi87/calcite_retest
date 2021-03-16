@@ -1,0 +1,17 @@
+
+
+select * from 
+
+((select bar.name, 0 profit from bar where bar.name not in 
+	(select f.bar 
+	from frequents f, likes l, serves s
+	where f.drinker = l.drinker and f.bar = s.bar and l.beer = s.beer
+	group by f.bar))
+
+union
+
+select f.bar, coalesce(sum(f.times_a_week*s.price),0) profit
+from frequents f, likes l, serves s
+where f.drinker = l.drinker and f.bar = s.bar and l.beer = s.beer
+group by f.bar)T
+order by profit desc, name;

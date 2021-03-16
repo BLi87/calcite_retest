@@ -1,0 +1,13 @@
+with temp1 as (SELECT beer.name, COUNT(distinct drinker)
+FROM likes right outer join beer
+on likes.beer=beer.name
+GROUP BY beer.name),
+
+temp2 as (Select beer.name, avg(price)
+From serves right outer join beer
+on serves.beer=beer.name
+Group by beer.name)
+
+select temp1.name, count, avg
+from temp1, temp2
+where temp1.name=temp2.name

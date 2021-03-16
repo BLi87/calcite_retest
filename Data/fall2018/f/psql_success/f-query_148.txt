@@ -1,0 +1,10 @@
+WITH serves1 AS (
+	SELECT *
+	FROM serves)
+SELECT beer, bar
+	FROM serves
+EXCEPT
+SELECT serves.beer, serves.bar
+	FROM serves
+	INNER JOIN serves1 ON serves.beer = serves1.beer
+	WHERE serves.bar <> serves1.bar;

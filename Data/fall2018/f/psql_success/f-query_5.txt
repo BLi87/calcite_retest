@@ -1,0 +1,7 @@
+Select bar, beer
+From serves
+Where beer IN (
+  Select beer
+  From serves
+  GROUP BY beer
+  Having count(beer) = 1);

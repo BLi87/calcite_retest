@@ -1,0 +1,3 @@
+SELECT DISTINCT drinker 
+FROM Frequents, Serves 
+WHERE Frequents.bar = Serves.bar AND beer = 'Corona' ; 

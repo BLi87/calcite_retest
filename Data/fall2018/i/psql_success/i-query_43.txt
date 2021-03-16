@@ -1,0 +1,32 @@
+--
+-- with everyPair(drinker, beer) as
+--   (select d.name as drinker, b.name as beer from drinker as d, beer as b)
+--
+-- (select name as drinker from drinker where name not in
+--   ((select drinker from (select * from ((select * from everyPair) except (select * from likes as baba)) as lala) as hehe
+--   natural join
+--   (select * from serves as b) as de)
+--   intersect
+--   (select drinker, bar from frequents)));
+
+--  --- (i) Find names of all drinkers who frequent only those bars that serve only beers they like.
+--
+--  --- all drinkers - drinkers who go to a bar that serves a beer they dont like
+
+  with everyPair(drinker, beer) as
+  (select d.name as drinker, b.name as beer from drinker as d, beer as b),
+  dislikes(drinker, beer) as (select * from everyPair except (select * from likes))
+  (select name as drinker from drinker) except
+  (select drinker from ((select  drinker, beer from frequents natural join serves) intersect (select * from dislikes)) as l);
+
+
+
+
+--
+--
+-- (select drinker from frequents as f where exists
+--   (select bar, beer from serves as s where f.bar = bar and  s.beer in dislikes));
+--
+
+
+-- drinker frequents

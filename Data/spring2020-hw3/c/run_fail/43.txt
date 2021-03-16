@@ -1,0 +1,10 @@
+SELECT name
+FROM drinker
+WHERE name NOT IN
+(SELECT DISTINCT f.drinker
+FROM frequents f, likes l, serves s
+WHERE f.drinker = l.drinker
+AND f.bar = s.bar
+AND s.beer NOT IN (SELECT DISTINCT likes.beer
+FROM likes
+WHERE likes.drinker = l.drinker));

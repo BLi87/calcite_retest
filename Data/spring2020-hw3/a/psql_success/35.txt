@@ -1,0 +1,4 @@
+WITH maxPrice AS (SELECT beer, max(price) AS price FROM serves GROUP BY beer),
+danBeers AS (SELECT beer FROM likes WHERE drinker='Dan')
+SELECT beer, bar FROM serves NATURAL JOIN maxPrice WHERE beer IN (SELECT * FROM danBeers);
+

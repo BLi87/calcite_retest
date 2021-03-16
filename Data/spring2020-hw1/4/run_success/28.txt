@@ -1,0 +1,3 @@
+SELECT DISTINCT D.name, D.address
+FROM drinker D, frequents F1, frequents F2
+WHERE F1.bar <> F2.bar AND F1.drinker = F2.drinker AND D.name = F1.drinker

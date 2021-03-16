@@ -1,0 +1,105 @@
+SELECT
+  DISTINCT temp5.bar1, temp5.bar2
+FROM
+(
+  (
+    (
+      SELECT
+        temp1.bar1, temp1.bar2, temp1.beer
+      FROM
+      (
+        (
+          SELECT
+            bar1.bar AS bar1, bar2.bar AS bar2
+          FROM
+            serves AS bar1, serves AS bar2
+        ) AS s1
+        JOIN
+        (
+          SELECT
+            *
+          FROM
+            serves
+        ) AS s2
+        ON
+          s1.bar2 = s2.bar
+      ) AS temp1
+    )
+    EXCEPT
+    (
+      SELECT
+        temp2.bar1, temp2.bar2, temp2.beer
+      FROM
+      (
+        (
+          SELECT
+            bar1.bar AS bar1, bar2.bar AS bar2
+          FROM
+            serves AS bar1, serves AS bar2
+        ) AS s1
+        JOIN
+        (
+          SELECT
+            *
+          FROM
+            serves
+        ) AS s2
+        ON
+          s1.bar1 = s2.bar
+      ) AS temp2
+    )
+  )
+) AS temp5
+EXCEPT
+SELECT
+  DISTINCT temp6.bar1, temp6.bar2
+FROM
+(
+  (
+    (
+      SELECT
+        temp3.bar1, temp3.bar2, temp3.beer
+      FROM
+      (
+        (
+          SELECT
+            bar1.bar AS bar1, bar2.bar AS bar2
+          FROM
+            serves AS bar1, serves AS bar2
+        ) AS s1
+        JOIN
+        (
+          SELECT
+            *
+          FROM
+            serves
+        ) AS s2
+        ON
+          s1.bar1 = s2.bar
+      ) AS temp3
+    )
+    EXCEPT
+    (
+      SELECT
+        temp4.bar1, temp4.bar2, temp4.beer
+      FROM
+      (
+        (
+          SELECT
+            bar1.bar AS bar1, bar2.bar AS bar2
+          FROM
+            serves AS bar1, serves AS bar2
+        ) AS s1
+        JOIN
+        (
+          SELECT
+            *
+          FROM
+            serves
+        ) AS s2
+        ON
+          s1.bar2 = s2.bar
+      ) AS temp4
+    )
+  )
+) AS temp6;

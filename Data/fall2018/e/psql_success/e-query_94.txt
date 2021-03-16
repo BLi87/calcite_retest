@@ -1,0 +1,5 @@
+((Select frequents.bar from frequents where frequents.drinker = 'Ben') union
+(Select frequents.bar from frequents where frequents.drinker = 'Dan'))except
+
+((Select frequents.bar from frequents where frequents.drinker = 'Ben') intersect
+(Select frequents.bar from frequents where frequents.drinker = 'Dan'));

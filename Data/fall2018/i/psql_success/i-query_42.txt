@@ -1,0 +1,19 @@
+
+select distinct name
+from drinker
+
+except(
+
+select distinct drinker
+from(
+(select f1.drinker, f1.bar, s1.beer
+from frequents as f1
+  left join serves as s1
+  on f1.bar = s1.bar)
+
+except
+
+(select distinct l1.drinker, s1.bar, l1.beer
+from likes as l1
+  left join serves as s1
+  on l1.beer = s1.beer)) as t)

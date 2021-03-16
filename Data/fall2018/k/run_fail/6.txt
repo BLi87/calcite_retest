@@ -1,0 +1,3 @@
+select bar, sum(price) as price from
+(select frequents.bar, times_a_week * price as price from frequents,serves
+where frequents.bar=serves.bar) as RES group by RES.bar order by price desc;

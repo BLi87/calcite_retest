@@ -1,0 +1,1 @@
+select drinker from (select count(*), drinker from frequents where bar like 'James Joyce Pub' or bar like 'Satisfaction' group by drinker) as _ where count = 2;

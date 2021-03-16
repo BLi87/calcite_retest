@@ -1,0 +1,33 @@
+with sameBeers(bar1, bar2) as
+(select b1.name as bar1, b2.name as bar2 from bar as b1, bar as b2 where not exists
+  ((select beer from serves as s1 where s1.bar = b1.name) except
+      (select beer from serves as s2 where s2.bar = b2.name)) and not exists
+
+      ((select beer from serves as s1 where s1.bar = b2.name) except
+          (select beer from serves as s2 where s2.bar = b1.name)) and b1.name <> b2.name),
+   oneServesMore(bar1, bar2) as (select b1.name as bar1, b2.name as bar2 from bar as b1, bar as b2 where exists
+  ((select beer from serves as s1 where s1.bar = b1.name) except
+      (select beer from serves as s2 where s2.bar = b2.name)))
+select b3.name as bar1, b4.name as bar2 from bar as b3, bar as b4 where b3.name <> b4.name
+except ((select * from oneServesMore) union (select * from sameBeers));
+ -- ;
+--
+-- --
+-- -- ---  bar1 bar2 pairs where bar2 serves a drink bar1 does
+-- --
+-- -- (select b1.name as bar1, b2.name as bar2 from bar as b1, bar as b2 where exists
+-- --   ((select beer from serves as s1 where s1.bar = b2.name) except
+-- --       (select beer from serves as s2 where s2.bar = b1.name)));
+-- --- bar1 bar2 pairs where they serve the same drinker
+-- (select b1.name as bar1, b2.name as bar2 from bar as b1, bar as b2 where exists
+--   ((select beer as beer1 from serves as s1 where s1.bar = b2.name) where exists
+--       (select beer as beer2 from serves as s2 where s2.bar = b1.name)));
+--
+-- ----
+--
+-- (select b1.name as bar1, b2.name as bar2 from bar as b1, bar as b2 where not exists
+--   ((select beer from serves as s1 where s1.bar = b1.name) except
+--       (select beer from serves as s2 where s2.bar = b2.name)) and not exists
+--
+--       ((select beer from serves as s1 where s1.bar = b2.name) except
+--           (select beer from serves as s2 where s2.bar = b1.name)) and b1.name <> b2.name);

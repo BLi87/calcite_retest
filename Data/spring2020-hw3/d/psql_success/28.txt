@@ -1,0 +1,1 @@
+select bd.beer as beer, COUNT(distinct drinker) as cnt, AVG(price) from (select b.name as beer, l.drinker as drinker from beer b LEFT OUTER JOIN likes l ON b.name=l.beer) as bd LEFT OUTER JOIN serves s ON bd.beer=s.beer group by bd.beer order by cnt desc, bd.beer asc

@@ -1,0 +1,1 @@
+SELECT bar FROM Frequents as F where drinker = 'Dan' or drinker = 'Ben' except (SELECT bar FROM Frequents as F WHERE drinker = 'Dan' AND EXISTS (SELECT drinker FROM Frequents WHERE drinker='Ben' and bar=F.bar));

@@ -1,0 +1,22 @@
+-- For each beer that Dan likes, find the names of bars that serve it at the highest price.
+-- Format your output as list of (beer, bar) pairs (x) [Output columns: beer, bar]
+
+-- get beers that dan likes
+with beersDanLikes1 as (select beer
+from likes
+where drinker='Dan'),
+
+-- get all distinct bars that serve the beers that dan likes & the beer's price at each bar 
+barprices as (select distinct s2.beer, s2.bar, s2.price
+from beersDanLikes1 b1, serves s1, serves s2
+where b1.beer = s1.beer and b1.beer = s2.beer and s1.price<=s2.price),
+
+-- get the beer served at the max price out of all the prices for each beer in barprices
+ans as (select barprices.beer, max(barprices.price) as price
+from barprices
+group by barprices.beer)
+
+-- get beer and bar that serve each beer at the max price
+select ans.beer, serves.bar
+from ans, serves
+where ans.beer = serves.beer and ans.price = serves.price

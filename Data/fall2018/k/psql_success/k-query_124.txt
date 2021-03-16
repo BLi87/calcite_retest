@@ -1,0 +1,14 @@
+select whatever.name, SUM(whatever.income) AS answer
+from
+((select name, 0 AS income from bar)
+
+union
+
+(select frequents.bar, SUM(price*times_a_week) AS income from frequents, serves, likes                                                                                       
+	 where serves.bar=frequents.bar and serves.beer=likes.beer and likes.drinker=frequents.drinker
+	 GROUP BY frequents.bar
+	 ORDER BY income DESC, frequents.bar)
+) AS whatever
+
+GROUP BY name
+ORDER BY answer DESC, name;

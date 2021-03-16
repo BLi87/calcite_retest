@@ -1,0 +1,17 @@
+WITH allPairs AS (
+	SELECT drinker1.name AS drinker1, drinker2.name AS drinker2
+	FROM drinker AS drinker1 JOIN drinker AS drinker2 ON NOT drinker1.name = drinker2.name
+)
+SELECT * 
+FROM allPairs
+EXCEPT(
+	SELECT sameLikes.drinker1, sameLikes.drinker2
+	FROM (
+		SELECT allPairs.drinker1, allPairs.drinker2, likes.beer
+		FROM allPairs JOIN likes ON (allPairs.drinker1 = likes.drinker)
+		EXCEPT(
+			SELECT allPairs.drinker1, allPairs.drinker2, likes.beer
+			FROM allPairs JOIN likes ON (allPairs.drinker2 = likes.drinker)
+		)
+	) AS sameLikes
+)

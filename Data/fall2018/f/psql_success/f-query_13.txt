@@ -1,0 +1,6 @@
+Select beer, bar
+From serves as s1
+Where NOT Exists (Select beer, bar
+					From serves
+					Where beer = s1.beer
+					And bar <> s1.bar);

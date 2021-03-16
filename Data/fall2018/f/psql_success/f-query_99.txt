@@ -1,0 +1,1 @@
+SELECT serves.beer, serves.bar FROM serves EXCEPT (SELECT s1.beer, s1.bar FROM serves s1 JOIN serves s2 on s1.bar != s2.bar AND s1.beer = s2.beer);

@@ -1,0 +1,14 @@
+select f.drinker, f.bar
+from frequents f, 
+(select F.drinker, max(F.times_a_week) maximum
+from frequents F
+group by F.drinker) maxfreqs
+where maxfreqs.maximum = f.times_a_week
+and f.drinker = maxfreqs.drinker
+
+union
+
+(select nodrinkers.name, null
+from (select drinker.name
+from drinker
+where drinker.name not in (select frequents.drinker from frequents)) nodrinkers)

@@ -1,0 +1,1 @@
+select bar.name, bar.address from bar, serves where bar.name = serves.bar and serves.beer = 'Corona' and serves.price <= 3;

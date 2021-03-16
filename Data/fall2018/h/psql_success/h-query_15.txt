@@ -1,0 +1,2 @@
+with good(drinker, bar, beer) as (select drinker, bar, beer from serves natural join frequents natural join likes)
+select name from drinker where not exists ((select bar from frequents where drinker = name) except (select bar from good where good.drinker = name))

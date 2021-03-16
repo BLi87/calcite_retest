@@ -1,0 +1,3 @@
+(select distinct frequents.bar from frequents where frequents.drinker='Ben' union 
+select distinct frequents.bar from frequents where frequents.drinker='Dan') except 
+select distinct freq1.bar from frequents as freq1, frequents as freq2 where (freq1.drinker='Ben' and freq2.drinker='Dan' or freq1.drinker='Dan' and freq2.drinker='Ben') and freq1.bar=freq2.bar;

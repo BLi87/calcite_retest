@@ -1,0 +1,1 @@
+select bar, drinker from frequents f where f.times_a_week=(select max(times_a_week) from frequents f2 where bar=f.bar);

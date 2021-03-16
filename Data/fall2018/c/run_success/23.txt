@@ -1,0 +1,1 @@
+select distinct b.name, b.address from Bar b, Serves s where b.name = s.bar and s.beer = 'Corona' and s.price<=3.00;

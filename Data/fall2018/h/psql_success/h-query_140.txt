@@ -1,0 +1,6 @@
+select name from Drinker where name not in
+(select distinct l.drinker from Likes l, Serves s, Frequents f where
+l.drinker=f.drinker and f.bar=s.bar and (select count (*) from (
+(select l1.beer from Likes l1 where l1.drinker=l.drinker)
+intersect
+(select s1.beer from Serves s1 where s1.bar=s.bar))inter)=0);

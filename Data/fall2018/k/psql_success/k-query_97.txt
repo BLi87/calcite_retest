@@ -1,0 +1,33 @@
+select name,sum(total) from (
+
+(select name,0 total from bar)
+EXCEPT
+(select bar,sum(money) total from (
+	select bar,beer,sum1*price money from (
+		select bar,beer,sum(times_a_week) sum1,price from (
+			select f.bar,l.beer,f.times_a_week,s.price
+			from frequents f, likes l, serves s
+			where f.drinker=l.drinker and f.bar=s.bar and l.beer=s.beer
+		) foo
+		group by bar,beer,price
+	) foo1
+) foo2
+group by bar
+order by total DESC, bar)
+UNION
+(select bar,sum(money) total from (
+	select bar,beer,sum1*price money from (
+		select bar,beer,sum(times_a_week) sum1,price from (
+			select f.bar,l.beer,f.times_a_week,s.price
+			from frequents f, likes l, serves s
+			where f.drinker=l.drinker and f.bar=s.bar and l.beer=s.beer
+		) foo
+		group by bar,beer,price
+	) foo1
+) foo2
+group by bar
+order by total DESC, bar)
+
+) foo3
+group by name
+order by sum DESC, name;

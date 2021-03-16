@@ -1,0 +1,3 @@
+Select bar
+From Serves beer
+Where beer = 'Corona'

@@ -1,0 +1,11 @@
+(select name 
+from drinker)
+except(select drinker
+	from
+((
+select drinker, beer
+from frequents natural join serves 
+order by drinker)
+except   
+(select *
+from likes))alias);

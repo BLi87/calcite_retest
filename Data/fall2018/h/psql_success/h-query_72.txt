@@ -1,0 +1,14 @@
+/*find drinkers who frequent bars that serve beer they don't like */
+
+(SELECT name
+FROM Drinker)
+EXCEPT
+(SELECT DISTINCT sub.drinker
+FROM 
+((SELECT DISTINCT Frequents.drinker,Frequents.bar
+FROM Frequents)
+EXCEPT 
+(SELECT DISTINCT Frequents.drinker,Frequents.bar
+FROM Frequents
+JOIN Likes ON Frequents.drinker = Likes.drinker
+JOIN Serves ON Frequents.bar = Serves.bar AND Likes.beer = Serves.beer)) sub);

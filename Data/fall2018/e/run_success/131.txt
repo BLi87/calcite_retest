@@ -1,0 +1,7 @@
+select bar from frequents where drinker = 'Dan'
+except all
+select bar from frequents where drinker = 'Ben'
+union all
+(select bar from frequents where drinker = 'Ben'
+except all
+select bar from frequents where drinker = 'Dan');

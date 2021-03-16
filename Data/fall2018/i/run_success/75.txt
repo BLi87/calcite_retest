@@ -1,0 +1,12 @@
+(SELECT DISTINCT name
+FROM drinker)
+EXCEPT
+(SELECT DISTINCT drinker
+FROM (
+(SELECT Frequents.drinker AS drinker, Frequents.bar AS bar, Serves.beer AS beer
+FROM Frequents
+LEFT OUTER JOIN Serves ON Frequents.bar = Serves.bar)
+EXCEPT
+(SELECT Frequents.drinker AS drinker, Frequents.bar AS bar, Likes.beer AS beer
+FROM Frequents
+LEFT OUTER JOIN Likes ON Frequents.drinker = Likes.drinker)) AS T);

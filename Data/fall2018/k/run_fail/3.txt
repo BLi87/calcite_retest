@@ -1,0 +1,27 @@
+WITH
+tmp0 AS
+(SELECT * FROM Likes NATURAL JOIN Serves),
+
+tmp1(bar,price,times_a_week) AS
+(SELECT tmp0.bar, price, times_a_week FROM tmp0 JOIN Frequents ON tmp0.drinker=Frequents.drinker AND tmp0.bar=Frequents.bar),
+
+tmp2(bar, revenue) AS
+(SELECT bar, tmp1.price*tmp1.times_a_week FROM tmp1),
+
+tmp3(bar, price) AS
+(SELECT bar, SUM(revenue) FROM tmp2 GROUP BY bar),
+
+tmp4(bar) AS
+((SELECT name FROM Bar) EXCEPT (SELECT bar FROM tmp3)),
+
+tmp5(bar, revenue) AS
+(SELECT bar, 0 FROM tmp4),
+
+tmp6(bar, revenue) AS
+(SELECT * FROM tmp5 UNION SELECT * FROM tmp3),
+
+tmp7(bar, revenue) AS 
+(SELECT * FROM tmp6 ORDER BY revenue DESC, bar)
+
+
+SELECT * FROM tmp7;

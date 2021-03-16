@@ -1,0 +1,6 @@
+WITH frequents1 AS ( 
+	SELECT *
+	FROM frequents)
+SELECT frequents.drinker
+	FROM frequents, frequents1
+	WHERE (frequents.drinker = frequents1.drinker AND frequents.bar = 'James Joyce Pub' AND frequents1.bar = 'Satisfaction');

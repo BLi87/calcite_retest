@@ -1,0 +1,13 @@
+SELECT beer, bar
+FROM serves AS s
+WHERE NOT exists
+(SELECT s.bar,s.beer,s.price
+FROM serves AS s1
+WHERE (s1.beer= s.beer)
+      and s1.beer In
+      (SELECT beer FROM likes
+      WHERE drinker = 'Dan') 
+      and s.price < s1.price)
+and s.beer In
+      (SELECT beer FROM likes
+      WHERE drinker = 'Dan');

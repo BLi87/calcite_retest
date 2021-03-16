@@ -1,0 +1,16 @@
+(select bar2,bar1 from ((select * from 
+(select bar as bar1,beer from serves) as f, 
+(select name as bar2 from bar) as g)
+except 
+select bar2,beer,bar1 from (select * from 
+(select bar as bar1,beer from serves) as f, 
+(select name as bar2 from bar) as g) as h) as i)
+except
+(select bar1,bar2 from ((select * from 
+(select bar as bar1,beer from serves) as f, 
+(select name as bar2 from bar) as g)
+except 
+select bar2,beer,bar1 from (select * from 
+(select bar as bar1,beer from serves) as f, 
+(select name as bar2 from bar) as g) as h)as i)
+;

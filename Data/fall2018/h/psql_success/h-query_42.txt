@@ -1,0 +1,8 @@
+SELECT name FROM Drinker EXCEPT
+(SELECT FB.drinker FROM
+(SELECT bar,drinker FROM Frequents EXCEPT
+(SELECT DISTINCT foo.bar, L.drinker FROM Likes L
+INNER JOIN
+(SELECT * FROM Frequents A
+NATURAL JOIN Serves B) foo
+on L.drinker  = foo.drinker AND L.beer = foo.beer))FB);

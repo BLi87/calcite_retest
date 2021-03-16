@@ -1,0 +1,3 @@
+select distinct d.name , d.address 
+from frequents f, drinker d, frequents f2 
+where f.drinker = d.name and f.bar != f2.bar and f2.drinker = d.name

@@ -1,0 +1,4 @@
+select likes1.drinker as drinker1, likes2.drinker as drinker2, likes1.beer as beer
+from likes likes1, likes likes2
+where likes1.beer = likes2.beer and likes1.drinker < likes2.drinker
+order by drinker1

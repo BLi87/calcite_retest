@@ -1,0 +1,13 @@
+with frequents_moreBars(drinker, bar) as
+((select drinker, bar
+from frequents)
+except
+(select drinker, bar
+from likes natural join serves))
+
+(select name
+from drinker)
+except
+(select drinker as name
+from frequents_moreBars);
+

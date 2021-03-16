@@ -1,0 +1,21 @@
+WITH Y AS
+(
+  SELECT X.bar1, X.beer, X.bar2
+  FROM
+  (
+    SELECT bar.name as bar1, bar.address, serves.bar as bar2, serves.beer, serves.price
+    FROM bar, serves
+  ) X
+  EXCEPT
+  SELECT X2.bar2, X2.beer, X2.bar1
+  FROM
+  (
+    SELECT bar.name as bar1, bar.address, serves.bar as bar2, serves.beer, serves.price
+    FROM bar, serves
+  ) X2
+)
+SELECT Y.bar1, Y.bar2
+FROM Y
+EXCEPT
+SELECT Y2.bar2, Y2.bar1
+FROM Y as Y2;

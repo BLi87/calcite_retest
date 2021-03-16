@@ -1,0 +1,29 @@
+/* Collaborated during undergrad ta office hours */
+
+WITH unordered AS (
+
+	(WITH listofBars AS
+
+		(WITH joinLikesFreq AS
+			(SELECT likes.drinker, beer, bar, times_a_week FROM likes INNER JOIN frequents ON likes.drinker = frequents.drinker)
+			SELECT drinker, joinLikesFreq.beer, joinLikesFreq.bar, times_a_week, price FROM joinLikesFreq JOIN serves ON serves.beer = joinLikesFreq.beer AND serves.bar = joinLikesFreq.bar)
+
+		SELECT bar, SUM(times_a_week*price) AS amount FROM listofBars GROUP BY bar)
+
+	UNION
+
+		(WITH allZeros AS
+			(SELECT name FROM Bar
+
+			EXCEPT
+			(WITH listofBars AS
+
+				(WITH joinLikesFreq AS (SELECT likes.drinker, beer, bar, times_a_week FROM likes JOIN frequents ON likes.drinker = frequents.drinker)
+					SELECT drinker, joinLikesFreq.beer, joinLikesFreq.bar, times_a_week, price FROM joinLikesFreq INNER JOIN serves ON serves.bar = joinLikesFreq.bar AND serves.beer = joinLikesFreq.beer)
+
+			SELECT bar AS name FROM listofBars GROUP BY bar))
+
+	SELECT name, 0.0 AS amount FROM allZeros)
+)
+
+SELECT * FROM unordered ORDER BY amount desc, bar;

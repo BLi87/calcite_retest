@@ -1,0 +1,27 @@
+WITH 
+drinkerPairs AS 
+(SELECT d1.name drinker1, d2.name drinker2
+FROM drinker d1, drinker d2
+WHERE d1.name <> d2.name),
+
+oneReal AS
+(SELECT drinker1, drinker2, beer
+FROM drinkerPairs, likes
+WHERE drinker1 = drinker),
+
+twoReal AS
+(SELECT drinker1, drinker2, beer
+FROM drinkerPairs, likes
+WHERE drinker2 = drinker), 
+
+diff AS
+(SELECT DISTINCT drinker1, drinker2
+FROM
+((SELECT * FROM oneReal)
+EXCEPT
+(SELECT * FROM twoReal)) AS temp
+)
+
+((SELECT * FROM drinkerPairs)
+EXCEPT
+(SELECT * FROM diff));

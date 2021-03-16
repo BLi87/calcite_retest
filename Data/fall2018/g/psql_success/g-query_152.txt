@@ -1,0 +1,4 @@
+SELECT f.bar,drinker
+FROM frequents AS f,
+     (SELECT bar, MAX(times_a_week) FROM frequents GROUP BY bar) AS t
+WHERE f.bar = t.bar AND f.times_a_week = t.max;

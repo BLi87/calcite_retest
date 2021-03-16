@@ -1,0 +1,7 @@
+SELECT y.bar, y.drinker
+FROM (
+	SELECT bar, max(times_a_week) AS mx
+	FROM frequents
+	GROUP BY bar
+)	x JOIN frequents y ON x.bar = y.bar AND x.mx = y.times_a_week
+;

@@ -1,0 +1,14 @@
+With BeersNotLiked(drinker, beer)as (select Drinker.name,Beer.name
+from Drinker , Beer 
+where (Drinker.name,Beer.name) not in (
+select drinker,beer
+from Likes)
+)
+
+select name
+from Drinker
+where name not in (
+select Frequents.drinker
+from Frequents, Serves,  BeersNotLiked as dis 
+where  dis.beer = Serves.beer and Frequents.bar = Serves.bar and Frequents.drinker = dis.drinker );
+

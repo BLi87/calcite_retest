@@ -1,0 +1,16 @@
+SELECT a.bar1, b.bar2 FROM
+(SELECT bar as bar1, beer as beer1 from serves) a LEFT JOIN
+(SELECT bar as bar2, beer as beer2 from serves) b ON a.bar1 != b.bar2
+
+EXCEPT
+
+SELECT c.bar1, c.bar2 FROM
+(SELECT a.bar1, b.bar2, a.beer FROM
+(select bar as bar1, beer from serves) a CROSS JOIN
+(select name as bar2 from bar) b 
+
+EXCEPT 
+
+SELECT b.bar1, a.bar2, a.beer FROM
+(select bar as bar2, beer from serves) a CROSS JOIN
+(select name as bar1 from bar) b) c

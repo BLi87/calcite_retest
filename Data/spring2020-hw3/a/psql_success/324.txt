@@ -1,0 +1,3 @@
+select b.beer, b.bar from serves b  
+where b.beer in (select beer from likes where drinker = 'Dan')  
+and not exists  (select price from serves where price > b.price and beer = b.beer)

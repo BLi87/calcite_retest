@@ -1,0 +1,17 @@
+WITH e1 AS
+(SELECT d1.name as name1, d2.name as name2
+FROM drinker d1, drinker d2
+WHERE d1.name <> d2.name), 
+e2 AS
+(SELECT name1, name2, beer
+FROM e1
+JOIN likes ON name1 = drinker 
+EXCEPT
+(SELECT name1, name2, beer
+FROM e1 JOIN likes ON name2 = drinker 
+))
+
+SELECT name2, name1
+FROM e1
+EXCEPT 
+(SELECT name1, name2 FROM e2);

@@ -1,0 +1,4 @@
+SELECT A.drinker FROM Frequents A
+INNER JOIN Frequents B
+ON A.drinker = B.drinker AND
+A.bar = 'James Joyce Pub' AND B.bar = 'Satisfaction';

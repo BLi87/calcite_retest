@@ -1,0 +1,7 @@
+(SELECT DISTINCT b.name bar1, s.bar bar2
+FROM Bar b, Serves s
+WHERE b.name NOT IN (SELECT DISTINCT bar FROM Serves WHERE beer = s.beer))
+EXCEPT
+(SELECT DISTINCT s.bar bar1, b.name bar2
+FROM Bar b, Serves s
+WHERE b.name NOT IN (SELECT DISTINCT bar FROM Serves WHERE beer = s.beer));

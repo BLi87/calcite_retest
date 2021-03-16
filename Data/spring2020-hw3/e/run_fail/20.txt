@@ -1,0 +1,5 @@
+with firstjoin as(SELECT name, max(times_a_week) as max2
+from drinker left join frequents on drinker.name = frequents.drinker
+group by name)
+select firstjoin.name as drinker, frequents.bar as bar
+from frequents right join firstjoin on frequents.drinker = firstjoin.name and firstjoin.max2 = frequents.times_a_week

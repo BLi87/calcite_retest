@@ -1,0 +1,25 @@
+SELECT bar2, bar
+FROM
+(
+(SELECT *
+FROM (SELECT bar, beer FROM serves) AS sbeer 
+CROSS JOIN (SELECT bar.name AS bar2 FROM bar) AS bname)
+EXCEPT
+(SELECT bar2, sbeer.beer, sbeer.bar
+FROM (SELECT bar, beer FROM serves) AS sbeer 
+CROSS JOIN (SELECT bar.name AS bar2 FROM bar) AS bname) 
+)AS nd
+
+EXCEPT
+
+SELECT bar, bar2
+FROM
+(
+(SELECT *
+FROM (SELECT bar, beer FROM serves) AS sbeer 
+CROSS JOIN (SELECT bar.name AS bar2 FROM bar) AS bname)
+EXCEPT
+(SELECT bar2, sbeer.beer, sbeer.bar
+FROM (SELECT bar, beer FROM serves) AS sbeer 
+CROSS JOIN (SELECT bar.name AS bar2 FROM bar) AS bname) 
+)AS nd;

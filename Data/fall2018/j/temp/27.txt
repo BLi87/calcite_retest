@@ -1,0 +1,25 @@
+---- Collaborated with other students in TA office hours
+
+
+(SELECT main.name, main.bar FROM
+
+  (
+    (SELECT Serves.bar, Serves.beer, Bar.name FROM Serves CROSS JOIN Bar)
+    EXCEPT
+    (SELECT Bar.name, Serves.beer, Serves.bar FROM Serves CROSS JOIN Bar)
+  )
+
+AS main)
+
+
+EXCEPT
+
+(SELECT diff.bar, diff.name FROM
+
+  (
+    (SELECT Serves.bar, Serves.beer, Bar.name FROM Serves CROSS JOIN Bar)
+    EXCEPT
+    (SELECT Bar.name, Serves.beer, Serves.bar FROM Serves CROSS JOIN Bar)
+  )
+
+  AS diff);

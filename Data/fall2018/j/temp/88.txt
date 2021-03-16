@@ -1,0 +1,5 @@
+SELECT s4.secondbar, s4.firstbar FROM (SELECT s3.bar AS firstbar, s3.beer, s4.bar AS secondbar FROM (SELECT * from serves) as s3 CROSS JOIN serves s4 
+EXCEPT (SELECT s2.bar, s1.beer, s1.bar FROM (SELECT * from serves) as s1 CROSS JOIN serves s2)) as s4 
+EXCEPT (SELECT s14.firstbar, s14.secondbar FROM (SELECT s13.bar AS firstbar, s13.beer, s14.bar AS secondbar FROM (SELECT * from serves) as s13 CROSS JOIN serves s14 
+EXCEPT (SELECT s12.bar, s11.beer, s11.bar FROM (SELECT * from serves) as s11 CROSS JOIN serves s12)) as s14); 
+

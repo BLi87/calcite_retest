@@ -1,0 +1,19 @@
+SELECT name
+FROM drinker
+
+EXCEPT
+
+SELECT drinker
+FROM frequents
+WHERE EXISTS (
+	(SELECT beer
+	FROM serves
+	WHERE serves.bar = frequents.bar)
+
+	EXCEPT
+
+	(SELECT beer
+	FROM likes
+	WHERE frequents.drinker = likes.drinker)
+	)
+;

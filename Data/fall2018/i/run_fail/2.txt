@@ -1,0 +1,18 @@
+Select drinker
+From frequents
+Where drinker
+NOT IN (
+  Select drinker
+  From ((
+    Select frequents.drinker, frequents.bar, serves.beer
+    From serves
+    JOIN frequents
+    ON serves.bar = frequents.bar)
+    EXCEPT (
+      Select likes.drinker, frequents.bar, likes.beer
+      From likes
+      JOIN frequents
+      ON likes.drinker = frequents.drinker))AS V);
+/*Every person goes to at least one bar that serves
+more drinks than what they like so the query will
+return 0*/

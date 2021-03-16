@@ -1,0 +1,18 @@
+SELECT DISTINCT D.name
+FROM drinker D
+WHERE NOT EXISTS
+	(SELECT drinker, bar
+	FROM frequents
+	WHERE drinker = D.name
+	EXCEPT
+	SELECT DISTINCT L.drinker, S.bar
+	FROM serves S, likes L
+	WHERE S.beer = L.beer AND L.drinker = D.name AND NOT EXISTS
+		(SELECT S1.beer
+		FROM serves S1
+		WHERE S1.bar = S.bar
+		EXCEPT
+		SELECT beer
+		FROM likes
+		WHERE drinker = D.name))
+

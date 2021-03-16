@@ -1,0 +1,16 @@
+/*
+(drinkers who frequent only those bars that serve only beers they like) =
+(drinkers) - (drinkers who frequent a bar that serves a beer they don't like).
+*/
+
+WITH TEMP1(drinker,beer) AS
+(SELECT drinker,beer FROM
+ frequents INNER JOIN serves ON frequents.bar = serves.bar),
+
+TEMP2(drinker,beer) AS
+(SELECT * FROM TEMP1 EXCEPT
+SELECT * FROM likes)
+
+
+SELECT name FROM drinker EXCEPT
+SELECT drinker FROM TEMP2; 

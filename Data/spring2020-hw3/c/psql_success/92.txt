@@ -1,0 +1,9 @@
+with dislikes as (select *
+from ((select name as beer from beer) a cross join (select name as drinker from drinker) b) c
+except (select beer, drinker from likes)
+order by beer)
+
+(select name from drinker)
+except (select distinct x.drinker 
+from (dislikes natural join serves) x
+where (x.drinker, x.bar) in (select f.drinker, f.bar from frequents f))

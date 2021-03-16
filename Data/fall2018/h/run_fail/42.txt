@@ -1,0 +1,3 @@
+with some1(drinker,bar) as (select f.drinker, f.bar from frequents f group by f.drinker, f.bar
+ except (select f.drinker, f.bar from frequents f, likes l, serves s where f.drinker=l.drinker and f.bar=s.bar and s.beer=l.beer group by f.drinker, f.bar))
+select name from drinker except (select drinker from some1);

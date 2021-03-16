@@ -1,0 +1,29 @@
+WITH Answer AS ((WITH Data AS 
+
+(WITH Likers AS (SELECT likes.drinker, beer, bar, times_a_week 
+	             FROM Likes  inner join Frequents on likes.drinker = frequents.drinker) 
+                 SELECT drinker, likers.beer, likers.bar, times_a_week, price 
+                 FROM likers join serves on serves.beer = likers.beer 
+                 AND serves.bar = likers.bar)
+
+SELECT bar, sum(times_a_week*price) AS amount FROM Data GROUP BY bar)
+
+UNION
+
+(WITH zeros AS
+(SELECT name FROM bar
+EXCEPT
+
+(WITH Data AS 
+
+(WITH likers AS (SELECT likes.drinker, beer, bar, times_a_week 
+	             FROM likes inner join frequents on likes.drinker = frequents.drinker) 
+                 SELECT drinker, likers.beer, likers.bar, times_a_week, price 
+                 FROM likers join serves on serves.beer = likers.beer 
+                 AND serves.bar = likers.bar)
+
+SELECT bar AS name FROM Data GROUP BY bar))
+
+SELECT name, 0.0 AS amount FROM zeros))
+
+SELECT * FROM answer ORDER BY amount DESC, bar;

@@ -1,0 +1,5 @@
+select drinker.name from 
+(select drinker.name, drinker.address from drinker, frequents 
+	where drinker.name=frequents.drinker and frequents.bar='James Joyce Pub') 
+	AS drinker, frequents where drinker.name=frequents.drinker 
+		and frequents.bar='Satisfaction';

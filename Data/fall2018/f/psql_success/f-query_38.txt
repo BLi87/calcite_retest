@@ -1,0 +1,4 @@
+select t.beer,t.bar from serves t,
+((select name from beer) except 
+(select s1.beer from serves s1, serves s2 where s1.beer = s2.beer and not s1.bar=s2.bar)) as b 
+where t.beer = b.name;

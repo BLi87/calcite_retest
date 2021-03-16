@@ -1,0 +1,9 @@
+SELECT name FROM drinker
+
+EXCEPT
+
+(SELECT drinker
+FROM
+((SELECT drinker, beer FROM frequents, serves WHERE frequents.bar = serves.bar)
+EXCEPT
+(SELECT * FROM likes)) as foo);

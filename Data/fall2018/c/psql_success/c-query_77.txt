@@ -1,0 +1,1 @@
+select b.name, b.address from bar b, serves s where s.beer='Corona' and b.name=s.bar and s.price<='3.00';

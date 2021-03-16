@@ -1,0 +1,33 @@
+WITH drinker_serves_diff AS (
+        SELECT drinker.name, serves.bar, serves.beer
+        FROM drinker 
+        CROSS JOIN serves
+        EXCEPT (        
+                SELECT likes.drinker, serves.bar, serves.beer
+                FROM likes
+                JOIN serves 
+                ON serves.beer = likes.beer)
+), frequents_minus_non_likes AS (
+        SELECT drinker, bar
+        FROM frequents
+        EXCEPT (
+                SELECT name, bar
+                FROM drinker_serves_diff
+        )
+), drinker_frequents_bar AS (
+        SELECT name 
+        FROM drinker 
+        EXCEPT (
+                SELECT drinker 
+                FROM (
+                        SELECT drinker, bar 
+                        FROM frequents
+                        EXCEPT (
+                                SELECT * 
+                                FROM frequents_minus_non_likes
+                        )
+                ) as temp
+        )
+)
+
+SELECT * FROM drinker_frequents_bar;

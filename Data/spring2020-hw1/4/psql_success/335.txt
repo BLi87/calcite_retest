@@ -1,0 +1,1 @@
+select distinct drinker.name, drinker.address from drinker, frequents a, frequents b where drinker.name = a.drinker and drinker.name = b.drinker and a.bar <> b.bar

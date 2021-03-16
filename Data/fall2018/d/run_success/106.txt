@@ -1,0 +1,6 @@
+Select drinker
+From frequents
+Where bar = 'James Joyce Pub'
+And drinker IN (Select drinker
+				From frequents
+				Where bar = 'Satisfaction');

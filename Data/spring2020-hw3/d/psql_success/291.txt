@@ -1,0 +1,19 @@
+select distinct beer.name as beer,
+  case
+  when cnt is NULL then 0 else cnt
+  end, avg
+from beer
+
+left join
+(select likes.beer, count(distinct likes.drinker) as cnt
+from likes
+group by likes.beer) as b
+on beer.name = b.beer
+
+left join
+(select serves.beer, avg(serves.price) as avg
+from serves
+group by serves.beer) as a
+on a.beer = beer.name
+
+order by cnt desc,beer.name asc

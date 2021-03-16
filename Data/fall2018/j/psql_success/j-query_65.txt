@@ -1,0 +1,35 @@
+with serves_cross(bar1, beer1, bar2, beer2) as
+(select distinct s1.bar as bar1, s1.beer as beer1, s2.bar as bar2, s2.beer as beer2
+from serves as s1, serves as s2),
+
+serves_beer1AtBar2(bar1, beer1, bar2) as
+(select distinct bar1, beer1, bar2
+from serves, serves_cross
+where bar=bar2 and beer=beer1),
+
+serves_beer1NotAtBar2(bar1, bar2) as
+(select distinct bar1, bar2
+from (
+(select bar1, beer1, bar2
+from serves_cross)
+except
+(select bar1, beer1, bar2
+from serves_beer1AtBar2)) as A),
+
+serves_beer2AtBar1(bar1, beer2, bar2) as
+(select distinct bar1, beer2, bar2
+from serves, serves_cross
+where bar=bar1 and beer=beer2),
+
+serves_beer2NotAtBar1(bar1, bar2) as
+(select distinct bar1, bar2
+from(
+(select bar1, beer2, bar2
+from serves_cross)
+except
+(select bar1, beer2, bar2
+from serves_beer2AtBar1)) as A)
+
+(select * from serves_beer2NotAtBar1)
+except
+(select * from serves_beer1NotAtBar2);

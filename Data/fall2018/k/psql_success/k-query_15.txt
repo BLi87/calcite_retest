@@ -1,0 +1,10 @@
+with total as ((with tool as (with lover as
+(select likes.drinker, beer, bar, times_a_week from likes inner join frequents on likes.drinker = frequents.drinker) select drinker, lover.beer, lover.bar, times_a_week, price from lover join serves on serves.bar = lover.bar and serves.beer = lover.beer )
+select bar, sum(times_a_week*price) as amount from tool group by bar)
+union
+(with zeros as (select name from bar
+except
+(with tool as (with lover as (select likes.drinker, beer, bar, times_a_week from likes inner join frequents on likes.drinker = frequents.drinker) select drinker, lover.beer, lover.bar, times_a_week, price from lover join serves on serves.bar = lover.bar and serves.beer = lover.beer)
+select bar as name from tool group by bar))
+select name, 0.0 as amount from zeros))
+select * from total order by amount desc, bar;

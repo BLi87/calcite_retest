@@ -1,0 +1,11 @@
+WITH t1 AS (SELECT p1.name, count(p1.drinker)
+FROM (Beer B left join Likes L on B.name = L.beer) p1
+GROUP BY p1.name),
+
+t2 AS (SELECT p2.name, avg(p2.price)
+FROM (Beer B left join Serves S on B.name = S.beer) p2
+GROUP BY p2.name)
+
+SELECT *
+FROM t1 natural join t2
+ORDER BY count DESC, avg

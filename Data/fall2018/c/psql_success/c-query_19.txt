@@ -1,0 +1,4 @@
+SELECT name, address from bar
+WHERE name IN
+(SELECT bar from serves
+WHERE beer = 'Corona' and price <= 3.00);

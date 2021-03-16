@@ -1,0 +1,5 @@
+select bar1.bar, bar2.bar from (select bar, array_agg(beer)
+from serves group by bar) as bar1, (select bar, array_agg(beer) from
+serves group by bar) as bar2
+
+where bar1.array_agg <@ bar2.array_agg AND bar1.bar <> bar2.bar ;

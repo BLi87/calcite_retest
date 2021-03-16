@@ -1,0 +1,16 @@
+SELECT name
+FROM drinker
+EXCEPT
+SELECT drinker
+FROM frequents
+GROUP BY drinker
+HAVING (drinker, COUNT(bar)) NOT IN 
+
+(SELECT drinker, COUNT(bar)
+FROM (SELECT DISTINCT drinker, bar 
+      FROM (serves NATURAL JOIN  likes) NATURAL JOIN frequents
+      GROUP BY drinker, bar
+      HAVING (bar, COUNT(beer)) IN (SELECT bar, COUNT(beer)
+                                    FROM serves
+                                    GROUP BY bar)) as _
+GROUP BY drinker);

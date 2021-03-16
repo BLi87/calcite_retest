@@ -1,0 +1,29 @@
+with tmp1(drinker, bar, times_a_week, beer) as 
+(select * from (
+frequents
+natural join
+likes)),
+tmp2(drinker, bar, times_a_week, beer, price) as
+(select drinker, serves.bar, tmp1.times_a_week, serves.beer, serves.price from (
+tmp1 
+join 
+serves
+on tmp1.beer = serves.beer and tmp1.bar = serves.bar 
+)), 
+tmp3(bar, amount) as 
+(select bar, sum(times_a_week * price) 
+from tmp2
+group by bar),
+tmp4(bar) as 
+((select name as bar from bar)
+except 
+(select bar from tmp3)
+), 
+tmp5(bar, amount) as (
+select bar, 0 from tmp4
+)
+select * from (
+(select bar, amount from tmp3)
+union 
+(select bar, amount from tmp5)
+order by amount DESC, bar ASC) res;

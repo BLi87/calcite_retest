@@ -1,0 +1,10 @@
+SELECT DISTINCT name FROM Drinker 
+EXCEPT
+SELECT drinker FROM (
+SELECT DISTINCT drinker, beer FROM Frequents, Serves
+	WHERE Frequents.bar = Serves.bar 
+EXCEPT
+(SELECT drinker, beer FROM Likes)) AS Jtable;
+
+
+	

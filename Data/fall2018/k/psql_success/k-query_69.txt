@@ -1,0 +1,15 @@
+
+
+
+select * from (select name, coalesce (sum,0) as total from (select name, sum from bar b left outer join (select bar, sum(money) from 
+(select bar,drinker,price*times_a_week as money from 
+(select * from likes natural join 
+(select * from serves natural join frequents)
+ as sub2) 
+ as sub3) 
+ as sub4 group by bar) 
+as sub5 on sub5
+.bar = b.name) as sub1) as final_sub order by total desc, name;
+
+/* worked with Riley  Hockett */ 
+

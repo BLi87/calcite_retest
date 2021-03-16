@@ -1,0 +1,17 @@
+/* Places where Ben or Dan frequent*/
+SELECT DISTINCT bar
+FROM Frequents
+WHERE drinker='Ben' OR drinker='Dan'
+EXCEPT ALL
+/* Places where Ben and Dan frequent*/
+SELECT DISTINCT bar
+FROM Frequents
+WHERE bar IN (
+    SELECT bar
+    FROM Frequents
+    WHERE drinker='Ben'
+) AND bar IN (
+    SELECT bar
+    FROM Frequents
+    WHERE drinker='Dan'
+);

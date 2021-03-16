@@ -1,0 +1,15 @@
+select drinker.name, b.bar
+
+from drinker
+
+left join
+(select a.drinker, max_times, bar
+from frequents,
+
+(select frequents.drinker, max(times_a_week) as max_times
+from frequents
+group by frequents.drinker) as a
+
+where a.drinker = frequents.drinker
+and times_a_week = max_times) as b
+on drinker.name = b.drinker

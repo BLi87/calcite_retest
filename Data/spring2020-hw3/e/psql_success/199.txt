@@ -1,0 +1,1 @@
+select d.name, f.bar from drinker d left join frequents f on d.name = f.drinker where not exists (select times_a_week from frequents where drinker = f.drinker and times_a_week > f.times_a_week)

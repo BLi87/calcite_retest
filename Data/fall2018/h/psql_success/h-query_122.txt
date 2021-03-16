@@ -1,0 +1,12 @@
+select Drinker.name
+from Drinker
+where Drinker.name not in
+
+(select badBois.drinker from
+((select f1.drinker, f1.bar from Frequents as f1)
+
+except
+
+(select f1.drinker, f1.bar
+from Frequents as f1, Likes as l1
+where f1.drinker=l1.drinker and l1.beer in (select s1.beer from Serves as s1 where s1.bar=f1.bar))) as badBois);

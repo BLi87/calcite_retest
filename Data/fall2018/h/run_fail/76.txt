@@ -1,0 +1,17 @@
+With tb1  as
+(
+	SELECT  Likes.drinker, Serves.bar
+	From Serves
+	JOIN Likes on Serves.beer = Likes.beer
+	)
+
+(SELECT DISTINCT name
+from Drinker)
+EXCEPT
+Select drinker 
+FROM  
+(SELECT drinker, bar
+FROM Frequents
+EXCEPT
+(Select * from tb1)
+) as tb2;

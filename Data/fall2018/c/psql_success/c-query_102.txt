@@ -1,0 +1,1 @@
+select * from bar as b where exists (select bar from serves where beer='Corona' and price<=3.00 and bar=b.name);

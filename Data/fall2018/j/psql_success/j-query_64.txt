@@ -1,0 +1,14 @@
+
+WITH increasingBars AS
+(SELECT bar, COUNT(beer) FROM serves GROUP BY bar),
+
+candidatePairs AS
+(SELECT i1.bar AS bar1, i2.bar AS bar2, COUNT(*) AS count FROM increasingBars AS i1, increasingBars AS i2, serves as s WHERE i1.count < i2.count AND s.bar = i1.bar GROUP BY bar1, bar2),
+
+mutualBeers AS
+(SELECT s1.bar AS bar1, s2.bar AS bar2, COUNT(*) AS count FROM serves AS s1, serves AS s2 WHERE s1.beer = s2.beer GROUP BY bar1, bar2),
+
+candidates AS
+((SELECT bar1, bar2, count FROM candidatePairs) INTERSECT (SELECT bar1, bar2, count FROM mutualBeers))
+
+SELECT bar1, bar2 FROM candidates;

@@ -1,0 +1,3 @@
+SELECT beer 
+FROM Serves
+Where bar = 'James Joyce Pub';

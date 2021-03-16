@@ -1,0 +1,1 @@
+(SELECT DISTINCT F.drinker FROM Frequents AS F WHERE F.bar LIKE '%James Joyce Pub%') INTERSECT (SELECT DISTINCT F.drinker FROM Frequents AS F WHERE F.bar LIKE 'Satisfaction%');

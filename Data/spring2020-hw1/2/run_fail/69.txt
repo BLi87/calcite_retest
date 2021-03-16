@@ -1,0 +1,1 @@
+select distinct bar from serves where beer = (select name from beer where brewer = 'Grupo Modelo')

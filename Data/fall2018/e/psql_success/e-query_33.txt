@@ -1,0 +1,3 @@
+(select bar from frequents where drinker='Ben' OR drinker='Dan') 
+except 
+(select f1.bar from frequents f1, frequents f2 where f1.drinker='Ben' AND f2.drinker='Dan' AND f1.bar=f2.bar);

@@ -1,0 +1,1 @@
+SELECT bar, SUM(earnings) AS total FROM (SELECT s.bar, CASE WHEN f.drinker IS NULL OR l.drinker IS NULL THEN 0 WHEN s.beer=l.beer THEN price*times_a_week ELSE 0 END AS earnings FROM serves AS s LEFT JOIN frequents AS f ON s.bar=f.bar LEFT JOIN likes AS l ON f.drinker=l.drinker) AS temp GROUP BY bar ORDER BY total DESC, bar;

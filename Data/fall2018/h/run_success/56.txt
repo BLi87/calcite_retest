@@ -1,0 +1,1 @@
+(SELECT name from drinker) EXCEPT ALL  (SELECT drinker from ((SELECT frequents.drinker, frequents.bar from frequents) EXCEPT ALL (SELECT likes.drinker, serves.bar from serves,likes WHERE likes.beer = serves.beer)) as x );

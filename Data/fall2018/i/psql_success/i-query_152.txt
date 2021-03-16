@@ -1,0 +1,1 @@
+(SELECT name FROM drinker) EXCEPT (SELECT t2.drinker FROM ((SELECT drinker, bar FROM frequents) INTERSECT (SELECT DISTINCT t1.drinker, serves.bar FROM serves INNER JOIN (SELECT t1.drinker, t1.beer FROM (SELECT drinker.name AS drinker, beer.name AS beer FROM drinker CROSS JOIN beer) AS t1 EXCEPT SELECT * FROM likes) as t1 ON serves.beer=t1.beer)) AS t2)

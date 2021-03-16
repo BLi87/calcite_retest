@@ -1,0 +1,5 @@
+SELECT beer, bar
+FROM ((SELECT beer, MAX(price)
+    FROM ((SELECT beer FROM likes WHERE drinker = 'Dan') a NATURAL JOIN serves s)
+    GROUP BY beer) a2 NATURAL JOIN serves s2)
+WHERE price = max

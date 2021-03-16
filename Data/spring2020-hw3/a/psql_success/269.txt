@@ -1,0 +1,6 @@
+SELECT S2.beer, S2.bar
+FROM serves S2
+WHERE (S2.beer, S2.price) IN (SELECT L.beer, MAX(S.price)
+FROM likes L, serves S
+WHERE L.drinker = 'Dan' AND L.beer = S.beer
+GROUP BY L.beer);

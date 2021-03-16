@@ -1,0 +1,2 @@
+SELECT name, address FROM bar JOIN serves ON bar.name=serves.bar 
+WHERE beer = 'Corona' and price <= 3;

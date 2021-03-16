@@ -1,0 +1,11 @@
+SELECT bar
+FROM frequents
+WHERE (
+  drinker = 'Ben' OR drinker = 'Dan'
+) EXCEPT (
+    SELECT f1.bar
+    FROM frequents f1 JOIN frequents f2 ON
+      f1.bar = f2.bar AND
+        f1.drinker = 'Ben' AND
+        f2.drinker = 'Dan'
+);

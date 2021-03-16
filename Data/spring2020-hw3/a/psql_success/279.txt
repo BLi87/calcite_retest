@@ -1,0 +1,5 @@
+select distinct S1.beer, S1.bar
+from likes L, serves S1
+where L.drinker = 'Dan' and L.beer = S1.beer and S1.price >= ALL(select price from serves where beer = S1.beer)
+
+

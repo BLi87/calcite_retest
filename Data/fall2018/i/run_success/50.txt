@@ -1,0 +1,17 @@
+/*
+
+SELECT * FROM frequents NATURAL JOIN serves
+
+(SELECT drinker, beer FROM (SELECT * FROM frequents NATURAL JOIN serves) AS foo) EXCEPT (SELECT * FROM likes)
+
+SELECT drinker FROM ((SELECT drinker, beer FROM (SELECT * FROM frequents NATURAL JOIN serves) AS foo) EXCEPT (SELECT * FROM likes)) AS fooof;
+
+SELECT name AS drinker FROM drinker
+
+/diff
+
+SELECT drinker FROM ((SELECT drinker, beer FROM (SELECT * FROM frequents NATURAL JOIN serves) AS foo) EXCEPT (SELECT * FROM likes)) AS fooof;
+
+*/
+
+(SELECT name AS drinker FROM drinker) EXCEPT (SELECT drinker FROM ((SELECT drinker, beer FROM (SELECT * FROM frequents NATURAL JOIN serves) AS foo) EXCEPT (SELECT * FROM likes)) AS fooof);

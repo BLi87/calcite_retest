@@ -1,0 +1,5 @@
+WITH Temp1 as (select MAX(price), serves.beer from serves, likes
+where likes.drinker = 'Dan' and likes.beer = serves.beer group by serves.beer) 
+select serves.beer, serves.bar
+from Temp1, serves
+where Temp1.beer = serves.beer and Temp1.max = serves.price

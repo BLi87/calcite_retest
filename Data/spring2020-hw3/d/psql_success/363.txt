@@ -1,0 +1,5 @@
+SELECT b.name,
+	   (SELECT COUNT(*) FROM likes l WHERE l.beer = b.name) AS cnt, 
+	   (SELECT AVG(price) FROM serves s WHERE s.beer = b.name) AS avg
+FROM beer b
+ORDER BY cnt DESC, b.name;

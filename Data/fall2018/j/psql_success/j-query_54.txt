@@ -1,0 +1,15 @@
+(SELECT x.bar2 AS bar2, x.bar1 AS bar1 FROM ((SELECT b.bar AS bar1, beer, a.name AS bar2 FROM (SELECT name FROM bar) AS a, (SELECT bar, beer FROM serves) AS b) EXCEPT (SELECT c.bar2, c.beer, c.bar1 FROM (SELECT b.bar AS bar1, beer, a.name AS bar2 FROM (SELECT name FROM bar) AS a, (SELECT bar, beer FROM serves) AS b) AS c)) AS x) EXCEPT (SELECT y.bar1 AS bar1, y.bar2 AS bar2 FROM ((SELECT b.bar AS bar1, beer, a.name AS bar2 FROM (SELECT name FROM bar) AS a, (SELECT bar, beer FROM serves) AS b) EXCEPT (SELECT c.bar2, c.beer, c.bar1 FROM (SELECT b.bar AS bar1, beer, a.name AS bar2 FROM (SELECT name FROM bar) AS a, (SELECT bar, beer FROM serves) AS b) AS c)) AS y);
+
+
+/*
+
+in e1 below, bar1 serves beer, and is paired with every bar2:
+(SELECT b.bar AS bar1, beer, a.name AS bar2 FROM (SELECT name FROM bar) AS a, (SELECT bar, beer FROM serves) AS b)
+
+this is for e2 but i dont think we need to actually rename anything
+(SELECT b.bar AS bar1, beer, a.name AS bar2 FROM (SELECT name FROM bar) AS a, (SELECT bar, beer FROM serves) AS b) EXCEPT (SELECT c.bar2, c.beer, c.bar1 FROM (SELECT b.bar AS bar1, beer, a.name AS bar2 FROM (SELECT name FROM bar) AS a, (SELECT bar, beer FROM serves) AS b) AS c);
+
+
+*/
+
+

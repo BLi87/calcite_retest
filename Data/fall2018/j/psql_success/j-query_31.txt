@@ -1,0 +1,12 @@
+--(j) Find all (bar1, bar2) pairs where the set of beer served at bar1 is a proper subset of those served at
+--bar2; i.e., bar2 serves every beer that bar1 serves and plus some more.
+(SELECT DISTINCT b1.bar, b2.bar FROM serves AS b1, serves AS b2 WHERE b1.bar <> b2.bar)
+
+EXCEPT
+
+(SELECT DISTINCT bars.bar, bars.name FROM (
+  (SELECT a.bar, a.name, a.beer FROM (serves CROSS JOIN bar) a)
+  EXCEPT
+  (SELECT b.name, b.bar, b.beer FROM (serves CROSS JOIN bar) b)
+) bars
+);

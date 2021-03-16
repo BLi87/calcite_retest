@@ -1,0 +1,12 @@
+with drinkfreq as (select *
+from frequents as f1 right join drinker as d1
+on f1.drinker = d1.name),
+
+maxfreq as(
+select name, max(times_a_week) as max_times
+from drinkfreq
+group by name)
+
+select maxfreq.name, f2.bar
+from maxfreq left join frequents as f2
+on maxfreq.max_times=f2.times_a_week and maxfreq.name=f2.drinker

@@ -1,0 +1,13 @@
+WITH PairLikes AS
+(SELECT d1.name AS drinker1,d2.name AS drinker2 FROM drinker AS d1,drinker AS d2
+WHERE d1.name <> d2.name)
+
+SELECT * FROM PairLikes p
+  WHERE not EXISTS
+    (SELECT * 
+    FROM likes l
+    WHERE p.drinker1 = l.drinker
+      and not EXISTS
+        (SELECT * 
+        FROM likes
+          WHERE beer = l.beer AND drinker = p.drinker2));

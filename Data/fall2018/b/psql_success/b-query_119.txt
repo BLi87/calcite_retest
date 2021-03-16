@@ -1,0 +1,3 @@
+SELECT DISTINCT drinker FROM frequents,
+(SELECT bar from serves where beer = 'Corona') AS places
+WHERE frequents.bar = places.bar;

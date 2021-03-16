@@ -1,0 +1,10 @@
+SELECT name, COALESCE(sum(times_a_week * price), 0) as amount
+FROM bar LEFT JOIN (
+  SELECT f.drinker, f.bar, f.times_a_week, s.beer, s.price
+  FROM frequents AS f, serves AS s, likes AS l
+  WHERE f.bar = s.bar
+  AND f.drinker = l.drinker
+  AND s.beer = l.beer
+) AS a ON bar.name = a.bar
+GROUP BY name
+ORDER BY amount DESC, name ASC;

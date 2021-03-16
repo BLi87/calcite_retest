@@ -1,0 +1,1 @@
+SELECT * FROM ((SELECT bar, drinker FROM Frequents) EXCEPT (SELECT freq1.bar, freq1.drinker FROM Frequents freq1, Frequents freq2 WHERE freq1.times_a_week < freq2.times_a_week AND freq1.bar = freq2.bar)) AS temp;

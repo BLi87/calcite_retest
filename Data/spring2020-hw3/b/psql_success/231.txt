@@ -1,0 +1,3 @@
+SELECT DISTINCT l1.drinker, l2.drinker 
+from likes l1, likes l2
+where (l1.drinker <> l2.drinker and l1.beer = l2.beer and (SELECT COUNT(beer) from likes where drinker = l1.drinker) < (SELECT COUNT(beer) from likes where drinker=l2.drinker))

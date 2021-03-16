@@ -1,0 +1,6 @@
+with cntlist as(SELECT l.beer, COUNT(drinker) cnt 
+FROM likes l GROUP BY l.beer), 
+avglist as (SELECT s.beer, AVG(s.price) avg FROM serves s GROUP BY s.beer),
+newcnt as (SELECT beer.name beer, cntlist.cnt FROM beer LEFT JOIN cntlist ON beer.name = cntlist.beer)
+
+SELECT newcnt.beer, coalesce(newcnt.cnt, 0), avglist.avg FROM newcnt LEFT JOIN avglist ON newcnt.beer = avglist.beer ORDER BY cnt DESC, beer ASC 

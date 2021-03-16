@@ -1,0 +1,1 @@
+SELECT DISTINCT beer, bar FROM ( SELECT   *  FROM   Serves AS Serves3 EXCEPT ( SELECT Serves1.bar, Serves1.beer, Serves1.price   FROM   Serves AS Serves1 , Serves AS Serves2  WHERE   Serves1.beer = Serves2.beer   AND  Serves1.bar <> Serves2.bar )) AS answer;

@@ -1,0 +1,1 @@
+select beer, bar from Serves except select beer1 as beer, bar1 as bar from (select S1.beer as beer1, S1.bar as bar1, S2.beer as beer2, S2.bar as bar2 from Serves as S1, Serves as S2 where S1.beer = S2.beer and S1.bar <> S2.bar) as T;

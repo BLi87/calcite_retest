@@ -1,0 +1,22 @@
+--Discussed RA translation with other students
+
+--e2
+SELECT e2.name, e2.bar FROM
+(SELECT Serves.bar, Serves.beer, Bar.name FROM --bar1, beer, bar2
+Serves CROSS JOIN Bar --e1
+  EXCEPT (
+    SELECT Bar.name, Serves.beer, Serves.bar FROM
+    Serves CROSS JOIN Bar
+  )
+)AS e2
+EXCEPT (
+  SELECT temp.bar, temp.name FROM
+  (SELECT Serves.bar, Serves.beer, Bar.name FROM --bar1, beer, bar2
+  Serves CROSS JOIN Bar --e1
+    EXCEPT (
+      SELECT Bar.name, Serves.beer, Serves.bar FROM
+      Serves CROSS JOIN Bar
+    )
+  ) AS temp
+)
+;

@@ -1,0 +1,19 @@
+(SELECT a1.bar, a2.bar
+FROM 
+	(SELECT bar, COUNT(beer) AS count
+	FROM Serves
+	GROUP BY bar) AS a1, 
+	(SELECT bar, COUNT(beer) AS count
+	FROM Serves
+	GROUP BY bar) AS a2
+WHERE a1.count < a2.count)
+EXCEPT
+((SELECT y1.bar, y2.bar
+FROM Serves y1, Serves y2
+WHERE (y2.bar, y1.beer) NOT IN
+	(SELECT bar,beer FROM Serves))
+INTERSECT
+(SELECT z1.bar, z2.bar
+FROM Serves z1, Serves z2
+WHERE (z1.bar, z2.beer) NOT IN
+	(SELECT bar,beer FROM Serves)));

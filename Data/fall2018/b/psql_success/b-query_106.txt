@@ -1,0 +1,5 @@
+SELECT DISTINCT drinker 
+FROM Frequents, 
+	(SELECT bar FROM Serves WHERE beer = 'Corona') 
+	AS CoronaServer 
+WHERE Frequents.bar = CoronaServer.bar;

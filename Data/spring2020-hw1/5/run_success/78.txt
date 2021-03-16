@@ -1,0 +1,1 @@
+SELECT drinker as name, bar, address FROM frequents INNER JOIN bar ON frequents.bar = bar.name WHERE times_a_week < 2

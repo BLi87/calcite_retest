@@ -1,0 +1,4 @@
+((select drinker from frequents) except (select distinct drinker from ((select distinct drinker, bar from frequents) except (select distinct l.drinker, f.bar from likes l, frequents f, serves s where l.drinker=f.drinker and f.bar=s.bar and l.beer=s.beer)) as T)) union ((select drinker.name as drinker from drinker) except (select drinker from frequents));
+
+
+

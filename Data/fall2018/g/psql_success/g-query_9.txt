@@ -1,0 +1,2 @@
+select bar, drinker from (select bar, drinker, rank() over (partition by bar
+  order by times_a_week DESC)as rank from frequents) as bitch where rank =1;

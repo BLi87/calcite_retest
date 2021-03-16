@@ -1,0 +1,1 @@
+SELECT frequents.drinker FROM frequents WHERE frequents.bar = 'James Joyce Pub' INTERSECT SELECT frequents.drinker FROM frequents WHERE frequents.bar = 'Satisfaction';

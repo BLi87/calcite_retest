@@ -1,0 +1,4 @@
+with v as ((with u as (with l as (select likes.drinker, beer, bar, times_a_week from likes join frequents on likes.drinker = frequents.drinker) select drinker, l.beer, l.bar, times_a_week, price from l join serves on serves.beer = l.beer and serves.bar = l.bar) select bar, sum(times_a_week * price) as amount from u group by bar)
+union
+(with s as (select name from bar except (with t as (with w as (select likes.drinker, beer, bar, times_a_week from likes join frequents on likes.drinker = frequents.drinker) select drinker, w.beer, w.bar, times_a_week, price from w join serves on serves.beer = w.beer and serves.bar = w.bar) select bar as name from t group by bar)) select name, 0.0 as amount from s))
+select * from v order by amount desc, bar;

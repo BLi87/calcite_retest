@@ -1,0 +1,12 @@
+-- SELECT DISTINCT Bar.name, Bar.address
+-- FROM Bar,Serves
+-- WHERE Serves.bar = Bar.name
+-- AND Serves.beer = 'Corona'
+-- AND Serves.price >= 3.00;
+
+
+
+SELECT Serves.bar, Bar.address
+FROM Serves
+JOIN Bar ON Bar.name = Serves.bar
+WHERE Serves.beer = 'Corona' AND Serves.price <=3.00;

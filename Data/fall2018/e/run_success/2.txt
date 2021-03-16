@@ -1,0 +1,6 @@
+select bar from frequents 
+	where drinker='Dan' or drinker='Ben' 
+	except (select danBar.bar from 
+			(select bar from frequents where drinker='Dan') AS danBar, 
+			(select bar from frequents where drinker='Ben') AS benBar 
+			where danBar.bar=benBar.bar);

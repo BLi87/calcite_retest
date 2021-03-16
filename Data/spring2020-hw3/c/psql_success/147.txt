@@ -1,0 +1,22 @@
+WITH fs AS
+(SELECT DISTINCT drinker, frequents.bar AS "bar", beer
+FROM frequents
+JOIN
+serves ON(frequents.bar = serves.bar)),
+fl AS
+(SELECT DISTINCT frequents.drinker AS "drinker", bar, beer
+FROM frequents
+JOIN
+likes ON (frequents.drinker = likes.drinker)),
+diff AS
+(SELECT *
+FROM fs
+EXCEPT
+SELECT *
+FROM fl)
+
+SELECT name
+FROM drinker
+EXCEPT
+SELECT DISTINCT drinker AS "name"
+FROM diff;

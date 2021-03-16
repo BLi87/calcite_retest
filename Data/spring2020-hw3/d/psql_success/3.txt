@@ -1,0 +1,9 @@
+with temp1 as (select beer.name as beer from beer except select serves.beer from serves),
+     temp2 as (select temp1.beer, null::int4 as avg from temp1),
+     temp3 as (select serves.beer, AVG(serves.price) as avg from serves group by serves.beer),
+     temp4 as (select* from temp2 union select * from temp3),
+     temp5 as (select beer.name as beer from beer except select likes.beer from likes),
+     temp6 as (select temp5.beer, 0 as cnt from temp5),
+     temp7 as (select likes.beer, COUNT(*) as cnt from likes group by likes.beer),
+     temp8 as (select* from temp6 union select * from temp7)
+select temp4.beer, temp8.cnt, temp4.avg::numeric from temp4, temp8 where temp4.beer = temp8.beer 

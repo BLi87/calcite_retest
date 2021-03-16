@@ -1,0 +1,1 @@
+select name, address from Bar left outer join Serves on Bar.name = Serves.bar where Serves.beer = 'Corona' and Serves.price <= 3;

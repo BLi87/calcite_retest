@@ -1,0 +1,4 @@
+with temp as (SELECT drinker, MAX(times_a_week) FROM frequents GROUP BY drinker),
+freq as (SELECT  f.drinker, bar FROM frequents f, temp WHERE f.drinker = temp.drinker AND times_a_week = temp.max)
+
+SELECT drinker.name, freq.bar FROM drinker LEFT JOIN freq ON freq.drinker = drinker.name

@@ -1,0 +1,14 @@
+select fmax.name, f0.bar
+from 
+    (select f.drinker as name, f.bar, f.times_a_week
+    from frequents as f) as f0 
+right outer join 
+    (select f2.name, max(f2.times_a_week)  
+    from (select d.name, f.times_a_week
+        from frequents f
+        right outer join 
+        drinker d 
+        on f.drinker = d.name) as f2 
+    group by f2.name
+    ) as fmax 
+on f0.name = fmax.name and f0.times_a_week = fmax.max;

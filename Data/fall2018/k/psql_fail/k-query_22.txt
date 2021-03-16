@@ -1,0 +1,7 @@
+SELECT SUM(price), bar FROM (SELECT DISTINCT drinker, bar, Serves.beer, price FROM Serves FULL OUTER JOIN Likes ON Serves.beer = Likes.beer) AS foo GROUP BY bar;
+
+
+
+SELECT SUM(times_a_week), bar FROM Frequents GROUP BY bar
+
+SELECT SUM(price), bar FROM Serves GROUP BY bar ORDER BY sum DESC, bar ASC

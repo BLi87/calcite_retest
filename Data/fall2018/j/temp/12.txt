@@ -1,0 +1,10 @@
+SELECT DISTINCT S1.bar AS bar1, S2.bar AS bar2 FROM Serves S1, Serves S2 WHERE NOT S1.bar = S2.bar
+EXCEPT
+(SELECT DISTINCT S1.bar AS bar1, NotServes.bar AS bar2 
+ FROM Serves AS S1, 
+ (SELECT DISTINCT bar, name AS beer FROM Serves, Beer EXCEPT SELECT bar, beer FROM Serves) AS NotServes 
+ WHERE (NOT S1.bar = NotServes.bar AND S1.beer = NotServes.beer)) 
+ UNION 
+ SELECT S1.bar AS bar1, S2.bar AS bar2 
+ FROM Serves AS S1, Serves AS S2
+ WHERE NOT EXISTS (SELECT beer FROM Serves WHERE (beer NOT IN (SELECT s3.beer FROM Serves s3, Serves s4 WHERE NOT s3.bar = S4.bar AND s3.beer = S4.beer)));

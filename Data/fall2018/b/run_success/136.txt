@@ -1,0 +1,5 @@
+select distinct drinker
+from frequents
+join serves
+on frequents.bar=serves.bar
+where beer='Corona';

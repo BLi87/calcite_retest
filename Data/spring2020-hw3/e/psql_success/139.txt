@@ -1,0 +1,9 @@
+WITH drinkerLOJfrequents as
+  (SELECT *
+  FROM drinker LEFT OUTER JOIN frequents ON drinker.name = frequents.drinker)
+SELECT name, bar
+FROM drinkerLOJfrequents
+WHERE drinkerLOJfrequents.times_a_week >= ALL(SELECT times_a_week
+                                              FROM frequents
+                                              WHERE drinkerLOJfrequents.drinker = frequents.drinker)
+    OR drinkerLOJfrequents.drinker IS NULL

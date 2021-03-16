@@ -1,0 +1,25 @@
+/* Collaborated during UTA office hours */
+WITH UnorderedBarRevenues AS ((WITH info AS 
+
+	(WITH LF AS (SELECT likes.drinker, beer, bar, times_a_week FROM likes JOIN frequents ON likes.drinker = frequents.drinker) SELECT drinker, 
+		LF.beer, LF.bar, times_a_week, price FROM LF JOIN serves ON serves.beer = LF.beer and serves.bar = LF.bar)
+
+	SELECT bar, SUM(times_a_week*price) AS amount FROM info GROUP BY bar)
+
+	UNION
+
+	(WITH zeros AS
+	(SELECT name FROM Bar
+
+	EXCEPT
+
+	(WITH info AS 
+
+		(WITH LF AS (SELECT likes.drinker, beer, bar, times_a_week FROM likes JOIN frequents ON likes.drinker = frequents.drinker) 
+			SELECT drinker, LF.beer, LF.bar, times_a_week, price FROM LF JOIN serves ON serves.beer = LF.beer AND serves.bar = LF.bar)
+
+		SELECT bar AS name FROM info GROUP BY bar))
+
+	SELECT name, 0.0 AS amount FROM zeros))
+
+SELECT * FROM UnorderedBarRevenues ORDER BY amount desc, bar;

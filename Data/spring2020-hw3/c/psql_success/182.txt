@@ -1,0 +1,20 @@
+SELECT drinker from frequents
+UNION
+SELECT drinker from likes
+UNION
+SELECT name from drinker
+EXCEPT
+(
+  WITH Temp1 AS
+  (
+    (SELECT drinker, bar, beer
+    FROM frequents
+    NATURAL JOIN serves)
+    EXCEPT
+    (SELECT drinker, bar, beer
+    FROM frequents
+    NATURAL JOIN likes)
+  )
+  SELECT drinker
+  FROM Temp1
+  )

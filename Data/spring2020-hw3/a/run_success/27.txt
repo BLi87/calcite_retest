@@ -1,0 +1,7 @@
+select serves.beer, serves.bar
+from serves inner join (select l.beer, s2.price
+                        from likes l inner join (select beer, max(price) price from serves group by beer) s2
+                        on l.drinker = 'Dan'
+                        and s2.beer = l.beer) s3
+on serves.price = s3.price
+and serves.beer = s3.beer;

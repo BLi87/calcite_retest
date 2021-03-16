@@ -1,0 +1,19 @@
+with A(drinker, bar, beer) as
+(select drinker, bar, beer
+from frequents natural join serves),
+
+B(drinker, bar, beer) as
+(select drinker, bar, beer
+from serves natural join likes)
+
+(select name
+from drinker)
+except
+(select drinker
+from A
+where not exists (
+select *
+from B
+where A.drinker=B.drinker
+and A.bar=B.bar
+and A.beer=B.beer));

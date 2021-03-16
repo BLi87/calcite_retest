@@ -1,0 +1,8 @@
+WITH earnings(bar,amount) AS 
+(SELECT f.bar,times_a_week*price FROM frequents f, serves s, likes l 
+	WHERE(f.bar = s.bar AND f.drinker = l.drinker AND l.beer = s.beer))
+
+SELECT bar,SUM(amount) total FROM earnings GROUP BY bar
+
+UNION SELECT name,0.00 AS total FROM 
+(SELECT name FROM bar EXCEPT SELECT bar FROM earnings) AS badbeer ORDER BY total DESC, bar ASC;

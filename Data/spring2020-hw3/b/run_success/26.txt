@@ -1,0 +1,27 @@
+SELECT a.drinker AS drinker1, b.drinker AS drinker2
+FROM likes a, likes b
+WHERE a.drinker <> b.drinker
+
+EXCEPT
+
+SELECT drinker1, drinker2
+FROM (
+  SELECT drinker1, drinker2, beer
+  FROM (
+    SELECT a.drinker AS drinker1, b.drinker AS drinker2, a.beer AS beer1, b.beer AS beer2
+    FROM likes a, likes b
+    WHERE a.drinker <> b.drinker
+  ) s, likes
+  WHERE drinker1 = likes.drinker
+  
+  EXCEPT
+  
+  SELECT drinker1, drinker2, beer
+  FROM (
+    SELECT a.drinker AS drinker1, b.drinker AS drinker2, a.beer AS beer1, b.beer AS beer2
+    FROM likes a, likes b
+    WHERE a.drinker <> b.drinker
+  ) s, likes
+  WHERE drinker2 = likes.drinker
+  ) t
+

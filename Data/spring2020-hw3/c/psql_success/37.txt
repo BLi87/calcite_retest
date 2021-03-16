@@ -1,0 +1,7 @@
+with
+allCombos as (select name as drinker, beer, bar from serves, drinker),
+actualCombos as (select drinker, beer, bar from likes natural join serves),
+shouldntGo as (select * from allCombos except select * from actualCombos),
+freq as (select drinker, bar from frequents),
+badDrinkers as (select * from freq intersect select drinker, bar from shouldntGo)
+(select name from drinker) except (select drinker as name from badDrinkers)

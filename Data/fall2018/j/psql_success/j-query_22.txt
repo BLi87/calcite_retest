@@ -1,0 +1,2 @@
+--Worked with Richard Vargo and TA in OH
+SELECT last.name, last.bar FROM((SELECT subset.name, subset.bar FROM((SELECT serves.bar, beer, bar.name FROM serves, bar)EXCEPT (SELECT bar.name, beer, serves.bar FROM serves, bar)) subset)EXCEPT(SELECT subset2.bar, subset2.name FROM((SELECT serves.bar, beer, bar.name FROM serves, bar) EXCEPT(SELECT bar.name, beer, serves.bar FROM serves, bar))subset2))last;

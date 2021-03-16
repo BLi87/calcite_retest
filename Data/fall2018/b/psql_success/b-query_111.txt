@@ -1,0 +1,1 @@
+select distinct drinker from serves,frequents where serves.bar=frequents.bar and serves.beer='Corona';

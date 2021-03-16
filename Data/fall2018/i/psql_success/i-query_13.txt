@@ -1,0 +1,57 @@
+(
+  SELECT
+    name AS drinker
+  FROM
+    drinker
+)
+EXCEPT
+(
+  SELECT
+    temp3.drinker
+  FROM
+  (
+    (
+      SELECT
+        drinker, bar
+      FROM
+        frequents
+    )
+    EXCEPT
+    (
+      SELECT
+        temp2.drinker, temp2.bar
+      FROM
+        (
+          (
+            SELECT
+              DISTINCT s1.drinker, s2.bar
+            FROM
+              likes AS s1, serves AS s2
+          )
+          EXCEPT
+          (
+            SELECT
+              temp.drinker, temp.bar
+            FROM
+              (
+                (
+                  SELECT
+                    DISTINCT s1.drinker, s2.beer, s2.bar
+                  FROM
+                    likes AS s1, serves AS s2
+                )
+                EXCEPT
+                (
+                  SELECT
+                    drinker, beer, bar
+                  FROM
+                  (
+                    likes NATURAL JOIN serves
+                  )
+                )
+              ) AS temp
+          )
+        ) AS temp2
+    )
+  ) AS temp3
+);

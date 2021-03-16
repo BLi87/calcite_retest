@@ -1,0 +1,3 @@
+SELECT drinker.name FROM drinker EXCEPT
+(SELECT f.drinker FROM
+(SELECT frequents.drinker, serves.beer FROM frequents JOIN serves ON frequents.bar = serves.bar EXCEPT (SELECT * FROM likes)) f);

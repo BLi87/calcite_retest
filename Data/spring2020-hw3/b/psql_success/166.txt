@@ -1,0 +1,60 @@
+with crossdrinker(drinker1, drinker2) as (
+  select
+    d1.name,
+    d2.name
+  from
+    drinker d1
+    cross join drinker d2
+  where
+    d1.name <> d2.name
+),
+crossdrinkernoelim(drinker1, drinker2) as (
+  select
+    d1.name,
+    d2.name
+  from
+    drinker d1
+    cross join drinker d2
+),
+drinkerslikes(drinker1, drinker2, beer) as (
+  select
+    crossdrinkernoelim.drinker1,
+    crossdrinkernoelim.drinker2,
+    likes.beer
+  from
+    likes
+    join crossdrinkernoelim on crossdrinkernoelim.drinker1 = likes.drinker
+),
+doublelikes(drinker1, drinker2, beer) as (
+  select
+    l1.drinker,
+    l2.drinker,
+    l1.beer
+  from
+    likes l1,
+    likes l2
+  where
+    l1.beer = l2.beer
+    and l1.drinker <> l2.drinker
+),
+
+rightside(drinker1, drinker2) as
+(select drinker1, drinker2, beer
+from drinkerslikes
+
+except
+select drinker1, drinker2, beer
+from doublelikes
+)
+
+
+select drinker1, drinker2
+from 
+(select drinker1, drinker2
+from crossdrinker 
+
+except 
+
+select drinker1, drinker2
+from rightside
+) as final

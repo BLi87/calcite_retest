@@ -1,0 +1,5 @@
+SELECT bar 
+FROM serves 
+JOIN beer 
+ON serves.beer = beer.name 
+WHERE beer.brewer = 'Grupo Modelo';

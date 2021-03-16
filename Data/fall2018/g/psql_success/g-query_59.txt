@@ -1,0 +1,9 @@
+create table max_times_a_week AS (
+  Select bar, Max(times_a_week)
+  From frequents
+  Group By bar);
+
+Select frequents.drinker, frequents.bar, frequents.times_a_week
+From frequents, max_times_a_week
+Where frequents.bar = max_times_a_week.bar
+AND frequents.times_a_week = max_times_a_week.max;

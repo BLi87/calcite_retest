@@ -1,0 +1,16 @@
+SELECT b.name, CASE WHEN revenue.revenue is NULL THEN 0
+				ELSE revenue.revenue
+				END amt
+FROM (bar b LEFT JOIN
+(SELECT bar, SUM(revenue) revenue FROM(
+
+select menu.bar, menu.times_a_week*menu.price revenue FROM
+(SELECT s1.* , s2.price FROM ((SELECT f1.*, l1.beer FROM                                                   
+frequents f1 INNER JOIN likes l1 ON f1.drinker = l1.drinker) s1 INNER JOIN
+(SELECT l1.drinker, s.*
+ FROM likes l1 INNER JOIN serves s on l1.beer = s.beer)s2 ON s1.drinker = s2.drinker AND s1.beer = s2.beer AND s1.bar = s2.bar)) menu) revs
+ 
+ GROUP BY bar) revenue
+
+ ON b.name = revenue.bar)
+ ORDER BY amt DESC, b.name ASC;

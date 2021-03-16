@@ -1,0 +1,6 @@
+SELECT B.name as beer, 
+(SELECT COUNT(beer) FROM likes WHERE beer = b.name) AS count,
+(SELECT AVG(price) FROM serves WHERE beer = b.name) AS average
+FROM beer b
+GROUP BY beer
+ORDER BY count desc, beer asc

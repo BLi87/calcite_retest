@@ -1,0 +1,15 @@
+-- For each bar, find the drinker who frequents it the greatest 
+-- number of times. Your output should be a list of (bar, drinker) pairs.
+-- If multiple drinkers tie for  the most frequent visitor to bar,
+-- list them all as separate pairs.
+
+SELECT bar, drinker
+FROM frequents 
+WHERE (bar, times_a_week) IN 
+(
+	SELECT bar, MAX(times_a_week)
+	FROM frequents
+	GROUP BY bar
+);
+
+

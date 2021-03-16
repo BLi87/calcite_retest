@@ -1,0 +1,16 @@
+
+SELECT t2.bar, t2.name
+FROM
+((SELECT Bar.name, Serves.bar
+ FROM Bar
+ CROSS JOIN Serves)
+EXCEPT
+(SELECT t1.name, t1.bar
+ FROM ((SELECT Bar.name, Serves.bar, Serves.beer
+        FROM Bar 
+        CROSS JOIN Serves)
+       EXCEPT
+       (SELECT Serves.bar, Bar.name, Serves.beer
+        FROM Serves
+        CROSS JOIN Bar)) as t1)) as t2
+WHERE t2.name <> t2.bar;

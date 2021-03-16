@@ -1,0 +1,16 @@
+WITH p(bar, amount) AS
+	(SELECT bar, times_a_week*price AS amount
+	FROM frequents NATURAL JOIN serves NATURAL JOIN likes),
+profits(bar,amount) AS
+	(SELECT bar, SUM(amount) AS amount FROM p GROUP BY bar),
+b(bar) AS
+	(SELECT name AS bar FROM bar)
+
+SELECT b.bar, CASE
+	WHEN amount IS NULL THEN 0
+	ELSE amount
+	END
+
+	FROM b LEFT OUTER JOIN profits
+		ON b.bar = profits.bar
+	ORDER BY amount DESC, bar;

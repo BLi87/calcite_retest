@@ -1,0 +1,1 @@
+select * from (select answer.bar, sum(answer.sum) from ((select distinct bar, 0 as sum from serves) union (select ans.bar, sum(ans.times_a_week*ans.price) from (frequents natural join likes natural join serves) ans group by bar)) answer group by answer.bar) final order by final.sum desc, final.bar;

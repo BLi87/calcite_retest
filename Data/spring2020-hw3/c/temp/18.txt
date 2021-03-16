@@ -1,0 +1,9 @@
+with drinkerserves as (SELECT d.name drinker, s.bar, s.beer FROM drinker d CROSS JOIN serves s),
+likesserves as (SELECT l.drinker drinker, bar, l.beer beer FROM likes l JOIN serves ON l.beer = serves.beer), 
+drinkerdiffs as (SELECT drinkerserves.drinker, drinkerserves.bar, drinkerserves.beer FROM drinkerserves 
+EXCEPT SELECT likesserves.drinker, likesserves.bar, likesserves.beer FROM likesserves),
+new as (SELECT f.drinker, f.bar FROM frequents f EXCEPT SELECT drinkerdiffs.drinker, drinkerdiffs.bar FROM drinkerdiffs),
+newtwo as (SELECT name FROM drinker EXCEPT (SELECT drinker FROM (SELECT f2.drinker, f2.bar 
+FROM frequents f2  EXCEPT (SELECT new.drinker, new.bar FROM new)) as newthree))
+
+SELECT name FROM newtwo

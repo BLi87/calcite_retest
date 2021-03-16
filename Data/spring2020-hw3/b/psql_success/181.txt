@@ -1,0 +1,19 @@
+WITH Temp1 AS
+  (SELECT DISTINCT A.name as drinker1, B.name as drinker2
+  FROM drinker as A, drinker as B
+  WHERE A.name != B.name),
+  Temp2 AS
+  (
+    (SELECT DISTINCT  D.name, C.beer, C.drinker
+    FROM likes C, drinker D
+    WHERE C.drinker != D.name)
+  EXCEPT ALL
+    (SELECT DISTINCT E.drinker, E.beer, F.drinker
+    FROM likes E, likes F
+    WHERE E.drinker != F.drinker and E.beer = F.beer)
+  )
+SELECT DISTINCT drinker1, drinker2
+FROM Temp1
+EXCEPT ALL
+(SELECT drinker, name
+FROM Temp2)

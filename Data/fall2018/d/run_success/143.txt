@@ -1,0 +1,11 @@
+
+
+
+SELECT DISTINCT T.drinker
+FROM (SELECT *
+	 FROM frequents
+	 WHERE bar = 'James Joyce Pub') AS T,
+	 (SELECT drinker
+	 FROM frequents
+	 WHERE bar = 'Satisfaction') AS T2
+WHERE T.drinker = T2.drinker;

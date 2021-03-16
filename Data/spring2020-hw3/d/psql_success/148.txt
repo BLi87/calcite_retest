@@ -1,0 +1,20 @@
+WITH joinedLikes AS
+(SELECT name, drinker
+FROM (beer LEFT OUTER JOIN likes ON (beer.name = likes.beer))),
+countsDone AS
+(SELECT joinedLikes.name AS "beer", COUNT(drinker) AS "cnt"
+FROM joinedlikes
+GROUP by name),
+aprice AS
+(SELECT beer, AVG(price) AS "avg"
+FROM serves
+GROUP BY beer),
+lastCombo AS
+(SELECT countsDone.beer AS "beer", cnt, avg
+FROM countsDone
+LEFT OUTER JOIN
+aprice ON (aprice.beer = countsDone.beer))
+
+SELECT *
+FROM lastCombo
+ORDER by cnt DESC, beer ASC;

@@ -1,0 +1,11 @@
+(SELECT F1.drinker, F1.bar
+FROM frequents F1
+WHERE F1.times_a_week = 
+    (SELECT MAX(F2.times_a_week)
+    FROM frequents F2
+    WHERE F1.drinker = F2.drinker))
+UNION
+(SELECT J.name AS drinker, null AS bar
+FROM ((SELECT D.name
+        FROM drinker D) 
+        EXCEPT (SELECT DISTINCT F.drinker FROM frequents F)) AS J)

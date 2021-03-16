@@ -1,0 +1,13 @@
+ SELECT name FROM drinker
+ EXCEPT
+ SELECT x.drinker as name 
+ FROM ( SELECT f1.drinker, f1.bar, s1.beer
+ FROM frequents f1, serves s1
+ WHERE f1.bar = s1.bar
+ EXCEPT
+  SELECT f2.drinker, f2.bar, s2.beer 
+  FROM frequents f2, serves s2, likes l2 
+  WHERE f2.bar = s2.bar 
+  AND f2.drinker = l2.drinker 
+  AND s2.beer = l2.beer) AS x;
+

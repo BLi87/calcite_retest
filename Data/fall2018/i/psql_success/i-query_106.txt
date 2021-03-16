@@ -1,0 +1,37 @@
+/*(i) Find names of all drinkers who frequent only those bars that serve only beers they like.
+
+#all drinker EXCEPT
+#drinkers who frequent bars that serve ANY beer they dislike
+	#find beers that drinker dislikes
+	#repeat h with that instead of likes
+
+NEED ALL DRINKERS EXCEPT (WORKS)
+
+#WORKS:
+#dislikes.name = beer
+#SELECT DISTINCT dislike_serve.beer, dislike_serve.drinker FROM
+
+*/
+
+/* (DRINKER, DISLIKES) */
+SELECT drinker.name as drinker FROM drinker 
+EXCEPT 
+SELECT DISTINCT frequents.drinker /*, frequents.bar */FROM 
+	frequents
+	INNER JOIN
+	/*bars frequented UNION dislike_bars gives us a list of drinkers who frequent bars that serve beers they dislike*/
+	(SELECT dislike_bars.drinker as drinker,/* dislike_bars.beer as beer, */ dislike_bars.bar as bar FROM (
+		SELECT * FROM (
+			SELECT drinker.name as drinker, beer.name as beer1 FROM beer CROSS JOIN drinker
+			EXCEPT 
+			SELECT likes.drinker as drinker, likes.beer as beer1 FROM likes 
+		) as dislikers
+		/* must now be matched with bars that serve dislikes */
+	INNER JOIN 
+		serves
+	ON serves.beer = dislikers.beer1
+	) as dislike_bars)
+	as badness
+	ON frequents.drinker=badness.drinker AND frequents.bar=badness.bar
+
+

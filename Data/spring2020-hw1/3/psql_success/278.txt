@@ -1,0 +1,5 @@
+SELECT d1.drinker as drinker1, d2.drinker as drinker2, d1.beer as beer
+  FROM likes as d1, likes as d2
+  WHERE d1.drinker < d2.drinker
+    AND d1.beer = d2.beer
+  ORDER BY drinker1, drinker2

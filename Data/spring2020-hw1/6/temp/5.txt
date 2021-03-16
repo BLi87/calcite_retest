@@ -1,0 +1,3 @@
+SELECT DISTINCT one.bar
+FROM serves as one, serves as two
+WHERE one.bar <> two.bar AND one.price < two.price AND one.beer = two.beer;

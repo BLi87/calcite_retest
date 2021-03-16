@@ -1,0 +1,18 @@
+WITH
+a AS 
+(SELECT F.drinker, F.bar, S.beer
+FROM frequents F, serves S
+WHERE F.bar = S.bar),
+
+b AS 
+(SELECT L.drinker, S.bar, S.beer
+FROM likes L, serves S
+WHERE L.beer = S.beer),
+
+diff AS
+(SELECT DISTINCT drinker
+FROM ((SELECT * FROM a) EXCEPT (SELECT * FROM b)) AS temp)
+
+SELECT name
+FROM drinker
+WHERE name NOT IN (SELECT * FROM diff);

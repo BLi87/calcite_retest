@@ -1,0 +1,16 @@
+
+WITH 
+
+	dansdrinks(bar, beer, price) AS
+	(SELECT s.bar, l.beer, s.price
+	FROM serves s, likes l
+	WHERE s.beer = l.beer AND l.drinker = 'Dan'),
+
+	cheap(beer, bar) AS
+	(SELECT d1.beer, d1.bar
+	FROM dansdrinks d1, dansdrinks d2
+	WHERE d1.beer = d2.beer AND d1.price < d2.price)
+
+(SELECT beer, bar FROM dansdrinks)
+EXCEPT
+(SELECT beer, bar FROM cheap);

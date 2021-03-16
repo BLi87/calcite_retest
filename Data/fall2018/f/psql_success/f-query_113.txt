@@ -1,0 +1,5 @@
+SELECT serves.beer, bar
+FROM serves, (SELECT count(bar), beer
+				FROM serves
+				GROUP BY beer) as counter
+WHERE serves.beer = counter.beer AND counter.count =1;

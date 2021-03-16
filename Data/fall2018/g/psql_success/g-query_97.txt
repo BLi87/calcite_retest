@@ -1,0 +1,2 @@
+
+SELECT bar, drinker FROM Frequents WHERE (bar, times_a_week) IN (SELECT bar, MAX(times_a_week) FROM Frequents GROUP BY bar);

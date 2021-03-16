@@ -1,0 +1,19 @@
+SELECT
+FinalBeers.beer,
+bar
+FROM
+(SELECT
+beer
+FROM
+(SELECT
+beer,
+COUNT(*) AS amount
+FROM
+Serves
+GROUP BY
+beer) as BeerCount
+WHERE
+amount = 1 ) FinalBeers
+JOIN
+Serves on FinalBeers.beer = Serves.beer
+;

@@ -1,0 +1,1 @@
+select name from drinker WHERE NOT EXISTS ((select beer from serves WHERE serves.bar IN (select bar from frequents WHERE drinker = name)) EXCEPT (select beer from likes where drinker = name));

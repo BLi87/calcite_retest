@@ -1,0 +1,5 @@
+with temp1 as (select distinct f1.drinker, f2.bar from frequents f1, frequents f2 where f1.drinker = f2.drinker and f2.times_a_week < f1.times_a_week),
+     temp2 as (select drinker.name as drinker from drinker except select frequents.drinker from frequents),
+     temp3 as (select temp2.drinker, null::text as bar from temp2),
+     temp4 as (select frequents.drinker, frequents.bar from frequents except select * from temp1)
+select * from temp4 union select * from temp3

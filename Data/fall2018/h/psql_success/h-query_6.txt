@@ -1,0 +1,1 @@
+SELECT name FROM Drinker WHERE name NOT IN (SELECT drinker FROM((SELECT drinker, bar FROM Frequents) EXCEPT (SELECT drinker, bar FROM Frequents NATURAL JOIN Serves NATURAL JOIN Likes)) AS d);

@@ -1,0 +1,1 @@
+SELECT f1.drinker FROM frequents AS f1, frequents AS f2 WHERE f1.drinker=f2.drinker AND f1.bar='James Joyce Pub' AND f2.bar='Satisfaction';

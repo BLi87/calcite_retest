@@ -1,0 +1,7 @@
+WITH most AS (SELECT f1.drinker, f1.bar
+			  FROM frequents f1
+			  WHERE times_a_week = (SELECT MAX(times_a_week)
+						  			FROM frequents f2
+						  			WHERE f1.drinker = f2.drinker))
+SELECT d.name, m.bar
+FROM most m RIGHT OUTER JOIN drinker d ON m.drinker = d.name;

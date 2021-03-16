@@ -1,0 +1,3 @@
+with sns(b1,b2) as (select b1.name, b2.name from bar as b1, bar as b2 where exists((select beer from serves where bar = b1.name) except (select beer from serves where bar = b2.name))),
+nss(b1,b2) as (select b2, b1 from sns)
+(select * from sns) except (select * from nss)

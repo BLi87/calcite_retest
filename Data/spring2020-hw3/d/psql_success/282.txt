@@ -1,0 +1,5 @@
+select distinct B.name as beer, 
+(select count(drinker) from likes where beer=B.name) as cnt, 
+(select avg(price) from serves where beer=B.name) as avg
+from beer B
+group by B.name

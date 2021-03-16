@@ -1,0 +1,17 @@
+WITH allPairs AS (
+SELECT d1.name one, d2.name two FROM drinker d1, drinker d2
+WHERE d1.name <> d2.name
+),
+drinkerOne AS (
+SELECT allPairs.one, allPairs.two, likes.beer FROM likes, allPairs
+WHERE allPairs.one = likes.drinker
+),
+drinkerTwo AS (
+SELECT allPairs.one, allPairs.two, likes.beer FROM likes, allPairs
+WHERE allPairs.two = likes.drinker
+),
+oneTwoDiff AS (
+SELECT * FROM drinkerOne EXCEPT (SELECT * FROM drinkerTwo)
+)
+
+SELECT * FROM allPairs EXCEPT (SELECT oneTwoDiff.one, oneTwoDiff.two FROM oneTwoDiff)

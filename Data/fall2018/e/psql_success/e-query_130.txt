@@ -1,0 +1,9 @@
+(select bar 
+from frequents 
+where drinker = 'Ben' OR drinker = 'Dan')
+except
+((select bar 
+from frequents where drinker = 'Ben')
+intersect
+(select bar 
+from frequents where drinker = 'Dan'));

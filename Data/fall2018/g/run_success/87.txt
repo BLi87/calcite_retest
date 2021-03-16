@@ -1,0 +1,6 @@
+(SELECT bar,drinker 
+	FROM frequents)
+EXCEPT
+(SELECT frequents1.bar,frequents1.drinker 
+	FROM frequents AS frequents1, frequents AS frequents2 
+	WHERE frequents1.bar = frequents2.bar AND frequents1.times_a_week<frequents2.times_a_week);

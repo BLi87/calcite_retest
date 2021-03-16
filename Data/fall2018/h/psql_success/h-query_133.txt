@@ -1,0 +1,16 @@
+select distinct name
+from drinker
+except
+select distinct f1.drinker
+from (
+select distinct drinker, bar
+from frequents
+except
+select distinct FreqLikes.drinker, FreqLikes.bar
+from (select frequents.drinker, frequents.bar, likes.beer
+from frequents
+full join likes
+on frequents.drinker = likes.drinker) as FreqLikes
+full join serves as s1
+on s1.bar = FreqLikes.bar
+where s1.beer = FreqLikes.beer) as f1;

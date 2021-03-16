@@ -1,0 +1,33 @@
+-- (SELECT DISTINCT name
+-- FROM Bar,Frequents
+-- WHERE Bar.name = Frequents.bar
+-- AND Frequents.drinker = 'Ben' or Frequents.drinker = 'Dan')
+-- EXCEPT
+-- ((SELECT DISTINCT name
+-- FROM Bar,Frequents
+-- WHERE Bar.name = Frequents.bar
+-- AND Frequents.drinker = 'Ben')
+-- UNION
+-- (SELECT DISTINCT name
+-- FROM Bar,Frequents
+-- WHERE Bar.name = Frequents.bar
+-- AND Frequents.drinker = 'Dan'));
+
+
+((SELECT DISTINCT Frequents.bar
+FROM Frequents
+WHERE Frequents.drinker = 'Ben')
+EXCEPT
+(SELECT DISTINCT Frequents.bar
+FROM Frequents
+WHERE Frequents.drinker = 'Dan'))
+
+UNION
+
+((SELECT DISTINCT Frequents.bar
+FROM Frequents
+WHERE Frequents.drinker = 'Dan')
+EXCEPT
+(SELECT DISTINCT Frequents.bar
+FROM Frequents
+WHERE Frequents.drinker = 'Ben'));

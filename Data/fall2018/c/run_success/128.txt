@@ -1,0 +1,4 @@
+select bar.name , bar.address from bar,
+(select serves.bar from serves where serves.beer='Corona' and serves.price<=3)
+as table1
+where table1.bar=bar.name;

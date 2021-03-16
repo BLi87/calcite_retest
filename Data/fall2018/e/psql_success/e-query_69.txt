@@ -1,0 +1,1 @@
+((SELECT bar FROM Frequents WHERE drinker= 'Ben' AND bar NOT IN (SELECT bar FROM Frequents WHERE drinker ='Dan')) Union (SELECT bar FROM Frequents WHERE drinker= 'Dan' AND bar NOT IN (SELECT bar FROM Frequents WHERE drinker ='Ben')));

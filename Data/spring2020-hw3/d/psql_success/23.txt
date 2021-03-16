@@ -1,0 +1,24 @@
+WITH allbeer AS (
+	(SELECT beer FROM likes)
+	UNION
+	(SELECT beer FROM serves)
+	UNION
+	(SELECT name FROM beer)
+), counting AS (
+	SELECT f.beer, COUNT(l.drinker)
+	FROM (SELECT * FROM allbeer) AS f
+	LEFT OUTER JOIN likes l
+	ON f.beer = l.beer
+	GROUP BY f.beer
+), pricing AS (
+	SELECT f.beer, AVG(s.price)
+	FROM (SELECT * FROM allbeer) AS f
+	LEFT OUTER JOIN serves s
+	ON f.beer = s.beer
+	GROUP BY f.beer
+)
+SELECT l.beer, l.count, s.avg
+FROM (SELECT * FROM counting) AS l
+FULL OUTER JOIN (SELECT * FROM pricing) AS s
+ON l.beer = s.beer
+ORDER BY l.count desc, s.beer

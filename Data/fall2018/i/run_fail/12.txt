@@ -1,0 +1,13 @@
+(SELECT name FROM drinker)
+
+EXCEPT
+
+(SELECT drinker FROM ((SELECT drinker, bar FROM frequents) INTERSECT (SELECT drinker, bar FROM
+
+  ((SELECT drinker, s1.beer, bar FROM serves AS s1, likes AS l1 WHERE s1.beer <> l1.beer)
+
+  EXCEPT
+
+  ((SELECT drinker, s1.beer, bar FROM serves AS s1, likes AS l1 WHERE s1.beer = l1.beer))) AS F
+
+)) AS T);

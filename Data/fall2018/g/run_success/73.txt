@@ -1,0 +1,6 @@
+Select bar, drinker
+From frequents as f1
+Where NOT Exists (Select bar, drinker
+					From frequents
+					Where bar = f1.bar
+					And times_a_week > f1.times_a_week);

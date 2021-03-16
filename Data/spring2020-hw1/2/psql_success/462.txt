@@ -1,0 +1,4 @@
+SELECT DISTINCT bar
+FROM Serves, beer
+where Serves.beer = beer.name and 
+beer.brewer = 'Grupo Modelo'

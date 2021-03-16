@@ -1,0 +1,44 @@
+WITH all_combos AS (
+        SELECT drinker_1.name name_1, drinker_2.name name_2
+        FROM drinker AS drinker_1
+        CROSS JOIN drinker drinker_2
+        WHERE drinker_1.name <> drinker_2.name
+), drinker_one_likes AS (
+        SELECT name_1, name_2, likes.beer beer
+        FROM all_combos, likes
+        WHERE all_combos.name_1 = likes.drinker 
+        -- AND combo_cross_beer.beer = likes.beer
+        
+-- ), and_drinker_two_likes AS (
+--         SELECT name_1, name_2, drinker_one_likes.beer 
+--         FROM drinker_one_likes, likes
+--         WHERE drinker_one_likes.name_2 = likes.drinker
+--         AND drinker_one_likes.beer = likes.beer
+), just_drinker_two_likes AS (
+        SELECT name_1, name_2, likes.beer beer
+        FROM all_combos, likes
+        WHERE all_combos.name_2 = likes.drinker 
+        -- AND combo_cross_beer.beer = likes.beer
+        
+-- ), drinker_two_also_likes AS (
+--         SELECT name_1,name_2, beer
+--         FROM just_drinker_two_likes
+--         EXCEPT (
+--                 SELECT * 
+--                 FROM and_drinker_two_likes
+--         )
+)
+        
+SELECT * 
+FROM all_combos
+EXCEPT (
+        SELECT name_1, name_2
+        FROM (
+                SELECT * 
+                FROM drinker_one_likes 
+                EXCEPT (
+                SELECT * 
+                FROM just_drinker_two_likes
+        ) 
+        ) as temp
+);

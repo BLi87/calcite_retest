@@ -1,0 +1,12 @@
+/*g) For each bar, find the drinker who frequents it the greatest number of times. Your output should be
+#a list of (bar, drinker) pairs. If multiple drinkers tie for the most frequent visitor to a bar, list them all
+#as separate pairs.
+
+#these are the top bars and times a week*/
+SELECT top_bars.bar, all_bars.drinker FROM (SELECT f1.bar, f1.times_a_week
+	FROM frequents f1 INNER JOIN frequents f2 ON (f1.bar = f2.bar) WHERE (f1.times_a_week >= f2.times_a_week)
+EXCEPT
+SELECT f1.bar, f1.times_a_week
+	FROM frequents f1 INNER JOIN frequents f2 ON (f1.bar = f2.bar) 
+	WHERE f1.times_a_week < f2.times_a_week) as top_bars
+INNER JOIN frequents all_bars ON (top_bars.bar = all_bars.bar and top_bars.times_a_week=all_bars.times_a_week); /*#connect top bars and times a week with people*/

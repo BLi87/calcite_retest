@@ -1,0 +1,7 @@
+SELECT name FROM drinker 
+	EXCEPT (SELECT DISTINCT drinker FROM 
+		(SELECT drinker, bar FROM frequents EXCEPT
+		       	(SELECT drinker, bar FROM frequents except (
+				SELECT DISTINCT name, bar FROM
+			       	(SELECT name, bar, beer FROM drinker,serves except
+				       	(SELECT likes.drinker, bar, serves.beer FROM serves,likes WHERE(likes.beer = serves.beer))) AS antilike))) AS badbar);

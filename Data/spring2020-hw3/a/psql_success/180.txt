@@ -1,0 +1,6 @@
+SELECT DISTINCT A.beer, A.bar
+FROM likes, serves A
+WHERE likes.drinker = 'Dan' and likes.beer = A.beer 
+and A.price >= ALL(SELECT price
+                  FROM serves B
+                  WHERE B.beer = A.beer and B.bar != A.bar)

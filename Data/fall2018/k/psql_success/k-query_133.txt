@@ -1,0 +1,21 @@
+select name as bar, sum(price*times_a_week) as amount
+from (
+select drinker, name, serves.beer, times_a_week, price as price2, case when price is null then 0 else price end
+  from (select likes.drinker, name, times_a_week, beer
+    from (select drinker, bar.name, times_a_week
+      from frequents right outer join bar on frequents.bar=bar.name) as T1
+        left outer join likes on likes.drinker=T1.drinker) as T2
+        left outer join serves on serves.beer=T2.beer and serves.bar=T2.name) as foo
+group by name
+order by amount desc, bar asc;
+
+-- My query works in the small databse, but does not work in the general case.
+-- I tried to use the case syntax so that it would record the price as 0 whenever there is a case
+-- a drinker goes to the bar but does not have a beer that he/she prefers. It properly calculates the
+-- price as 0 in the column price, but doesn't happen to work in the general case.
+-- I joined all the drinkers and bar, then with frequents, then with serves so that I have a complete chart of
+-- drinker, name, beer, and price. My query successfully outputs the bar and amount, but still can't handle the case when
+-- there is a bar with amount 0. It outputs as none, which puts it at the top of the list, outputing an incorrect answer.
+-- Right outer join was used between frequents and bars because I wanted to include the bars that might have no one frequenting
+-- to be included on the final table. Left outer join was used between T1 and likes because I wanted to include
+-- all the drinekrs that frequented a bar even though it doesn't have a beer that they liked.

@@ -1,0 +1,32 @@
+--Find names of all drinkers who frequent only those bars
+--that serve some beers they like
+
+/*
+Drinker(name, address)
+Bar(name, address)
+Beer(name, brewer)
+Frequents(drinker, bar, times_a_week)
+Likes(drinker, beer)
+Serves(bar, beer, price)
+*/
+
+--Discussed RA translation with other students
+
+--Distinct drinker names
+--project drinker from Drinker
+SELECT DISTINCT name FROM Drinker
+--diff
+EXCEPT (
+  SELECT h.drinker FROM
+  --Select drinker, bar from Frequents
+  (SELECT Frequents.drinker, Frequents.bar FROM Frequents
+  --diff
+  EXCEPT (
+    --select drinker, bar from...
+    SELECT Frequents.drinker, Frequents.bar FROM
+    --frequents join likes
+    (Frequents NATURAL JOIN Likes)
+    --join serves on serves bar = frequents bar and serves beer = frequents beer
+    JOIN Serves ON Serves.bar = Frequents.bar AND Likes.beer = Serves.beer
+  )) AS h
+);

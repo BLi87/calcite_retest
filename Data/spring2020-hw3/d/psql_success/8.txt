@@ -1,0 +1,3 @@
+select beer,cnt,avg from ((select serves.beer as beer, count(distinct drinker) as cnt, avg(price) from likes,serves where likes.beer=serves.beer group by serves.beer) union
+(select serves.beer,0,avg(price) from serves where serves.beer not in (select beer from likes) group by serves.beer) union (select likes.beer,count(drinker),NULL from likes where likes.beer not in (select beer from serves) group by likes.beer) 
+union (select beer.name as beer,0,NULL from beer where beer.name not in (select beer from serves) and beer.name not in (select beer from likes))) as c2 order by cnt desc, beer

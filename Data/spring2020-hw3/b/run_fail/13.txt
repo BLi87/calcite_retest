@@ -1,0 +1,1 @@
+select a.name as drinker1, b.name as drinker2 from drinker a, drinker b where a.name <> b.name and not exists(select * from likes c where c.drinker = a.name and c.beer not in(select beer from likes d where d.drinker = b.name))

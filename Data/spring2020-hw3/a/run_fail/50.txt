@@ -1,0 +1,5 @@
+with danbeers as (select likes.beer from likes where likes.drinker = 'Dan'),
+  maxes as (select serves.beer, max(price) as price from serves where serves.beer in (select danbeers.beer from danbeers) group by serves.beer)
+select maxes.beer, serves.bar
+from danbeers, maxes, serves
+where maxes.beer = danbeers.beer and serves.beer = maxes.beer and serves.price = maxes.price;

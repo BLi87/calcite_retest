@@ -1,0 +1,9 @@
+--(h) Find names of all drinkers who frequent only those bars that serve some beers they like. 
+select distinct name 
+from drinker d
+where not exists
+    (select drinker, bar from frequents f  -- (drinker, bar) pairs where the bar serves only beers they don't like
+     where f.drinker = d.name
+     and not exists  -- No beer served at this bar is liked by drinker
+        (select * from likes, serves
+         where likes.drinker = f.drinker and serves.bar = f.bar and serves.beer = likes.beer));

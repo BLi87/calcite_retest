@@ -1,0 +1,1 @@
+(SELECT name FROM drinker AS drinker)EXCEPT(SELECT DISTINCT drinker FROM ((SELECT DISTINCT drinker,bar FROM frequents)EXCEPT(SELECT DISTINCT drinker,bar FROM likes,serves WHERE likes.beer = serves.beer)) as subTable);

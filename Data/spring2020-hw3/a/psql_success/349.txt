@@ -1,0 +1,9 @@
+with DanLikes as
+  (
+    select beer
+    from likes
+    where drinker = 'Dan'
+  )
+select s.bar, s.beer
+from serves s, DanLikes D
+where s.beer = D.beer and s.price >= all(select price from serves where s.beer = beer)

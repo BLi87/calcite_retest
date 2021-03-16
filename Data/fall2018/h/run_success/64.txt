@@ -1,0 +1,28 @@
+/*(h) Find names of all drinkers who frequent only those bars that serve some beers they like.
+
+#find drinkers who frequent bars serve 1+ beers they like
+
+#join likes and serves? with beer=beer
+#then join w frequents
+*/
+
+ /*0) drinker frequents combo... ALL POSSIBLE BARS THEY FREQUENT */
+/*DIFF							... MINUS */
+/*1) likes serves frequents combo. ...ALL THAT SERVE THINGS THEY LIKE AND THEY FREQUENT */
+--> project name
+
+SELECT drinker.name as drinker FROM drinker 
+EXCEPT
+SELECT drinker FROM (
+	/*0.*/
+	SELECT drinker.name as drinker, frequents.bar as bar FROM drinker INNER JOIN frequents ON drinker.name=frequents.drinker
+	EXCEPT
+	/*1.*/
+	SELECT like_serve.drinker, frequents.bar as bar FROM
+		(SELECT likes.drinker, serves.bar as bar, serves.beer as beer FROM likes JOIN serves on likes.beer = serves.beer) as like_serve
+		INNER JOIN
+		frequents on like_serve.bar=frequents.bar 
+
+	)
+	AS rejected
+

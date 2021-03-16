@@ -1,0 +1,28 @@
+
+SELECT bar, SUM(amount) AS amount
+FROM (
+    /* bars set to amount 0*/
+    SELECT name AS bar, 0 AS amount
+    FROM Bar
+
+    UNION ALL
+
+    /* select bar and amount, descending*/ 
+    SELECT bar, amount 
+    FROM (
+        SELECT bar, SUM(weekly_yield) AS amount
+        FROM (
+            SELECT f.bar AS bar, price*times_a_week AS weekly_yield
+            FROM Frequents AS f
+            JOIN (
+                SELECT drinker, bar, Likes.beer, price
+                FROM Likes JOIN Serves
+                ON Likes.beer=Serves.beer
+            ) AS T
+            ON f.drinker=T.drinker AND f.bar=T.bar
+        ) AS joined
+        GROUP BY bar
+    ) AS grouped
+) AS Touter
+GROUP BY bar
+ORDER BY amount DESC, bar;

@@ -1,0 +1,10 @@
+
+(SELECT beer, bar from serves)
+
+EXCEPT ALL
+
+(SELECT serves.beer, serves.bar
+    FROM serves, (SELECT beer, bar from serves) as foo
+    WHERE serves.bar <> foo.bar and serves.beer = foo.beer)
+
+/* Worked with Trilok Sadarangani */

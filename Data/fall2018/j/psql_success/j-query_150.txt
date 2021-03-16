@@ -1,0 +1,2 @@
+SELECT a.name, b.name FROM Bar AS a, Bar AS b WHERE NOT EXISTS (SELECT beer FROM Serves WHERE bar = a.name  EXCEPT SELECT beer FROM Serves WHERE bar = b.name) AND EXISTS(SELECT
+beer FROM Serves WHERE bar = b.name  EXCEPT SELECT beer FROM Serves WHERE bar = a.name);

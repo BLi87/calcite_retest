@@ -1,0 +1,4 @@
+SELECT F.drinker AS name, B.name, B.address
+FROM bar B, frequents F
+WHERE F.times_a_week < 2
+AND F.bar = B.name

@@ -1,0 +1,7 @@
+(SELECT beer, bar
+ FROM Serves)
+EXCEPT
+(SELECT Serves.beer, Serves.bar
+ FROM Serves
+ INNER JOIN Serves AS S1
+ ON S1.bar != Serves.bar AND S1.beer = Serves.beer);

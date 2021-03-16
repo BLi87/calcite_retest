@@ -1,0 +1,12 @@
+select d.name 
+from drinker d
+except 
+(select temp.drinker
+from
+(select f.drinker, s.bar, s.beer 
+from frequents f, serves s 
+where f.bar = s.bar 
+except
+select f.drinker, f.bar, l.beer
+from frequents f, likes l
+where f.drinker = l.drinker) as temp); 

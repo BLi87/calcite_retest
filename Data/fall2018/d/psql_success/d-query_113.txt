@@ -1,0 +1,7 @@
+(select drinker
+from frequents
+where frequents.bar='James Joyce Pub')
+intersect all
+(select drinker
+  from frequents
+  where frequents.bar='Satisfaction');

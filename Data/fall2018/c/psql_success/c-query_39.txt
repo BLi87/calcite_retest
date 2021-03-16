@@ -1,0 +1,4 @@
+--(c) Find the names and addresses of bars that serve Corona for no more than $3.00. 
+select bar.name, bar.address
+from bar, serves
+where bar.name = serves.bar and serves.beer = 'Corona' and serves.price <= 3.00;

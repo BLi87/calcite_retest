@@ -1,0 +1,11 @@
+select name as drinker 
+from drinker 
+except 
+select drinker from (
+	select drinker,bar 
+	from frequents 
+	except 
+	select drinker,bar 
+	from likes 
+	natural join serves
+	) as t;

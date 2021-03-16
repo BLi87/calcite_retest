@@ -1,0 +1,1 @@
+select distinct drinker from serves join frequents on serves.bar=frequents.bar where serves.beer = 'Corona';

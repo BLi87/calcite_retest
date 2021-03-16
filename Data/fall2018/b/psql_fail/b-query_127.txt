@@ -1,0 +1,3 @@
+SELECT DISTINCT drinker FROM Frequents, Serves WHERE Serves.beer='Corona';
+
+//SELECT DISTINCT drinker from FREQUENTS, (SELECT bar FROM Serves WHERE beer='Corona') WHERE frequents.drinker=ANY(SELECT bar FROM Serves WHERE beer='Corona');

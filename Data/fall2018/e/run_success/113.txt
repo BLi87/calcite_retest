@@ -1,0 +1,15 @@
+select bar
+from frequents
+where drinker = 'Ben'
+EXCEPT ALL
+select bar
+from frequents
+where drinker = 'Dan'
+UNION ALL
+(select bar
+from frequents
+where drinker = 'Dan'
+EXCEPT ALL
+select bar
+from frequents
+where drinker = 'Ben');

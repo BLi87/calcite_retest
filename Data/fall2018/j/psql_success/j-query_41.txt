@@ -1,0 +1,46 @@
+SELECT s1.bar AS bar1, s2.bar AS bar2
+FROM Serves AS s1
+CROSS JOIN Serves AS s2
+WHERE s1.bar != s2.bar
+
+EXCEPT
+
+(
+    /* A serves beer b doesn't serve*/
+    SELECT bar1, bar2
+    FROM (
+        SELECT s3.bar AS bar1, 
+        b1.name AS bar2, 
+        s3.beer
+        FROM Serves AS s3
+        CROSS JOIN Bar AS b1
+
+        EXCEPT
+
+        SELECT b2.name AS bar1, 
+        s4.bar AS bar2, 
+        s4.beer
+        FROM Serves AS s4
+        CROSS JOIN Bar AS b2
+    ) AS T1
+
+    UNION
+
+    /* b serves beer a doesn't serve */
+    SELECT bar2 AS bar1, bar2 AS bar1
+    FROM (
+        SELECT b3.name AS bar1, 
+        s5.bar AS bar2,
+        s5.beer
+        FROM Serves AS s5
+        CROSS JOIN Bar AS b3
+
+        EXCEPT
+
+        SELECT s6.bar AS bar1, 
+        b4.name AS bar2, 
+        s6.beer
+        FROM Serves AS s6
+        CROSS JOIN Bar AS b4
+    ) AS T2
+);

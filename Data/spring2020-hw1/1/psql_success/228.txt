@@ -1,0 +1,11 @@
+SELECT bar
+FROM serves
+WHERE serves.beer = 'Corona'
+
+
+
+
+
+
+
+

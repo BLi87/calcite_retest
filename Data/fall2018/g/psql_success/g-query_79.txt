@@ -1,0 +1,15 @@
+(SELECT bar, drinker FROM frequents) EXCEPT (SELECT c.bar, c.drinker FROM (SELECT a.drinker AS drinker, a.bar AS bar, a.times_a_week AS times_a_week, b.drinker AS drinker2, b.bar AS bar2, b.times_a_week AS times_a_week2 FROM frequents AS a, frequents AS b WHERE a.bar=b.bar AND a.times_a_week < b.times_a_week) AS c);
+
+/*
+
+
+
+(SELECT bar, drinker FROM frequents);
+
+(SELECT a.drinker AS drinker2, a.bar AS bar2, a.times_a_week AS times_a_week2 FROM frequents AS a);
+
+SELECT a.drinker AS drinker, a.bar AS bar, a.times_a_week AS times_a_week, b.drinker AS drinker2, b.bar AS bar2, b.times_a_week AS times_a_week2 FROM frequents AS a, frequents AS b WHERE a.bar=b.bar AND a.times_a_week < b.times_a_week;
+
+SELECT c.bar, c.drinker FROM (SELECT a.drinker AS drinker, a.bar AS bar, a.times_a_week AS times_a_week, b.drinker AS drinker2, b.bar AS bar2, b.times_a_week AS times_a_week2 FROM frequents AS a, frequents AS b WHERE a.bar=b.bar AND a.times_a_week < b.times_a_week) AS c;
+
+*/

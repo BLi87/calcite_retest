@@ -1,0 +1,5 @@
+SELECT DISTINCT name, address
+FROM serves, bar
+WHERE bar.name = serves.bar
+AND serves.beer = 'Corona'
+AND NOT serves.price>3.00;

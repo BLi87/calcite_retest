@@ -1,0 +1,11 @@
+with TMP1(bar,sumEarn) as (select bar,sumEarn from (select consume.bar,sum(spend) as sumEarn from (select s.bar,s.beer,f.drinker,f.times_a_week,s.price,(s.price*f.times_a_week)as spend from Serves s, Likes l, Frequents f where f.drinker=l.drinker and f.bar=s.bar and s.beer=l.beer) consume group by consume.bar) toInsert),
+
+
+TMP2(bar,sumEarn) as (select b.name,0 from Bar b,
+
+(select consume.bar,sum(spend) as sumEarn from (select s.bar,s.beer,f.drinker,f.times_a_week,s.price,(s.price*f.times_a_week)as spend from Serves s, Likes l, Frequents f where f.drinker=l.drinker and f.bar=s.bar and s.beer=l.beer) consume group by consume.bar) earns
+
+where b.name not in 
+
+(select consume.bar from (select s.bar,s.beer,f.drinker,f.times_a_week,s.price,(s.price*f.times_a_week)as spend from Serves s, Likes l, Frequents f where f.drinker=l.drinker and f.bar=s.bar and s.beer=l.beer) consume group by consume.bar))
+(select * from TMP1) union (select * from TMP2) order by sumEarn DESC,bar;

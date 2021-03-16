@@ -1,0 +1,12 @@
+WITH maxFound AS
+(SELECT beer, MAX(price)
+FROM serves
+GROUP BY beer),
+danBeer AS
+(SELECT beer
+FROM likes
+WHERE drinker = 'Dan')
+
+SELECT danBeer.beer AS "beer", bar
+FROM serves, maxFound, danBeer
+WHERE danBeer.beer = serves.beer and maxFound.beer = danBeer.beer and maxFound.max = serves.price;

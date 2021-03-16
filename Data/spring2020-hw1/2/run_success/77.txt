@@ -1,0 +1,1 @@
+SELECT bar FROM serves LEFT JOIN beer ON serves.beer = beer.name WHERE brewer = 'Grupo Modelo'

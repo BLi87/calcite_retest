@@ -1,0 +1,28 @@
+SELECT bar, SUM(moneymade) FROM
+	(SELECT * FROM (SELECT bar, price * times_a_week moneymade FROM
+		(SELECT drinker, frequents.bar, times_a_week, beer, price
+			FROM frequents
+			JOIN serves
+			ON frequents.bar = serves.bar) AS t1
+		JOIN likes
+		ON t1.beer = likes.beer
+	WHERE t1.drinker = likes.drinker) as t2
+
+	UNION ALL
+
+	SELECT t4.name bar, times_a_week - times_a_week FROM
+		(SELECT name FROM bar
+	
+		EXCEPT
+		SELECT bar FROM 
+			(SELECT bar, price * times_a_week moneymade FROM
+				(SELECT drinker, frequents.bar, times_a_week, beer, price
+					FROM frequents
+					JOIN serves
+					ON frequents.bar = serves.bar) AS t1
+				JOIN likes
+				ON t1.beer = likes.beer
+			WHERE t1.drinker = likes.drinker) AS t3) AS t4
+			CROSS JOIN frequents) AS t5
+GROUP BY bar
+ORDER BY sum DESC, bar ASC;

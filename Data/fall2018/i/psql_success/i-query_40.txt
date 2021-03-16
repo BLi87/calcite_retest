@@ -1,0 +1,10 @@
+SELECT name 
+FROM drinker
+EXCEPT (
+SELECT drinker FROM((
+SELECT drinker, beer
+FROM frequents 
+JOIN serves
+ON frequents.bar = serves.bar) 
+EXCEPT (SELECT * FROM likes)
+) AS temp);

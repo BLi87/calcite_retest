@@ -1,0 +1,14 @@
+SELECT relation.bar, SUM(earnings) AS earnings
+FROM 
+((SELECT bar, SUM(price*times_a_week) AS earnings
+FROM serves NATURAL JOIN likes NATURAL JOIN frequents	
+GROUP BY bar
+ORDER BY earnings DESC, bar)
+
+UNION ALL
+
+(SELECT name AS bar, 0 AS earnings
+ FROM bar))
+AS relation
+GROUP BY bar
+ORDER BY earnings DESC, bar;

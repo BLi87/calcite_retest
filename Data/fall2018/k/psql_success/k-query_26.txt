@@ -1,0 +1,13 @@
+SELECT b.name, COALESCE(total,0) total
+FROM bar b LEFT OUTER JOIN
+(SELECT bar, sum(total) total
+FROM
+(SELECT l.drinker, l.beer, bar, price * times_a_week total FROM Likes l, 
+(SELECT drinker, f.bar, beer, price, times_a_week
+FROM frequents f, serves s
+WHERE f.bar = s.bar) t
+WHERE l.drinker = t.drinker 
+AND l.beer = t.beer) t1
+GROUP BY bar) t2 
+ON b.name = t2.bar
+ORDER BY total DESC, name;

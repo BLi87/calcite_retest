@@ -1,0 +1,10 @@
+WITH combinations(bar1, beer, bar2) AS 
+(SELECT serves.bar, serves.beer, bar.name from serves, bar),
+comboSwap(bar2, beer, bar1) AS
+(SELECT bar2, beer, bar1 from combinations),
+diffFirst(barA, beer, barB) AS
+((select * from combinations) EXCEPT (select* from comboSwap)),
+diffSwap(barB, beer, barA) AS
+(SELECT barB, beer, barA from diffFirst)
+(Select barB, barA from diffSwap) EXCEPT
+(Select table1.bar1, table1.bar2 from (SELECT barB as bar1, barA as bar2 from diffSwap) as table1, (SELECT barB as bar3, barA as bar4 from diffSwap) as table2 where bar1 = bar4 and bar2 = bar3);

@@ -1,0 +1,1 @@
+SELECT beer FROM Serves WHERE Serves.bar LIKE '%James Joyce Pub%';

@@ -1,0 +1,26 @@
+
+WITH beers AS
+	(SELECT DISTINCT name
+	FROM beer),
+
+ counts AS 
+	(SELECT beers.name AS beer, COUNT(likes.beer) AS c
+	FROM beers
+		LEFT JOIN likes ON likes.beer = beers.name
+	GROUP BY beers.name),
+
+ ser AS 
+	(SELECT beers.name AS beer, serves.price AS price
+	FROM beers
+		LEFT OUTER JOIN serves ON serves.beer = beers.name),
+
+ averages AS 
+	(SELECT beers.name AS beer, AVG(price) AS a
+	FROM ser, beers
+	WHERE ser.beer = beers.name
+	GROUP BY beers.name)
+
+SELECT counts.beer, counts.c, averages.a
+FROM counts, averages
+WHERE counts.beer = averages.beer
+ORDER BY counts.c DESC, counts.beer;

@@ -1,0 +1,11 @@
+SELECT name 
+FROM drinker
+WHERE name IN 
+(SELECT drinker 
+FROM frequents 
+WHERE bar = 'James Joyce Pub') 
+AND name IN 
+(SELECT drinker 
+FROM frequents 
+WHERE bar = 'Satisfaction');
+

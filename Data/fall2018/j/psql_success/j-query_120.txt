@@ -1,0 +1,30 @@
+SELECT bars1.name, bars2.name FROM bar as bars1, bar as bars2
+EXCEPT
+(SELECT Sub.bars1, Sub.bars2
+FROM 
+	(SELECT B1.bar as bars1, B2.bar as bars2, B1.beer
+		FROM serves B1, serves B2
+			EXCEPT
+
+		SELECT B1.bar, B2.bar, B2.beer
+			FROM serves B1, serves B2
+WHERE B1.beer = B2.beer and not(B1.bar = B2.bar)) as Sub);
+
+/*collaborated with Rachel Shapiro, rms56*/
+
+	--sub1
+	/*
+	SELECT bars1, bars2, beer from (
+
+		(SELECT bar as bars1, beer from serves) S1
+		CROSS JOIN
+		(SELECT bar as bars2 from bar) B2
+	);
+
+	--sub2
+	SELECT bars1, bars2, beer from (
+		(SELECT bar as bars2, beer from serves) S2
+		CROSS JOIN
+		(SELECT bar as bars1 from bar) B1
+	);
+*/

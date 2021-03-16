@@ -1,0 +1,4 @@
+--(a) Find the names of beers that James Joyce Pub serves. 
+select beer 
+from serves 
+where bar = 'James Joyce Pub';

@@ -1,0 +1,28 @@
+WITH notLike AS(
+	SELECT *
+	FROM
+	(SELECT drinker.name AS drinker
+	 FROM drinker
+	) AS drinker
+	CROSS JOIN
+	(
+	SELECT beer.name AS beer
+	FROM beer
+	) AS beer
+	EXCEPT
+	(
+		SELECT *
+		FROM likes
+	)
+)
+SELECT drinker.name
+FROM drinker
+EXCEPT(
+SELECT servesNotLike.drinker
+FROM 
+(
+	SELECT notLike.drinker, serves.bar, serves.beer, serves.price
+	FROM serves JOIN notLike ON serves.beer=notLike.beer
+) AS servesNotLike 
+JOIN frequents ON servesNotLike.drinker = frequents.drinker AND servesNotLike.bar = frequents.bar
+)

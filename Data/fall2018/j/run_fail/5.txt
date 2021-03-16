@@ -1,0 +1,15 @@
+(Select b1.name, b2.name
+From Bar as b1, Bar as b2
+where b1.name<>b2.name
+
+except
+
+Select b3.name, b4.name
+From Serves as s1, Serves as s2, Bar as b3, Bar as b4
+Where  b3.name=s1.bar and b4.name=s2.bar and s1.beer not in (select beer from Serves where bar=s2.bar))
+
+intersect 
+
+(Select distinct b3.name, b4.name
+From Serves as s1, Serves as s2, Bar as b3, Bar as b4
+Where  b3.name=s1.bar and b4.name=s2.bar and (s1.beer not in (select beer from Serves where bar=s2.bar) or s2.beer not in (select beer from Serves where bar=s1.bar)));

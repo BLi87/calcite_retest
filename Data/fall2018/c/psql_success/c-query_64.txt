@@ -1,0 +1,1 @@
+SELECT DISTINCT bar.name, bar.address FROM bar, (SELECT * FROM serves WHERE beer='Corona' AND price<=3.00) AS temp WHERE bar.name=temp.bar;

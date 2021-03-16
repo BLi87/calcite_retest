@@ -1,0 +1,9 @@
+(select distinct name from drinker)
+EXCEPT (select distinct drinker from (
+		(select drinker,f1.bar,beer,times_a_week,price from serves s1, frequents f1
+		where f1.bar=s1.bar)
+		EXCEPT
+		(select f.drinker,f.bar,l.beer,times_a_week,price from likes l,serves s,frequents f
+		where l.drinker=f.drinker and f.bar=s.bar and l.beer=s.beer) 
+	) foo
+);

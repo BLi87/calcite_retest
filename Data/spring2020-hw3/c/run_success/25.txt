@@ -1,0 +1,14 @@
+(SELECT name
+FROM drinker)
+EXCEPT
+(SELECT drinker AS name
+FROM
+(
+(SELECT drinker, beer
+FROM frequents AS f, serves AS s
+WHERE f.bar = s.bar)
+EXCEPT
+(SELECT *
+FROM likes)
+) AS subquery
+);

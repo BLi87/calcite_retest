@@ -1,0 +1,7 @@
+/*(d) Find the names of drinkers who frequent both James Joyce Pub and Satisfaction*/
+
+SELECT DISTINCT A.drinker
+FROM Frequents A, Frequents B
+WHERE A.drinker = B.drinker
+AND A.bar = 'James Joyce Pub'
+AND B.bar = 'Satisfaction'; 

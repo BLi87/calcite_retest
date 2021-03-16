@@ -1,0 +1,12 @@
+SELECT DISTINCT name
+FROM drinker
+EXCEPT 
+SELECT drinker
+FROM 
+(
+SELECT drinker, bar
+FROM frequents
+EXCEPT ALL
+SELECT drinker, bar
+FROM likes NATURAL JOIN serves
+) AS foo;

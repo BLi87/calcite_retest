@@ -1,0 +1,5 @@
+SELECT DISTINCT S.bar
+FROM serves S, beer B
+WHERE S.beer IN (SELECT B1.name
+FROM beer B1
+WHERE B1.brewer = 'Grupo Modelo')

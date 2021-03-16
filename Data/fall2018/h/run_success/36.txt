@@ -1,0 +1,19 @@
+Select distinct name
+from drinker
+except
+-- get the drinkers who frequent bars who offer no drinks they like
+Select distinct tbl1.drinker
+From
+(
+	Select a.drinker, a.bar
+	from frequents a
+	where not exists
+	(
+		Select 1
+		from serves,likes
+		where a.drinker = likes.drinker
+		and a.bar = serves.bar
+		and likes.beer = serves.beer
+	) 
+) tbl1;
+

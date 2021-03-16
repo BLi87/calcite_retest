@@ -1,0 +1,9 @@
+SELECT DISTINCT foo.bar, foo.bar2 FROM (
+SELECT x.bar, y.bar as bar2, y.beer FROM serves x INNER JOIN serves y ON x.bar<>y.bar AND x.beer<>y.beer
+EXCEPT
+SELECT x.bar, y.bar, y.beer FROM serves x INNER JOIN serves y ON x.bar<>y.bar AND x.beer=y.beer) foo
+EXCEPT
+SELECT DISTINCT foo2.bar2, foo2.bar FROM (
+SELECT x.bar, y.bar as bar2, y.beer FROM serves x INNER JOIN serves y ON x.bar<>y.bar AND x.beer<>y.beer
+EXCEPT
+SELECT x.bar, y.bar, y.beer FROM serves x INNER JOIN serves y ON x.bar<>y.bar AND x.beer=y.beer) foo2;

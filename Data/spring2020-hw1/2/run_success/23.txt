@@ -1,0 +1,3 @@
+Select bar
+  From Beer, Serves
+  Where Beer.brewer='Grupo Modelo' and Serves.beer=beer.name

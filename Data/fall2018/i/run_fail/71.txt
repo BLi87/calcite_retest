@@ -1,0 +1,1 @@
+SELECT name FROM Drinker WHERE name NOT IN (SELECT drinker FROM Frequents AS f WHERE bar IN (SELECT bar FROM Serves WHERE beer NOT IN (SELECT beer from Likes WHERE f.drinker = drinker)));

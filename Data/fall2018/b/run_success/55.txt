@@ -1,0 +1,3 @@
+SELECT distinct q1.drinker FROM
+(SELECT bar from serves where beer = 'Corona') q0 LEFT JOIN
+(SELECT drinker, bar from frequents) q1 ON q0.bar = q1.bar ;

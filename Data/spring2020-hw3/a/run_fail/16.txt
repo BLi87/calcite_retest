@@ -1,0 +1,11 @@
+with DanBars as
+  (select S.bar, S.beer, S.price
+  from serves S, likes L
+  where L.beer = S.beer and L.drinker = 'Dan')
+
+select beer, bar
+from DanBars D1
+where not exists 
+  (select *
+  from DanBars D2
+  where D2.price > D1.price and D1.beer = D2.beer);

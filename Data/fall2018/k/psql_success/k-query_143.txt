@@ -1,0 +1,16 @@
+with o as (
+with p as (select f.drinker,f.times_a_week, f.bar, sum(s.price) as m 
+		from frequents f, serves s, likes l 
+		where l.beer = s.beer 
+		and s.bar = f.bar 
+		and f.drinker = l.drinker 
+		group by f.drinker, f.bar, f.times_a_week) 
+select distinct
+case when bars.name not in (select p.bar from p) then bars.name else p.bar end as tbar, 
+case when bars.name not in (select p.bar from p) then 0 
+	 when bars.name in (select p.bar from p) then sum(p.m * p.times_a_week) end as money
+from p, bar as bars
+	group by tbar, bars.name
+	order by money desc, tbar asc)
+select tbar, money from o;
+

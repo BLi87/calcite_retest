@@ -1,0 +1,5 @@
+select distinct serves1.bar, serves2.bar from serves as serves1, serves as serves2 where serves1.bar <> serves2.bar 
+except
+(select distinct T.bar1, T.bar2 from (select distinct serves1.bar as bar1, serves2.bar as bar2, serves1.beer from serves as serves1, serves as serves2
+except
+select distinct serves1.bar, serves2.bar, serves2.beer from serves as serves1, serves as serves2) as T);

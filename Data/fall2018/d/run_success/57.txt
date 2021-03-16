@@ -1,0 +1,3 @@
+select distinct f1.drinker 
+from frequents f1, frequents f2 
+where f1.drinker=f2.drinker AND f1.bar='James Joyce Pub' AND f2.bar='Satisfaction';

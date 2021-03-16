@@ -1,0 +1,15 @@
+SELECT name
+FROM Drinker
+-- keep drinkers who refuse to have the option to drink beer they don't like
+WHERE name NOT IN (
+  SELECT drinker FROM (
+    -- beers drinker has options to drink at frequented bars
+    SELECT drinker, beer
+    FROM Frequents, Serves
+    WHERE Frequents.bar = Serves.bar
+    -- subtract off the ones they like
+    EXCEPT
+    SELECT drinker, beer
+    FROM Likes
+  ) as a
+);

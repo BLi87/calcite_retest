@@ -1,0 +1,3 @@
+select frequents.drinker from frequents where frequents.bar='James Joyce Pub'
+ intersect
+select frequents.drinker from frequents where frequents.bar='Satisfaction';

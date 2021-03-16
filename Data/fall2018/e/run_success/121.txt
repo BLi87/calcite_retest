@@ -1,0 +1,4 @@
+select bar 
+from frequents 
+where (drinker = 'Ben' or drinker = 'Dan') 
+and bar not in (select f.bar from frequents f, frequents h where f.drinker = 'Ben' and h.drinker = 'Dan' and f.bar = h.bar);

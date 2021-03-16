@@ -1,0 +1,1 @@
+SELECT DISTINCT drinker FROM drinker, frequents, serves WHERE drinker.name = frequents.drinker AND frequents.bar = serves.bar AND serves.beer = 'Corona';

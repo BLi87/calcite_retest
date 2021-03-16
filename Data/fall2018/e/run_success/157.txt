@@ -1,0 +1,16 @@
+SELECT DISTINCT bar
+FROM ((SELECT bar 
+FROM Frequents
+WHERE drinker = 'Ben')
+UNION ALL
+(SELECT bar 
+FROM Frequents
+WHERE drinker = 'Dan')) AS apple
+EXCEPT ALL
+(SELECT View1.bar 
+FROM (SELECT bar 
+FROM Frequents
+WHERE drinker = 'Ben') AS View1, (SELECT bar 
+FROM Frequents
+WHERE drinker = 'Dan') as View2
+WHERE View1.bar = View2.bar);

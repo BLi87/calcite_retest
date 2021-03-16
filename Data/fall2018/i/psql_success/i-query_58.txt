@@ -1,0 +1,16 @@
+SELECT DISTINCT name
+FROM drinker
+WHERE name NOT IN (
+
+SELECT DISTINCT drinker FROM
+(
+	((SELECT DISTINCT serves.bar, beer, drinker
+	FROM frequents INNER JOIN serves
+	ON frequents.bar = serves.bar ORDER BY drinker)
+	EXCEPT
+	(SELECT DISTINCT bar, likes.beer, drinker
+	FROM serves INNER JOIN likes 
+	ON serves.beer=likes.beer ORDER BY drinker))
+) AS f1
+
+);

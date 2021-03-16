@@ -1,0 +1,6 @@
+SELECT bar, drinker 
+FROM Frequents f 
+WHERE times_a_week IN 
+(SELECT MAX(times_a_week) 
+	FROM Frequents 
+	WHERE f.bar = Frequents.bar);

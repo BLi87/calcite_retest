@@ -1,0 +1,6 @@
+(SELECT bar, drinker FROM frequents) 
+
+EXCEPT ALL
+
+(SELECT frequents.bar, frequents.drinker FROM frequents, frequents as f1 WHERE f1.bar = frequents.bar AND f1.times_a_week > frequents.times_a_week); 
+

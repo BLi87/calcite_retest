@@ -1,0 +1,6 @@
+select D1.name as drinker1, D2.name as drinker2
+from drinker D1, drinker D2
+where D1.name != D2.name and not exists
+((select beer from likes where drinker=D1.name) 
+except
+(select beer from likes where drinker=D2.name))

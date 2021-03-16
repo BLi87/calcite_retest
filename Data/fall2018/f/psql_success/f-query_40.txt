@@ -1,0 +1,11 @@
+SELECT beer, bar
+FROM Serves
+WHERE beer In
+(SELECT beer
+FROM Serves
+WHERE beer NOT IN
+(SELECT DISTINCT serves1.beer
+FROM Serves serves1, Serves serves2
+WHERE (serves1.beer = serves2.beer) AND (serves1.bar <> serves2.bar
+))
+);

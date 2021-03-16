@@ -1,0 +1,21 @@
+WITH beerFrequency AS
+  (SELECT likes.beer, count(likes.drinker) frequency
+  FROM likes
+  GROUP BY likes.beer),
+  servesPrice AS
+  (SELECT serves.beer, avg(serves.price) priceAverage
+  FROM serves
+  GROUP BY serves.beer),
+  nullBeers AS
+  (SELECT beerFrequency.beer, beerFrequency.frequency FROM beerFrequency 
+  WHERE beerFrequency.beer NOT IN (SELECT serves.beer FROM serves)),
+  zeroFrequents AS (
+  SELECT servesPrice.beer, 0, servesPrice.priceAverage FROM servesPrice
+  WHERE servesPrice.beer NOT IN (SELECT likes.beer FROM likes)
+  )
+SELECT beerFrequency.beer, beerFrequency.frequency, servesPrice.priceAverage 
+FROM beerFrequency JOIN servesPrice ON beerFrequency.beer = servesPrice.beer
+UNION (SELECT nullbeers.beer, nullbeers.frequency, NULL FROM nullBeers)
+UNION (SELECT zeroFrequents.beer, 0, zeroFrequents.priceAverage FROM zeroFrequents)
+UNION (SELECT beer.name, 0, NULL FROM beer WHERE beer.name NOT IN 
+(SELECT likes.beer FROM likes UNION (SELECT serves.beer FROM serves)))

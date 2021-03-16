@@ -1,0 +1,4 @@
+select frequents_1.drinker from frequents as frequents_1
+join frequents as frequents_2
+on frequents_1.drinker=frequents_2.drinker
+where frequents_1.bar='James Joyce Pub' and frequents_2.bar='Satisfaction';

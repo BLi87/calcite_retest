@@ -1,0 +1,1 @@
+SELECT bar FROM frequents WHERE (drinker='Ben' AND bar!= ALL (SELECT bar FROM frequents WHERE drinker='Dan')) OR ((drinker='Dan' AND bar!= ALL (SELECT bar FROM frequents WHERE drinker='Ben')));

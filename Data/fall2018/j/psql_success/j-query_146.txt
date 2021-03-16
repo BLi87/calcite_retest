@@ -1,0 +1,15 @@
+WITH join1(bar1, bar2, beer) 
+	AS (SELECT serves.bar AS bar1, s1.bar AS bar2, s1.beer AS beer 
+		FROM serves, serves AS s1 
+		WHERE s1.bar <> serves.bar), 
+join2(bar1,bar2,beer) 
+	AS (SELECT s1.bar AS bar1, serves.bar AS bar2, s1.beer AS beer 
+		FROM serves, serves AS s1 
+		WHERE s1.bar <> serves.bar) 
+SELECT bar1, bar2 FROM join1 
+EXCEPT 
+SELECT bar1, bar2 FROM 
+	(SELECT * FROM join2 
+	EXCEPT 
+	SELECT * FROM join1) 
+		AS joined;

@@ -1,0 +1,7 @@
+with mostvisits as
+(select d.name, max(f.times_a_week)
+from drinker d left outer join frequents f on d.name = f.drinker
+group by d.name)
+
+select m.name, f.bar
+from mostvisits m left outer join frequents f on m.max = f.times_a_week and m.name = f.drinker

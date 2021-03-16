@@ -1,0 +1,21 @@
+WITH perBarBeerPriceDrinkerTimesaweek AS
+(SELECT f.bar AS bar, s.beer AS beer, s.price AS price, l.drinker AS drinker, f.times_a_week as TAW, SUM(s.price * f.times_a_week) AS total
+FROM likes as l, serves as s, frequents AS f
+WHERE f.bar = s.bar AND s.beer = l.beer AND l.drinker = f.drinker
+GROUP BY f.bar, s.beer, s.price, l.drinker, f.times_a_week),
+
+perBarTotal AS
+(SELECT bar AS barName, SUM(total) AS grandTotal FROM perBarBeerPriceDrinkerTimesaweek GROUP BY bar),
+
+barRoster AS
+(SELECT DISTINCT bar
+FROM Serves)
+
+SELECT DISTINCT bar,
+CASE WHEN (bar IN (SELECT barName FROM perBarTotal))
+THEN (SELECT grandTotal FROM perBarTotal WHERE bar = barName)
+ELSE 0
+END
+AS amount
+FROM barRoster, perBarTotal
+ORDER BY amount DESC, bar ASC;

@@ -1,0 +1,2 @@
+select fin.bar, fin.drinker from (select frequents.bar, frequents.drinker, frequents.times_a_week from frequents except 
+(select T0.bar, T0.drinker, T0.times_a_week from (select * from frequents) as T0,(select * from frequents) as T1 where T0.bar = T1.bar and T0.times_a_week < T1.times_a_week)) as fin;

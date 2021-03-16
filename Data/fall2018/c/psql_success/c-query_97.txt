@@ -1,0 +1,4 @@
+select name, address from bar, serves
+where name = bar
+and beer = 'Corona'
+and price <= 3;

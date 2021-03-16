@@ -1,0 +1,11 @@
+WITH lowerPrice AS (
+(SELECT beer, bar
+FROM serves)
+EXCEPT
+(SELECT s1.beer, s1.bar
+FROM serves s1, serves s2, likes l1 
+WHERE l1.drinker='Dan' and l1.beer=s1.beer and s1.beer=s2.beer and s1.price<s2.price))
+
+SELECT l2.beer, t1.bar
+FROM likes l2, lowerPrice t1
+WHERE l2.beer=t1.beer and l2.drinker='Dan';

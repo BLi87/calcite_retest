@@ -1,0 +1,16 @@
+select D.name as drinker
+from drinker D
+
+except
+
+select A.drinker
+from (
+
+select F.drinker, S.bar, S.beer
+from serves S, frequents F
+where F.bar = S.bar
+
+except
+
+select L.drinker, F.bar, L.beer
+from likes L, frequents F) A

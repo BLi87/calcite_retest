@@ -1,0 +1,1 @@
+select beer, bar from serves where beer in (select beer from (select s.beer, count(s.beer) from serves s group by s.beer) counts where count=1);

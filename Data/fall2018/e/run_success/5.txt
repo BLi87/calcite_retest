@@ -1,0 +1,18 @@
+((SELECT DISTINCT Frequents.bar FROM Frequents
+WHERE Frequents.drinker = 'Ben')
+UNION
+(SELECT DISTINCT Frequents.bar FROM Frequents
+WHERE Frequents.drinker = 'Dan'))
+EXCEPT
+(SELECT Frequents.bar FROM Frequents, Frequents AS Frequents2
+WHERE Frequents.drinker = 'Ben'
+AND Frequents2.drinker = 'Dan' 
+AND Frequents.bar = Frequents2.bar);
+
+
+
+
+
+
+
+

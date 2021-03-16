@@ -1,0 +1,5 @@
+(select name from drinker) except
+(select distinct a.drinker from 
+( (select distinct b.drinker, b.beer, b.bar from (serves natural join frequents)as b)
+ except
+ (select distinct c.drinker, c.beer, c.bar from (likes natural join frequents)as c) ) as a );

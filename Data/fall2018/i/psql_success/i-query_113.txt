@@ -1,0 +1,5 @@
+(SELECT name from drinker)
+EXCEPT
+(SELECT subq.drinker FROM (SELECT drinker, bar FROM frequents
+EXCEPT
+SELECT drinker, bar FROM likes JOIN serves ON likes.beer = serves.beer) subq);

@@ -1,0 +1,17 @@
+create table Bars_with_Ben AS
+  Select bar
+  From frequents
+  Where drinker = 'Ben';
+
+create table Bars_with_Dan AS
+  Select bar
+  From frequents
+  Where drinker = 'Dan';
+
+((Select * From Bars_with_Dan)
+EXCEPT
+(Select * From Bars_with_Ben))
+UNION
+((Select * From Bars_with_Ben)
+EXCEPT
+(Select * From Bars_with_Dan));

@@ -1,0 +1,9 @@
+WITH MaxVisits AS (SELECT F.drinker, MAX(F.times_a_week) AS max_value
+                  FROM Frequents F
+                  GROUP BY F.drinker),
+    DrinkerMaxBar AS (SELECT F.drinker, F.bar
+                      FROM Frequents F, MaxVisits MV
+                      WHERE F.drinker = MV.drinker AND F.times_a_week = MV.max_value)
+SELECT D.name AS drinker, bar
+FROM Drinker D FULL OUTER JOIN DrinkerMaxBar DMB
+ON D.name = DMB.drinker

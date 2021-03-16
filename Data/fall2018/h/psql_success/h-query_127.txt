@@ -1,0 +1,8 @@
+WITH drinkerBar(drinker, bar) AS
+((SELECT drinker, bar FROM frequents)
+EXCEPT
+((SELECT drinker, bar FROM frequents)
+INTERSECT
+(SELECT drinker, bar FROM serves AS s1, likes AS l1 where s1.beer = l1.beer)))
+
+(SELECT name FROM drinker) EXCEPT (SELECT drinker FROM drinkerBar);

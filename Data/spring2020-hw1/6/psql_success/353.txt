@@ -1,0 +1,3 @@
+SELECT DISTINCT b1.bar AS bar 
+FROM serves AS b1, serves AS b2 
+WHERE b1.beer = b2.beer AND b1.price < b2.price

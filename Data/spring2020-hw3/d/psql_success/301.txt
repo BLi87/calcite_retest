@@ -1,0 +1,30 @@
+
+ /*For each beer, find the number of drinkers who like it, as well as its average price as served by bars. 
+Sort the output by the number of drinkers who like the beer (the most popular beer should be listed first).
+In the case of ties, sort by beer name (ascending). If a beer is not served anywhere, its average price 
+should be listed as NULL.(x) [Output columns: beer, cnt, avg] 
+
+The Plan:
+
+avgPriceOfServedBeers -- group serves by beer, select beer and avg(price). 
+avgPriceOfAllBeers -- Left Join beer with avgPriceOfServedBeers on beer, select beer and avgPrice (will be NULL for beers unserved)
+
+numDrinkersWhoLikeBeer -- group likes by beer, select beer and count(*) ??.
+
+avgPriceAndNumLikers -- left join avgPriceOfAllBeers with numDrinkersWhoLikeBeer on beer (all beers in numDrinkersWhoLikeBeer
+      should be contained by the beers in avgPriceOfAllBeers bc we included all beers in the beer relation)
+      
+Sort avgPriceAndNumLikers, first alphabetically, then by popularity.
+
+*/
+
+WITH avgPriceOfServedBeers AS (SELECT beer, avg(price) as avgPrice FROM serves GROUP BY beer),
+
+avgPriceOfAllBeers AS (SELECT beer.name as beer, avgPrice
+FROM (beer LEFT JOIN avgPriceOfServedBeers on beer.name = avgPriceOfServedBeers.beer)),
+
+numDrinkersWhoLikeBeer AS (SELECT beer, count(*) as popularity FROM likes GROUP BY beer)
+
+(SELECT avgPriceOfALlBeers.beer, coalesce(popularity,0) as cnt, avgPrice FROM (avgPriceOfAllBeers LEFT JOIN numDrinkersWhoLikeBeer 
+ON avgPriceOfAllBeers.beer = numDrinkersWhoLikeBeer.beer)) ORDER BY beer, cnt DESC
+

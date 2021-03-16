@@ -1,0 +1,1 @@
+(select distinct b1.name, b2.name from bar b1, bar b2 where b1.name != b2.name) except (select distinct bar, name from ((select distinct serves.bar, bar.name, serves.beer from serves, bar where serves.bar != bar.name) except (select distinct bar.name, serves.bar, serves.beer from serves, bar where serves.bar != bar.name)) as foo)

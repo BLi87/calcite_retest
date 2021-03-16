@@ -1,0 +1,15 @@
+select d1.name as drinker1, d2.name as drinker2
+  from drinker d1, drinker d2
+  where d1.name <> d2.name
+  
+except
+
+select l1.drinker as drinker1, l2.name as drinker2
+  from likes l1, drinker l2
+  where not exists (
+    select likes.beer, likes.drinker
+      from likes
+      where likes.beer = l1.beer and likes.drinker = l2.name
+  )
+ 
+  

@@ -1,0 +1,1 @@
+(select * from ((select name from bar) as s1 join (select name from bar) as s2 on s1!=s2) as s) except (select bar, name from ((select bar, beer, name from serves, bar) except (select name, beer, bar from serves, bar)) as b);

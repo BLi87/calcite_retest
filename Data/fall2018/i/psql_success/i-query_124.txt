@@ -1,0 +1,8 @@
+SELECT DISTINCT name FROM Drinker
+EXCEPT (
+  SELECT T.drinker FROM
+  (SELECT Frequents.drinker, Serves.beer From
+        (Frequents NATURAL JOIN Serves)
+EXCEPT (
+  SELECT * FROM Likes)) as T
+);

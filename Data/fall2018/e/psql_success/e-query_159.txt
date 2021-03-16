@@ -1,0 +1,1 @@
+(select DISTINCT bar from frequents where drinker = 'Ben' or drinker = 'Dan') Except all (select bar from frequents where drinker = 'Ben' intersect select bar from frequents where drinker = 'Dan');

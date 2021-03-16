@@ -1,0 +1,5 @@
+SELECT bar, drinker
+FROM frequents AS f
+WHERE NOT EXISTS
+	(SELECT * FROM frequents
+	WHERE times_a_week > f.times_a_week and bar = f.bar);

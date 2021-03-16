@@ -1,0 +1,1 @@
+SELECT beer, bar FROM serves AS s WHERE NOT EXISTS (SELECT beer, bar FROM serves AS s2 WHERE s2.beer LIKE s.beer AND s2.bar NOT LIKE s.bar);

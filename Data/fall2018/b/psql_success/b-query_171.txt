@@ -1,0 +1,4 @@
+select distinct frequents.drinker 
+from frequents 
+natural join 
+(select bar from serves where beer = 'Corona') as corona_bars;

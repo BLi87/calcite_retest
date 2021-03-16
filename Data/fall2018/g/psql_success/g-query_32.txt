@@ -1,0 +1,9 @@
+SELECT bar, drinker
+FROM Frequents as f1
+WHERE drinker NOT IN (
+  SELECT DISTINCT f1.drinker
+  FROM Frequents AS f2, Frequents AS f3
+  WHERE f1.bar = f2.bar
+  AND f2.bar = f3.bar
+  AND f1.times_a_week < f2.times_a_week
+);

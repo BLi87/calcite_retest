@@ -1,0 +1,4 @@
+SELECT f.drinker
+FROM Frequents f, Frequents g
+WHERE f.drinker = g.drinker AND f.bar = 'James Joyce Pub' AND g.bar = 'Satisfaction'
+GROUP BY f.drinker;

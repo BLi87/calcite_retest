@@ -1,0 +1,15 @@
+(SELECT DISTINCT frequents.bar
+FROM frequents
+WHERE frequents.drinker = 'Ben' OR frequents.drinker = 'Dan')
+
+EXCEPT
+
+(SELECT frequents.bar
+FROM frequents
+WHERE frequents.drinker = 'Ben'
+INTERSECT 
+SELECT frequents.bar
+FROM frequents
+WHERE frequents.drinker = 'Dan');
+
+

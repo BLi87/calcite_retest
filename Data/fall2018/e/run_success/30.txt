@@ -1,0 +1,7 @@
+SELECT DISTINCT bar
+FROM Frequents
+WHERE drinker = 'Ben' OR drinker = 'Dan'
+EXCEPT
+SELECT DISTINCT f1.bar
+FROM Frequents f1, Frequents f2
+WHERE f1.bar = f2.bar AND f1.drinker = 'Ben' and f2.drinker = 'Dan';

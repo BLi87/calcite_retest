@@ -1,0 +1,15 @@
+select A.beer, cnt, avg
+from 
+
+(SELECT B1.name AS beer, COUNT(L1.drinker) AS cnt
+FROM beer B1 left outer join likes L1
+on B1.name = L1.beer
+GROUP BY B1.name) A left outer join
+
+(SELECT B1.name AS beer, AVG(S1.price) AS avg
+FROM beer B1 left outer join serves S1
+on B1.name = S1.beer
+GROUP BY B1.name) B
+
+on A.beer = B.beer
+order by cnt desc, A.beer

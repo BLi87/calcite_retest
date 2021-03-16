@@ -1,0 +1,4 @@
+SELECT b.bar from
+(select count(a.bar) as count, a.bar as bar from
+((Select drinker, bar from frequents where drinker = 'Ben')  UNION DISTINCT
+		(Select drinker, bar from frequents where drinker = 'Dan') ) a  group by bar HAVING count(a.bar) = 1) b; 

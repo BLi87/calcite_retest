@@ -1,0 +1,5 @@
+select d.name, f.bar, d.address
+from drinker d, frequents f
+where d.name = f.drinker
+AND times_a_week < '2'
+

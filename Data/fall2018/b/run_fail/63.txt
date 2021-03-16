@@ -1,0 +1,8 @@
+WITH TMP1(bar) AS
+	(SELECT bar
+	FROM serves
+	WHERE beer='Corona')
+
+SELECT DISTINCT frequents.drinker
+FROM TMP1, frequents
+WHERE TMP1.bar = frequents.bar;

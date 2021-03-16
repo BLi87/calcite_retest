@@ -1,0 +1,15 @@
+(SELECT bar
+FROM Frequents
+WHERE drinker='Ben'
+AND bar not in
+(SELECT bar 
+FROM Frequents
+WHERE drinker='Dan'))
+UNION
+(SELECT bar
+FROM Frequents
+WHERE drinker='Dan'
+AND bar not in
+(SELECT bar 
+FROM Frequents
+WHERE drinker='Ben'));

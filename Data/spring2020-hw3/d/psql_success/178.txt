@@ -1,0 +1,25 @@
+WITH 
+	beerlikes(beer, drinker) AS
+	(SELECT beer.name, likes.drinker
+	FROM beer
+	LEFT OUTER JOIN likes ON beer.name = likes.beer),
+
+	beercounts(beer, count) AS
+	(SELECT beer, COUNT(drinker)
+	FROM beerlikes
+	GROUP BY beer),
+
+	beerserves(beer, price) AS
+	(SELECT beer.name, serves.price
+	FROM beer
+	LEFT OUTER JOIN serves ON beer.name = serves.beer),
+
+	priceavg(beer, priceav) AS
+	(SELECT beer, AVG(price)
+	FROM beerserves
+	GROUP BY beer)
+
+SELECT beercounts.beer, beercounts.count, priceavg.priceav
+FROM beercounts, priceavg
+WHERE beercounts.beer = priceavg.beer
+ORDER BY beercounts.count DESC, beercounts.beer ASC;

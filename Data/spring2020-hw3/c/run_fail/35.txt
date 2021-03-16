@@ -1,0 +1,18 @@
+with dlikes as
+(select l.drinker, s.bar, l.beer
+from likes l, serves s
+where l.beer = s.beer),
+
+dbars as
+(select f.drinker, f.bar, s.beer
+from frequents f, serves s
+where f.bar = s.bar),
+
+difference as
+(select * 
+from dbars
+except (select * from dlikes))
+
+select d.name
+from drinker d
+except (select difference.drinker from difference)

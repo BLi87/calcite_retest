@@ -1,0 +1,6 @@
+SELECT Serves.beer, Serves.bar
+FROM Serves, (SELECT beer
+	FROM Serves
+	GROUP BY beer
+	HAVING COUNT(*)=1) AS B
+WHERE Serves.beer=B.beer;

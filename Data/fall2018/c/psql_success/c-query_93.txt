@@ -1,0 +1,2 @@
+SELECT DISTINCT bar.name, bar.address FROM bar JOIN serves ON bar.name = serves.bar WHERE
+serves.beer = 'Corona' AND serves.price <= 3;

@@ -1,0 +1,11 @@
+SELECT drinker.name
+FROM drinker
+EXCEPT (SELECT t1.drinker FROM 
+(SELECT f.drinker, f.bar FROM frequents AS f
+EXCEPT (
+SELECT l.drinker, s.bar FROM serves AS s, likes AS l WHERE s.beer = l.beer)) AS t1
+); 
+
+--this finds drinkers that frequent bars that serves no beers that they like
+--now need to find drinkers who ONLY frequent bars that serve beers they like, so
+-- subtract from main list of drinkers 

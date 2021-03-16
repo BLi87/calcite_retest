@@ -1,0 +1,40 @@
+
+/*if bar serves beer drinker likes
+times_a_week*price 
+keep the row  */
+
+/*if bar serves no beer drinker likes
+then return null??? */
+
+/*select bar, multiply timew a week with price, group by bar */
+
+-- CASE WHEN l1.beer = s1.bber 
+-- THEN f1.times_a_week*s1.price
+
+/*find all bars, give bars without purchases amount 0*/
+
+/*all the bar with purchases */
+
+SELECT answer.barname, answer.amount 
+FROM (
+(SELECT jointable.bar AS barname, SUM(jointable.times_a_week*jointable.price) as amount
+FROM
+(SELECT f1.drinker,f1.bar,f1.times_a_week, l1.beer, s1.beer, s1.price
+FROM Frequents f1
+JOIN Likes l1 ON f1.drinker = l1.drinker
+JOIN Serves s1 ON f1.bar = s1.bar
+WHERE l1.beer = s1.beer) jointable 
+GROUP BY jointable.bar
+ORDER BY amount DESC, jointable.bar)
+UNION
+/*Bars without purchases from drinkers */
+((SELECT name as barname, 0.0 as amount 
+FROM bar)
+EXCEPT
+(SELECT f1.bar, 0.0 as amount 
+FROM Frequents f1
+JOIN Likes l1 ON f1.drinker = l1.drinker
+JOIN Serves s1 ON f1.bar = s1.bar
+WHERE l1.beer = s1.beer))) answer 
+GROUP BY answer.barname, answer.amount 
+ORDER BY answer.amount DESC, answer.barname; 

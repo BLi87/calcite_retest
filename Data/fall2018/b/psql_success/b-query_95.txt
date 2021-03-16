@@ -1,0 +1,5 @@
+/*names of drinkers who frequent bars serving corona*/
+
+SELECT DISTINCT frequents.drinker
+    FROM frequents INNER JOIN serves ON (frequents.bar = serves.bar)
+    WHERE serves.beer = 'Corona';

@@ -1,0 +1,29 @@
+--CREATE VIEW Rev AS (SELECT c.bar AS bar, c.times_a_week AS times_a_week, c.price AS price FROM (SELECT * FROM (SELECT * FROM frequents NATURAL JOIN likes) AS a, (SELECT serves.bar AS bar2, serves.beer AS beer2, serves.price AS price FROM serves) AS b WHERE a.bar=b.bar2 AND a.beer=b.beer2) AS c);
+
+--(SELECT z.bar AS bar, z.sum AS amount FROM (SELECT bar, SUM(amount) FROM (SELECT bar, price*times_a_week AS amount FROM Rev) AS foo GROUP BY bar ORDER BY sum DESC, bar) AS z) UNION (SELECT d.name AS bar, 0 AS amount FROM ((SELECT name FROM bar) EXCEPT (SELECT bar FROM (SELECT * FROM (SELECT z.bar AS bar, z.sum AS amount FROM (SELECT bar, SUM(amount) FROM (SELECT bar, price*times_a_week AS amount FROM Rev) AS foo GROUP BY bar ORDER BY sum DESC, bar) AS z) AS foo WHERE foo.amount>-1) AS foof)) AS d ORDER BY bar);
+
+--(SELECT z.bar AS bar, z.sum AS amount FROM (SELECT bar, SUM(amount) FROM (SELECT bar, price*times_a_week AS amount FROM ((SELECT c.bar AS bar, c.times_a_week AS times_a_week, c.price AS price FROM (SELECT * FROM (SELECT * FROM frequents NATURAL JOIN likes) AS a, (SELECT serves.bar AS bar2, serves.beer AS beer2, serves.price AS price FROM serves) AS b WHERE a.bar=b.bar2 AND a.beer=b.beer2) AS c) AS foofofofo)) AS foo GROUP BY bar ORDER BY sum DESC, bar) AS z) UNION (SELECT d.name AS bar, 0 AS amount FROM ((SELECT name FROM bar) EXCEPT (SELECT bar FROM (SELECT * FROM (SELECT z.bar AS bar, z.sum AS amount FROM (SELECT bar, SUM(amount) FROM (SELECT bar, price*times_a_week AS amount FROM ((SELECT c.bar AS bar, c.times_a_week AS times_a_week, c.price AS price FROM (SELECT * FROM (SELECT * FROM frequents NATURAL JOIN likes) AS a, (SELECT serves.bar AS bar2, serves.beer AS beer2, serves.price AS price FROM serves) AS b WHERE a.bar=b.bar2 AND a.beer=b.beer2) AS c) AS foofofofo)) AS foo GROUP BY bar ORDER BY sum DESC, bar) AS z) AS foo WHERE foo.amount>-1) AS foof)) AS d ORDER BY bar);
+
+/*
+The three tables we need are: frequents, likes, and serves
+
+1) First, we need to join frequents and likes based on drinker. 
+	Then, we will have a table with columns {drinker, bar, times_a_week, beer}. Let's call this a
+2) Second, we take a and cross it with serves (where we rename the columns in serves to be {bar2, beer2, price}).
+	This will result in a table with columns {drinker, bar, times_a_week, beer, bar2, beer2, price}
+3) Third, we will select tuples where bar=bar2 and beer=beer2
+4) Fourth, we will add a column to the table called "amount" which will simply be times_a_week * price
+	This will result in a table w/ schema {drinker, bar, times_a_week, beer, bar2, beer2, price, amount}
+5) From this table, all we care about is the bar and it's amount. So, we will only select bar and amount.
+	This will give us a table with schema {bar, amount}
+6) Now, it's possible that some bars are expected to have 0 amount. To account for this, we need to join this
+	current table with the names of bars in the bar table. Bars that do not have a amount will now be in the table and 
+	have an expected amount of NULL
+7) We need to convert all NULLs to 0s
+8) We need to now sort in descending order, then in case of ties alphabetically. This should complete the problem!
+*/
+
+--(SELECT c.bar AS bar, c.times_a_week AS times_a_week, c.price AS price FROM (SELECT * FROM (SELECT * FROM frequents NATURAL JOIN likes) AS a, (SELECT serves.bar AS bar2, serves.beer AS beer2, serves.price AS price FROM serves) AS b WHERE a.bar=b.bar2 AND a.beer=b.beer2) AS c) AS fooo
+
+
+(SELECT z.bar AS bar, z.sum AS amount FROM (SELECT bar, SUM(amount) FROM (SELECT fooo.bar, fooo.price*fooo.times_a_week AS amount FROM (SELECT c.bar AS bar, c.times_a_week AS times_a_week, c.price AS price FROM (SELECT * FROM (SELECT * FROM frequents NATURAL JOIN likes) AS a, (SELECT serves.bar AS bar2, serves.beer AS beer2, serves.price AS price FROM serves) AS b WHERE a.bar=b.bar2 AND a.beer=b.beer2) AS c) AS fooo) AS foo GROUP BY bar ORDER BY sum DESC, bar) AS z) UNION (SELECT d.name AS bar, 0 AS amount FROM ((SELECT name FROM bar) EXCEPT (SELECT bar FROM (SELECT * FROM (SELECT z.bar AS bar, z.sum AS amount FROM (SELECT bar, SUM(amount) FROM (SELECT fooo.bar, fooo.price*fooo.times_a_week AS amount FROM (SELECT c.bar AS bar, c.times_a_week AS times_a_week, c.price AS price FROM (SELECT * FROM (SELECT * FROM frequents NATURAL JOIN likes) AS a, (SELECT serves.bar AS bar2, serves.beer AS beer2, serves.price AS price FROM serves) AS b WHERE a.bar=b.bar2 AND a.beer=b.beer2) AS c) AS fooo) AS foo GROUP BY bar ORDER BY sum DESC, bar) AS z) AS foo WHERE foo.amount>-1) AS foof)) AS d ORDER BY bar) ORDER BY amount DESC, bar;

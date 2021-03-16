@@ -1,0 +1,16 @@
+
+
+WITH 
+	drinkerfreq(drinker, bar, times) AS
+	(SELECT drinker.name, frequents.bar, frequents.times_a_week
+	FROM drinker
+	LEFT OUTER JOIN frequents ON drinker.name = frequents.drinker),
+
+	drinkerbars(drinker, bar, times) AS
+	(SELECT a.drinker, a.bar, a.times
+	FROM drinkerfreq a, drinkerfreq b
+	WHERE a.drinker = b.drinker AND a.bar <> b.bar AND a.times < b.times)
+
+	(SELECT drinker, bar FROM drinkerfreq)
+	EXCEPT
+	(SELECT drinker, bar FROM drinkerbars);

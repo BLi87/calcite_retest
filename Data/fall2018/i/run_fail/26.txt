@@ -1,0 +1,11 @@
+select name from drinker
+except
+select drinker as name from
+(select drinker, bar from frequents
+except
+(select drinker, bar from likes, serves
+except
+((select drinker, bar from
+(select drinker, serves.beer, bar from likes, serves
+except
+select drinker, serves.beer, bar from likes, serves where likes.beer = serves.beer) as X)))) as T;

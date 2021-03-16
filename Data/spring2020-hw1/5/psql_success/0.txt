@@ -1,0 +1,9 @@
+-- 5. For drinkers who visits some bar less than 2 times a week, find the drinker’s name, the bar’s name and the bar’s address (in that order) [Output format: three columns named as ‘name’, ‘bar’, ‘address’ in this order]
+
+SELECT frequents.drinker AS name,
+       bar.name          AS bar,
+       bar.address       AS address
+FROM   frequents,
+       bar
+WHERE  bar.name = frequents.bar
+       AND times_a_week < 2

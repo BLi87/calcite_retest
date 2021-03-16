@@ -1,0 +1,25 @@
+
+WITH 
+	drinkerpairs(drinker1, drinker2) AS
+	(SELECT d1.name, d2.name
+	FROM drinker d1, drinker d2
+	WHERE d1.name <> d2.name),
+
+	drinker1(drinker1, drinker2, beer) AS
+	(SELECT dp.drinker1, dp.drinker2, l.beer
+	FROM drinkerpairs dp, likes l
+	WHERE dp.drinker1 = l.drinker),
+
+	drinker2(drinker1, drinker2, beer) AS
+	(SELECT dp.drinker1, dp.drinker2, l.beer
+	FROM drinkerpairs dp, likes l
+	WHERE dp.drinker2 = l.drinker),
+
+	diff(drinker1, drinker2, beer) AS 
+	((SELECT drinker1, drinker2, beer FROM drinker1) 
+	EXCEPT
+	(SELECT drinker1, drinker2, beer FROM drinker2))
+
+(SELECT * FROM drinkerpairs)
+EXCEPT
+(SELECT drinker1, drinker2 FROM diff);

@@ -1,0 +1,17 @@
+SELECT Bar.name, SUM(
+  -- Account for the case where a bar
+  -- has no frequenters. Could account
+  -- for other cases up here too but
+  -- that would make the cross product
+  -- in FROM very large.
+  CASE WHEN Bar.name = Frequents.bar
+       THEN Serves.price * times_a_week
+       ELSE 0
+  END
+) AS amount
+FROM Bar, Frequents, Serves, Likes
+WHERE Frequents.bar = Serves.bar
+AND Frequents.drinker = Likes.drinker
+AND Serves.beer = Likes.beer
+GROUP BY Bar.name
+ORDER BY amount DESC, Bar.name ASC;

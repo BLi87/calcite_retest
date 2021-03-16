@@ -1,0 +1,17 @@
+WITH TEMP1 AS
+(SELECT *
+ FROM frequents NATURAL JOIN serves NATURAL JOIN likes),
+
+TEMP2(bar, amount) AS
+(SELECT bar, SUM(price*times_a_week) AS amount FROM TEMP1
+ GROUP BY bar),
+
+TEMP3(bar, amount) AS
+(SELECT bar.name, amount FROM TEMP2 
+ RIGHT OUTER JOIN bar ON bar.name = TEMP2.bar)
+
+SELECT bar,
+         CASE WHEN amount IS NULL THEN 0
+                     ELSE amount
+         END
+ FROM TEMP3 ORDER BY amount DESC, bar;

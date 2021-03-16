@@ -1,0 +1,7 @@
+select name from drinker EXCEPT
+select distinct a.drinker from
+(
+(Select drinker, bar from frequents)  EXCEPT
+(select distinct a.drinker as drinker, b.bar as bar from
+(select drinker, beer from likes) a LEFT JOIN
+(select bar, beer from serves) b ON a.beer = b.beer)  ) a;

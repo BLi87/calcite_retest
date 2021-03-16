@@ -1,0 +1,5 @@
+SELECT beer, bar FROM Serves
+WHERE beer IN
+(SELECT DISTINCT beer FROM Serves
+GROUP BY beer
+HAVING COUNT(beer) = 1);

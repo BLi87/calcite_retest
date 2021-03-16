@@ -1,0 +1,1 @@
+SELECT bar,drinker FROM (SELECT * FROM frequents AS f WHERE NOT EXISTS (SELECT * FROM frequents WHERE times_a_week > f.times_a_week AND bar = f.bar)) AS subTable;

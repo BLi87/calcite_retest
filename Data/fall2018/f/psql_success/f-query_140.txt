@@ -1,0 +1,10 @@
+SELECT serves.beer, bar
+FROM serves,
+       (SELECT beer
+        FROM serves
+        EXCEPT (SELECT DISTINCT s3.beer
+                FROM (SELECT s1.beer
+                        FROM serves AS s1,
+                        serves AS s2
+                        WHERE ((s1.beer = s2.beer) AND (s1.bar != s2.bar))) AS s3)) AS s4
+        WHERE (serves.beer = s4.beer);

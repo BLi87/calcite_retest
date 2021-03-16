@@ -1,0 +1,15 @@
+
+WITH drinker_count AS (
+        SELECT beer, COUNT(drinker) cnt
+        FROM likes
+        GROUP BY beer
+), average_price AS (
+        SELECT beer, AVG(price) avg
+        FROM serves
+        GROUP BY beer
+)
+
+SELECT beer.name, COALESCE(drinker_count.cnt, 0), average_price.avg
+FROM beer
+LEFT JOIN average_price ON beer.name = average_price.beer 
+LEFT JOIN drinker_count ON drinker_count.beer = beer.name;

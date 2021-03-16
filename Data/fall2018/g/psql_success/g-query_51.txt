@@ -1,0 +1,8 @@
+SELECT FINAL.bar, FINAL.drinker
+FROM (SELECT frequents.drinker, frequents.bar, frequents.times_a_week
+  FROM frequents EXCEPT
+  SELECT T.drinker1, T.bar1, T.num1 FROM
+    (SELECT f1.drinker AS drinker1, f2.drinker AS drinker2, f1.bar AS bar1, f2.bar AS bar2, f1.times_a_week AS num1, f2.times_a_week AS num2
+    FROM frequents AS f1, frequents AS f2
+    WHERE f1.times_a_week < f2.times_a_week
+    AND f1.bar = f2.bar) T) FINAL;

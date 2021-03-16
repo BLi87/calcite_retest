@@ -1,0 +1,2 @@
+SELECT bar FROM serves
+where beer = 'Corona'

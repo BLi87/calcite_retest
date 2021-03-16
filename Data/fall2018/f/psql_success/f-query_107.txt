@@ -1,0 +1,16 @@
+WITH Temp1 (beer1, count1) AS (
+SELECT beer, COUNT(beer)
+FROM serves
+GROUP BY beer
+HAVING COUNT(beer) = 1)
+
+SELECT DISTINCT beer, serves.bar
+FROM serves, Temp1
+WHERE beer = beer1; 
+
+
+
+
+
+
+

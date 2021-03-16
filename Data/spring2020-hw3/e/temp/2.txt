@@ -1,0 +1,21 @@
+
+
+
+WITH drinkers AS
+	(SELECT DISTINCT name
+	FROM drinker),
+
+joined AS
+	(SELECT drinkers.name AS drinker, frequents.times_a_week AS f, frequents.bar AS b
+	FROM drinkers
+		LEFT OUTER JOIN frequents ON drinkers.name = frequents.drinker
+	GROUP BY frequents.bar, drinkers.name, frequents.times_a_week),
+
+max AS
+	(SELECT MAX(f) as f, drinker
+	FROM joined
+	GROUP BY drinker)
+
+SELECT max.drinker, frequents.bar
+FROM max LEFT OUTER JOIN frequents ON frequents.drinker = max.drinker and frequents.times_a_week = max.f;
+ 

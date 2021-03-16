@@ -1,0 +1,1 @@
+select a.beer, count(distinct(a.drinker)), avg(a.price) from (select likes.drinker, serves.bar, serves.beer, serves.price from likes, serves where likes.beer=serves.beer) AS a GROUP BY a.beer ORDER BY a.count DESC, a.beer;

@@ -1,0 +1,5 @@
+SELECT bar From Frequents AS f3 WHERE f3.drinker = 'Ben' OR f3.drinker = 'Dan'
+
+EXCEPT
+
+(SELECT f1.bar FROM Frequents AS f1, Frequents AS f2 WHERE f1.bar = f2.bar AND f1.drinker = 'Ben' AND f2.drinker = 'Dan');

@@ -1,0 +1,23 @@
+with alldrinkers as (
+select name
+from drinker
+),
+
+frequents_max as (
+select drinker, max(times_a_week)
+from frequents
+group by drinker
+),
+
+max_bar as (
+select frequents_max.drinker, frequents_max.max, frequents.bar
+from frequents_max, frequents
+where frequents_max.max = frequents.times_a_week
+and frequents_max.drinker = frequents.drinker
+)
+
+select name, bar
+from alldrinkers
+left join max_bar
+on max_bar.drinker = alldrinkers.name
+

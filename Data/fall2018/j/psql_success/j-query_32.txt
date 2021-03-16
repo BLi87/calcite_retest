@@ -1,0 +1,12 @@
+SELECT d1.bar, d2.bar
+FROM (
+  SELECT bar, array_agg(beer), count(*)
+  FROM serves
+  GROUP BY bar
+) AS d1,(
+  SELECT bar, array_agg(beer), count(*)
+  FROM serves
+  GROUP BY bar
+) AS d2
+WHERE d1.array_agg <@ d2.array_agg
+AND d1.count < d2.count;

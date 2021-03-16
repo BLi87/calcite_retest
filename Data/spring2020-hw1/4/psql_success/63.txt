@@ -1,0 +1,1 @@
+SELECT DISTINCT f1.drinker, drinker.address FROM frequents f1 CROSS JOIN frequents f2 LEFT JOIN drinker ON f1.drinker = drinker.name WHERE f1.drinker = f2.drinker AND f1.bar != f2.bar

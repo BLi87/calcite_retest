@@ -1,0 +1,1 @@
+select beer, bar from serves except all (select a.beer, a.bar from serves a inner join serves b on a.beer = b.beer and a.bar!=b.bar);

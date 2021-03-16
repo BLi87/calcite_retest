@@ -1,0 +1,14 @@
+SELECT name AS drinker FROM Drinker
+EXCEPT
+SELECT DISTINCT drinker FROM
+(SELECT DISTINCT Frequents1.drinker, Frequents1.bar
+FROM Frequents AS Frequents1
+INNER JOIN Serves ON Frequents1.bar = Serves.bar
+INNER JOIN Likes ON Serves.beer != Likes.beer 
+AND Frequents1.drinker = Likes.drinker
+EXCEPT
+SELECT DISTINCT Frequents1.drinker, Frequents1.bar
+FROM Frequents AS Frequents1
+INNER JOIN Serves ON Frequents1.bar = Serves.bar
+INNER JOIN Likes ON Serves.beer = Likes.beer 
+AND Frequents1.drinker = Likes.drinker) as derivedTable;

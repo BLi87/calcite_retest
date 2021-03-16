@@ -1,0 +1,13 @@
+with d1 as
+    (select f.drinker, f.bar, s.beer
+      from frequents f, serves s
+        where f.bar = s.bar),
+  d2 as
+    (select f.drinker, f.bar, l.beer
+      from frequents f, likes l
+        where f.drinker = l.drinker),
+  n as
+    (select drinker as name
+      from ((select * from d1) except (select * from d2)) as d)
+select *
+  from ((select name from drinker) except (select * from n)) as p

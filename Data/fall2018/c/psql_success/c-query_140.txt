@@ -1,0 +1,10 @@
+SELECT DISTINCT
+bar, address
+FROM 
+(
+	(SELECT bar FROM Serves WHERE beer = 'Corona' AND price <= 3.00) t1
+	INNER JOIN
+	(SELECT name, address FROM Bar) t2
+	ON
+	t1.bar = t2.name
+);

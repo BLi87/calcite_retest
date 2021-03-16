@@ -1,0 +1,18 @@
+((SELECT d1.name AS drinker1, d2.name AS drinker2
+FROM drinker d1, drinker d2
+WHERE d1 != d2)
+
+EXCEPT
+
+(SELECT d1, d2
+FROM (
+
+(SELECT d1, d2, l.beer AS b1
+FROM likes l JOIN (SELECT d1.name AS d1, d2.name AS d2
+FROM drinker d1, drinker d2) AS a ON l.drinker = d1)
+
+EXCEPT
+
+(SELECT l1.drinker AS d1, l2.drinker AS d2, l2.beer AS b1
+FROM likes l1, likes l2
+WHERE l1.beer = l2.beer AND l1.drinker != l2.drinker)) AS b))

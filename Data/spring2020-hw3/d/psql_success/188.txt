@@ -1,0 +1,37 @@
+/* Can't use views?
+CREATE VIEW AvgPrices AS
+SELECT name, avg(price) AS avg
+FROM beer LEFT OUTER JOIN serves
+  ON beer.name = serves.beer
+GROUP BY beer.name;
+
+CREATE VIEW BeerCounts AS
+SELECT beer.name AS beer, count(beer) AS cnt
+FROM likes RIGHT OUTER JOIN beer
+  ON likes.beer = beer.name
+GROUP BY beer.name;
+
+SELECT beer, cnt, avg
+FROM BeerCounts FULL OUTER JOIN AvgPrices
+  ON BeerCounts.beer = AvgPrices.name
+ORDER BY cnt DESC, beer ASC;
+*/
+
+
+
+
+WITH AvgPrices AS
+  (SELECT name, avg(price) AS avg
+  FROM beer LEFT OUTER JOIN serves
+    ON beer.name = serves.beer
+  GROUP BY beer.name)
+
+SELECT beer, cnt, avg
+FROM
+(SELECT beer.name AS beer, count(beer) AS cnt
+FROM likes RIGHT OUTER JOIN beer
+  ON likes.beer = beer.name
+GROUP BY beer.name) AS BeerCounts
+FULL OUTER JOIN AvgPrices
+  ON BeerCounts.beer = AvgPrices.name
+ORDER BY cnt DESC, beer ASC;

@@ -1,0 +1,66 @@
+With initial as (
+Select name 
+From drinker
+),
+
+i as (
+Select name as drinker1
+From initial
+),
+
+j as (
+Select name as drinker2 
+From initial
+),
+
+alldrinkers as (
+Select *
+From i, j
+Where drinker1 <> drinker2
+),
+
+temp1 as (
+select *
+From alldrinkers, likes
+where alldrinkers.drinker1 = likes.drinker
+),
+
+temp2 as (
+Select drinker1, drinker2, beer
+From temp1
+),
+
+
+t1 as (
+Select *
+From alldrinkers, likes
+Where drinker2 = drinker
+),
+
+t2 as (
+Select drinker1, drinker2, beer
+From t1
+),
+
+difference1 as (
+Select * from temp2
+Except 
+Select * from t2
+),
+
+differencecool as (
+select drinker1, drinker2
+from difference1
+),
+
+final as (
+select * from alldrinkers
+Except
+select * from differencecool
+)
+
+select *
+from final
+
+
+

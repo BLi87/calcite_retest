@@ -1,0 +1,11 @@
+select name 
+from drinker
+except
+(
+select drinker 
+from
+((select drinker, beer
+from serves, frequents
+where serves.bar=frequents.bar)
+EXCEPT
+(select * from likes))  as a)

@@ -1,0 +1,8 @@
+/*bar with an array of its beers*/
+WITH bcb as (
+    SELECT bar, array_agg(beer) as beers
+    FROM serves
+    GROUP BY bar)
+SELECT less.bar, more.bar
+FROM  bcb as less CROSS JOIN bcb as more
+WHERE less.beers <@ more.beers AND less.bar != more.bar;

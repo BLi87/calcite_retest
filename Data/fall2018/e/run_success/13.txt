@@ -1,0 +1,1 @@
+((SELECT bar FROM Frequents WHERE drinker = 'Ben') EXCEPT ALL (SELECT bar FROM Frequents WHERE drinker = 'Dan')) UNION ALL ((SELECT bar FROM Frequents WHERE drinker = 'Dan') EXCEPT ALL (SELECT bar FROM Frequents WHERE drinker = 'Ben'));

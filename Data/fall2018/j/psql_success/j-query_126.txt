@@ -1,0 +1,9 @@
+WITH TEMP1(bar1,beer,bar2) AS
+(SELECT serves.bar, serves.beer, re_serves.bar FROM serves, serves AS re_serves),
+
+TEMP2(bar1,beer,bar2) AS
+(SELECT * FROM TEMP1 EXCEPT
+SELECT bar2,beer,bar1 FROM TEMP1)
+
+SELECT bar2 AS bar1, bar1 AS bar2 FROM TEMP2 EXCEPT
+SELECT bar1,bar2 FROM TEMP2;

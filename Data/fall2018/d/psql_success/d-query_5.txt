@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT drinker FROM Frequents WHERE bar = 'Satisfaction') AS "satis" WHERE drinker IN (SELECT drinker FROM Frequents WHERE bar = 'James Joyce Pub');

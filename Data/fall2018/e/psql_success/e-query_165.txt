@@ -1,0 +1,1 @@
+((select distinct bar from frequents where frequents.drinker = 'Ben') except (select distinct bar from frequents where frequents.drinker = 'Dan')) union ((select distinct bar from frequents where frequents.drinker = 'Dan') except (select distinct bar from frequents where frequents.drinker = 'Ben'));

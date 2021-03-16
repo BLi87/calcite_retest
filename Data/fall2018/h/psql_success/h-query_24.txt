@@ -1,0 +1,7 @@
+SElECT drinker.name from drinker 
+	EXCEPT ALL (
+		SElECT S.drinker from (
+			SElECT frequents.drinker, frequents.bar from frequents 
+			EXCEPT ALL (
+				SElECT u.drinker, u.bar from ((
+					SElECT distinct frequents.drinker, serves.bar, likes.beer from frequents, serves, likes where frequents.bar = serves.bar and frequents.drinker = likes.drinker and likes.beer = serves.beer)) as u)) as S);

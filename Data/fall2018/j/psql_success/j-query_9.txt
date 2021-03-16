@@ -1,0 +1,56 @@
+--Find all (bar1, bar2) pairs where the set of beer served at bar1 is a proper subset of those served at
+--bar2; i.e., bar2 serves every beer that bar1 serves and plus some more
+-- (\project_{bar2, bar}(
+-- temp1 (\project_{bar, bar2, beer} (serves \join_{bar <> bar2} (\rename_{bar2, address} bar)))
+-- temp3 \diff
+-- temp2 (\project_{bar2, bar, beer} ((\rename_{bar2, address} bar) \join_{bar <> bar2} serves))))
+
+-- \diff(
+--oppposite
+-- bar2, bar pair
+-- bar, bar2, beer serves join bar where the bars are not equal (makes bar, bar2) diff this from the 
+-- bar2, bar, beer bar join serves where bars are not equal (makes bar2, bar pairs)
+
+-- diff that entire thing with the same as 29/30 lines but do bar, bar2
+
+-- -make a view that is 
+
+WITH temp1 (bar1, bar2, beer) AS (
+SELECT DISTINCT serves.bar, bar.name, serves.beer
+FROM serves, bar
+WHERE serves.bar != bar.name),
+
+temp2(bar2, bar1, beer) AS (
+SELECT DISTINCT bar.name, serves.bar, serves.beer
+FROM bar, serves
+WHERE bar.name!= serves.bar
+),
+
+temp3 (bar1, bar2) AS(
+SELECT bar1, bar2, beer
+FROM temp1 
+EXCEPT 
+SELECT bar2, bar1, beer
+FROM temp2),
+
+
+temp4(bar2, bar1) AS(
+SELECT bar2, bar1, beer
+FROM temp1
+EXCEPT
+SELECT bar1, bar2, beer
+FROM temp2)
+
+
+SELECT bar2, bar1
+FROM temp3
+
+EXCEPT
+
+SELECT bar1, bar2
+FROM temp4;
+
+
+
+
+

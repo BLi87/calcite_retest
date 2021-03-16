@@ -1,0 +1,3 @@
+select D.name, B.name as bar, B.address
+from drinker D, bar B, frequents F1, frequents F2
+where F1.drinker = F2.drinker and F1.bar = F2.bar and F1.bar = B.name and F1.times_a_week <2 and F1.drinker = D.name

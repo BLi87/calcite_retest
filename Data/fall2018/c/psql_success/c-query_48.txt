@@ -1,0 +1,2 @@
+select distinct on (name, address) name, address from bar, ((select bar from serves 
+where beer = 'Corona' and price <= 3.00)) as T where bar.name = T.bar;

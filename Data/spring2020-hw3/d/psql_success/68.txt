@@ -1,0 +1,53 @@
+WITH numLike AS (
+    SELECT likes.beer, count(*) count
+    FROM likes
+    GROUP BY likes.beer
+),
+
+avgPrice AS (
+    SELECT serves.beer, avg(serves.price) average
+    FROM serves
+    GROUP BY serves.beer
+),
+  
+notServed AS (
+    SELECT numLike.beer, numLike.count 
+    FROM numLike 
+    WHERE numLike.beer NOT IN (
+        SELECT serves.beer 
+        FROM serves
+    )
+),
+  
+notLiked AS (
+    SELECT avgPrice.beer, 0, avgPrice.average 
+    FROM avgPrice
+    WHERE avgPrice.beer NOT IN (
+        SELECT likes.beer 
+        FROM likes
+    )
+)
+
+SELECT numLike.beer, numLike.count, avgPrice.average 
+FROM numLike JOIN avgPrice 
+ON numLike.beer = avgPrice.beer
+UNION (
+    SELECT notServed.beer, notServed.count, NULL 
+    FROM notServed
+)
+UNION (
+    SELECT notLiked.beer, 0, notLiked.average
+    FROM notLiked
+)
+UNION (
+    SELECT beer.name, 0, NULL 
+    FROM beer 
+    WHERE beer.name NOT IN (
+        SELECT likes.beer 
+        FROM likes UNION (
+            SELECT serves.beer FROM serves
+        )
+    )
+)
+
+ORDER BY count DESC, beer ASC

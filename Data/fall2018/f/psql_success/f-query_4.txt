@@ -1,0 +1,1 @@
+Select serves.beer, bar from serves join (select beer, count(bar) from serves group by beer having count(bar)=1) as b on b.beer=serves.beer;

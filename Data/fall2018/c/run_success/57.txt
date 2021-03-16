@@ -1,0 +1,1 @@
+select distinct bar,address from serves,bar where serves.bar=bar.name and beer='Corona' and price<=3;

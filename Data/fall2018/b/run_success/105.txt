@@ -1,0 +1,4 @@
+Select distinct a.drinker
+from frequents a 
+inner join serves b on a.bar = b.bar
+where b.beer = 'Corona';

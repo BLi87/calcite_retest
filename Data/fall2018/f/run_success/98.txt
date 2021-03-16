@@ -1,0 +1,4 @@
+select beer,bar from 
+	((select bar,beer from serves) 
+		except (select s1.bar, s1.beer from serves AS s1, serves AS s2 
+			where s1.bar<>s2.bar and s1.beer=s2.beer)) AS whatever;

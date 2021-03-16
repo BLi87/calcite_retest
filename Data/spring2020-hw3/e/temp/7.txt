@@ -1,0 +1,7 @@
+Select d1.name, f1.bar
+From drinker d1
+Left outer join frequents f1 on f1.drinker=d1.name
+Where exists (Select name from drinker 
+Left outer join frequents on drinker.name=frequents.drinker
+Where d1.name=drinker.name
+Group by name having f1.times_a_week=max(times_a_week) or f1.times_a_week is Null);

@@ -1,0 +1,12 @@
+select d.drinker
+from likes as d
+where d.drinker not in
+
+(select c.drinker
+from likes as c
+where c.beer not in
+
+(select a.beer
+from likes as a, likes as b
+where a.drinker = 'Amy'
+and a.beer = b.beer))

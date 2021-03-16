@@ -1,0 +1,36 @@
+With foo as (
+Select frequents.drinker,frequents.bar, serves.beer 
+From frequents, serves
+Where frequents.bar = serves.bar
+),
+
+foo2 as (
+Select frequents.drinker, frequents.bar, likes.beer
+From frequents, likes
+Where frequents.drinker = likes.drinker
+),
+
+first as (
+Select * From foo
+Except
+Select * from foo2
+),
+
+firstdrinkers as (
+Select drinker
+From first
+),
+
+alldrinkers as (
+Select name
+From drinker
+),
+
+final as (
+Select * from alldrinkers
+Except
+Select * from firstdrinkers
+)
+
+Select * 
+From final

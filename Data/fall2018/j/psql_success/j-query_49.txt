@@ -1,0 +1,19 @@
+select bar2, bar1
+from(
+(select s1.bar as bar1, s1.beer as beer1, bar.name as bar2
+from serves as s1
+cross join bar)
+except
+(select bar.name as bar1, s2.beer as beer1, s2.bar as bar2
+from serves as s2
+cross join bar)) as TwoBar1
+except
+select bar1, bar2
+from(
+(select s1.bar as bar1, s1.beer as beer1, bar.name as bar2
+from serves as s1
+cross join bar)
+except
+(select bar.name as bar1, s2.beer as beer1, s2.bar as bar2
+from serves as s2
+cross join bar)) as TwoBar2

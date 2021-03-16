@@ -1,0 +1,2 @@
+select distinct beer from serves where bar = 'James Joyce Pub';
+

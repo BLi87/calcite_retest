@@ -1,0 +1,11 @@
+/*  Find names of all drinkers who frequent only those bars that serve some beers they like. */ 
+
+(SELECT DISTINCT name FROM drinker)
+EXCEPT
+(SELECT DISTINCT sub.drinker FROM(
+	(SELECT DISTINCT drinker, bar FROM frequents)
+	EXCEPT
+	(SELECT DISTINCT drinker, bar FROM likes, serves WHERE likes.beer = serves.beer)) sub);
+
+/* sub is renaming the sub-query */ 
+

@@ -1,0 +1,33 @@
+
+WITH pairs AS
+	(SELECT d1.name AS drinker1, d2.name AS drinker2
+	FROM drinker d1, drinker d2
+	WHERE d1.name <> d2.name)
+
+SELECT p.drinker1, p.drinker2
+FROM (
+	(SELECT * from pairs)
+	
+	EXCEPT ALL
+	
+(
+	SELECT first.drinker1, first.drinker2 
+	FROM
+	(
+
+		(SELECT pairs.drinker1, pairs.drinker2, beer
+		FROM pairs, likes
+		WHERE pairs.drinker1 = likes.drinker)
+
+		EXCEPT ALL
+
+		(SELECT pairs.drinker1, pairs.drinker2, beer
+		FROM pairs, likes
+		WHERE pairs.drinker2 = likes.drinker)
+
+	) as first
+)
+
+) as p;
+
+

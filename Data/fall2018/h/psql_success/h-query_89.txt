@@ -1,0 +1,18 @@
+SELECT name FROM drinker
+
+EXCEPT
+
+SELECT DISTINCT sub.drinker FROM
+
+(SELECT drinker, bar FROM frequents
+
+EXCEPT
+
+SELECT DISTINCT frequents.drinker, frequents.bar FROM 
+
+frequents 
+JOIN serves 
+	ON frequents.bar = serves.bar
+JOIN likes
+	ON serves.beer = likes.beer 
+	AND frequents.drinker = likes.drinker) sub;

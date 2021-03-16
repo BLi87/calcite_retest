@@ -1,0 +1,10 @@
+select serves.beer, serves.bar
+from likes likes, serves serves
+where likes.beer = serves.beer
+and likes.drinker = 'Dan'
+and serves.price = 
+(
+select max(serves.price)
+from serves serves
+where serves.beer = likes.beer
+);

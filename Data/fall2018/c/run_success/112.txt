@@ -1,0 +1,1 @@
+SELECT * FROM bar WHERE bar.name IN (SELECT bar FROM serves WHERE beer = 'Corona' AND price <= 3);

@@ -1,0 +1,6 @@
+SELECT DISTINCT bar
+FROM frequents                                              
+WHERE (drinker = 'Ben' OR drinker = 'Dan') AND bar NOT IN
+(SELECT DISTINCT f1.bar 
+FROM frequents f1 INNER JOIN frequents f2 ON f1.bar = f2.bar
+WHERE f1.drinker = 'Ben' and f2.drinker ='Dan');

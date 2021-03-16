@@ -1,0 +1,1 @@
+select name, bar from drinker left outer join frequents a on drinker.name = a.drinker where a.times_a_week = (SELECT max(times_a_week) from frequents b where a.drinker = b.drinker) or a.times_a_week is null

@@ -1,0 +1,13 @@
+SELECT s1.beer, s1.bar 
+FROM Serves AS s1
+
+EXCEPT
+/* bar, beer pairings where beer is not unique*/
+SELECT s2.beer, s2.bar
+FROM Serves AS s2
+WHERE s2.beer IN (
+    SELECT s3.beer
+    FROM Serves AS s3
+    WHERE s2.beer=s3.beer
+    AND s2.bar != s3.bar
+);

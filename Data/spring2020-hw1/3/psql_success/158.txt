@@ -1,0 +1,4 @@
+SELECT one.drinker, two.drinker, one.beer FROM
+   likes as one, likes as two
+WHERE one.drinker < two.drinker AND one.beer = two.beer
+ORDER BY one.drinker

@@ -1,0 +1,4 @@
+SELECT DISTINCT beer 
+FROM Serves
+WHERE bar='James Joyce Pub';
+

@@ -1,0 +1,13 @@
+SELECT bar,
+      CASE WHEN tot_rev IS NOT NULL THEN tot_rev
+           ELSE 0 END AS amount
+      FROM (SELECT bar.name AS bar,tot_rev
+           FROM (SELECT bar as name,SUM(ind_rev) AS tot_rev
+                FROM (SELECT times_a_week*serves.price AS ind_rev,frequents.bar
+                          FROM likes,serves,frequents WHERE likes.beer=serves.beer AND serves.bar=frequents.bar AND likes.drinker=frequents.drinker
+                ) AS f GROUP BY bar
+            ) AS r
+            RIGHT OUTER JOIN
+            bar ON bar.name=r.name
+      ) AS final
+      ORDER BY amount DESC,bar;

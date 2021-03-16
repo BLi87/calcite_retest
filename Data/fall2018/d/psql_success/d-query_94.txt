@@ -1,0 +1,1 @@
+select name from Drinker d, Frequents f1, Frequents f2 where f1.bar = 'James Joyce Pub' and f2.bar='Satisfaction' and d.name=f1.drinker and d.name=f2.drinker;

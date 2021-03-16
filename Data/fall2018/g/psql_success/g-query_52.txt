@@ -1,0 +1,8 @@
+select distinct bar, drinker from frequents as f where (bar, drinker) not in (select f1.bar, f1.drinker from frequents f1 join frequents f2 on f1.bar = f2.bar where f1.times_a_week < f2.times_a_week);
+
+/* another option 
+
+select distinct bar, drinker from frequents as f where not exists (select * from frequernts where bar=f.bar and times_a_week>f.times_a_week);
+
+*/ 
+

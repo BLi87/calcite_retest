@@ -1,0 +1,13 @@
+((SELECT bar FROM frequents
+WHERE frequents.drinker = 'Ben')
+UNION 
+(SELECT bar FROM frequents
+WHERE frequents.drinker = 'Dan'))
+
+EXCEPT
+
+((SELECT bar FROM frequents
+WHERE frequents.drinker = 'Ben')
+INTERSECT
+(SELECT bar FROM frequents
+WHERE frequents.drinker = 'Dan'));

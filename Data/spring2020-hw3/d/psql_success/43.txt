@@ -1,0 +1,13 @@
+SELECT counts.name as beer, counts.cnt, averages.avg
+FROM
+(SELECT beer.name, count(likes.drinker) as cnt
+FROM beer
+LEFT JOIN likes
+ON likes.beer = beer.name
+GROUP BY beer.name) as counts
+LEFT JOIN 
+(SELECT beer, avg(price) as avg
+FROM serves
+GROUP BY beer) as averages
+ON averages.beer = counts.name
+ORDER BY cnt DESC, beer

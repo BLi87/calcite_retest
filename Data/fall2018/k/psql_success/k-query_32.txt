@@ -1,0 +1,18 @@
+select * from
+(
+
+(select bar.name, 0 as price 
+from bar 
+where name not in 
+(select frequents.bar
+ 	from likes, serves, frequents
+ 	where likes.beer = serves.beer and frequents.drinker = likes.drinker and frequents.bar = serves.bar))
+
+
+union
+
+ 	(select serves.bar as barA, sum(price * frequents.times_a_week) as spend
+ 	from likes, serves, frequents where likes.beer = serves.beer and frequents.drinker = likes.drinker and frequents.bar = serves.bar
+ 	group by barA))F
+
+	order by 2 desc, 1 asc;  

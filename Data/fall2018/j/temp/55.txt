@@ -1,0 +1,11 @@
+SELECT name, bar FROM
+(SELECT bar, name FROM
+((SELECT serves1.bar, bar1.name, serves1.beer FROM (serves AS serves1 CROSS JOIN bar AS bar1))
+EXCEPT
+(SELECT bar2.name, serves2.bar, serves2.beer FROM (serves AS serves2 CROSS JOIN bar AS bar2))) AS sbset1
+
+EXCEPT
+SELECT name, bar FROM
+(SELECT serves3.bar, bar3.name, serves3.beer FROM (serves AS serves3 CROSS JOIN bar AS bar3)
+EXCEPT
+(SELECT bar4.name, serves4.bar, serves4.beer FROM (serves AS serves4 CROSS JOIN bar AS bar4))) AS sbset2) AS aggr;

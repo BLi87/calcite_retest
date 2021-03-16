@@ -1,0 +1,9 @@
+with newtables(drinker,bar,times_a_week, drinker1, beer, bar1, beer1, price, name, address) as (select * 
+from frequents f, likes l, serves s, bar b where l.beer=s.beer and f.bar=s.bar and f.drinker=l.drinker and b.name=f.bar) 
+select bar, sum(times_a_week*price) as amount from newtables group by bar 
+UNION 
+
+select name, 0.0 as amount from bar except (select f.bar, 0.0 as amount from frequents f, likes l, serves s where f.drinker=l.drinker and f.bar=s.bar
+ and s.beer=l.beer group by f.bar, amount) order by amount desc, bar;
+
+	

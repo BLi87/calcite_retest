@@ -1,0 +1,11 @@
+SELECT name
+FROM Drinker
+EXCEPT
+(SELECT drinker
+ FROM ((SELECT Frequents.drinker, Frequents.bar, Serves.beer
+      FROM Frequents, Serves
+      WHERE Frequents.bar = Serves.bar)
+      EXCEPT
+      (SELECT Likes.drinker, Serves.bar, Likes.beer
+      FROM Likes, Serves
+      WHERE Likes.beer = Serves.beer)) AS Opp);

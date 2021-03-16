@@ -1,0 +1,3 @@
+from drinker drinka, frequents frequenta, frequents frequentb
+select distinct drinka.name, drinka.address
+where drinka.name = frequenta.drinker and frequenta.drinker = frequentb.drinker and frequentb.bar != frequenta.bar

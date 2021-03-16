@@ -1,0 +1,7 @@
+SELECT name, COALESCE(t1.amount,0) AS amount 
+FROM Bar LEFT JOIN (SELECT t2.bar, SUM(t2.amount) 
+					AS amount FROM (SELECT t3.bar, t3.times_a_week*t3.price 
+									AS amount 
+									FROM Likes l NATURAL JOIN (SELECT * FROM Frequents f NATURAL JOIN Serves s) AS t3) 
+					AS t2 GROUP BY t2.bar) 
+AS t1 ON name = t1.bar ORDER BY amount DESC, name;

@@ -1,0 +1,9 @@
+WITH temp1 as ((select distinct likes.drinker, beer.name as beer
+from likes, beer
+where likes.beer != beer.name) except (select * from likes))
+select drinker.name
+from drinker
+where drinker.name not in 
+(select distinct temp1.drinker
+from serves, temp1, frequents
+where serves.beer = temp1.beer and frequents.drinker = temp1.drinker and frequents.bar = serves.bar)

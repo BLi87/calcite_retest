@@ -1,0 +1,3 @@
+SELECT d2.name FROM drinker d2 EXCEPT (SELECT s3.drinker FROM (SELECT s2.bar, s2.beer, s2.price, f2.drinker, f2.times_a_week FROM serves s2, frequents f2 WHERE s2.bar=f2.bar EXCEPT (SELECT s1.bar, s1.beer, s1.price, s1.drinker, s1.times_a_week FROM likes l,  
+(SELECT s.bar, s.beer, s.price, f.drinker, f.times_a_week FROM serves s, frequents f WHERE s.bar=f.bar) as s1 WHERE
+l.beer=s1.beer AND l.drinker=s1.drinker)) as s3);

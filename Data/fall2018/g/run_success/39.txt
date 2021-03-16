@@ -1,0 +1,10 @@
+
+SELECT bar, drinker
+FROM frequents
+EXCEPT ALL
+(
+SELECT pair1.bar, pair1.drinker
+FROM frequents AS pair1 JOIN frequents AS pair2
+ON pair1.bar = pair2.bar AND pair1.times_a_week<pair2.times_a_week
+)
+;

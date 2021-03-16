@@ -1,0 +1,12 @@
+--(j) Find all (bar1, bar2) pairs where the set of beer served at bar1 is a proper subset of those served at bar2; i.e., bar2 serves every beer that bar1 serves and plus some more. 
+(select s1.bar as bar1, s2.bar as bar2  -- (bar1, bar2) pairs where bar2 serves some beer that bar1 doesn't
+ from serves as s1, serves as s2
+ where not exists  -- s2.beer should be served at bar2 but not bar1
+    (select * from serves as s3  -- Whether s1.bar serves s2.beer
+     where s3.bar = s1.bar and s3.beer = s2.beer))
+except
+(select s1.bar as bar1, s2.bar as bar2  -- (bar1, bar2) pairs where bar1 serves some beer that bar2 doesn't
+ from serves as s1, serves as s2
+ where not exists  -- s1.beer should be served at bar1 but not bar2
+    (select * from serves as s3  -- Whether s2.bar serves s1.beer
+     where s3.bar = s2.bar and s3.beer = s1.beer));

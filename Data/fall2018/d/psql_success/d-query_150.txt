@@ -1,0 +1,4 @@
+SELECT DISTINCT drinker.name
+FROM frequents s1, frequents s2, drinker
+WHERE s1.drinker = drinker.name and s2.drinker = drinker.name
+and s1.bar = 'James Joyce Pub' and s2.bar = 'Satisfaction';

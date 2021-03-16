@@ -1,0 +1,10 @@
+with profitbars(bar, drinker, times_a_week, beer, price) as (select *
+from (frequents natural join serves) fs
+where exists (select drinker, beer from likes where fs.drinker = drinker and beer = fs.beer)),
+actualprofits(bar, price) as (select bar, sum(times_a_week * price) as price from profitbars as b group by bar),
+un(bar, price) as ((select bar, price from actualprofits as u)
+union all
+(select bar, 0 as price from (select name as bar from bar) as b))
+
+select * from un u
+  where not exists (select * from un where bar = u.bar and price > u.price) order by price desc, bar asc;

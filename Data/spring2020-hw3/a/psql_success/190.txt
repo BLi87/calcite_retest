@@ -1,0 +1,7 @@
+(select l.beer, s.bar 
+from likes l,serves s, serves s2  
+where l.drinker='Dan' and l.beer = s.beer)
+EXCEPT 
+(select s2.beer, s2.bar
+from serves s, serves s2
+where s.bar !=s2.bar and s.beer = s2.beer and s.price> s2.price);

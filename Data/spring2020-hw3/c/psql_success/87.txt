@@ -1,0 +1,12 @@
+WITH temp AS(
+SELECT f1.drinker AS name, s1.beer AS beer
+FROM frequents f1, serves s1 
+WHERE f1.bar=s1.bar
+EXCEPT
+SELECT drinker AS name, beer 
+FROM likes)
+SELECT drinker.name AS name
+FROM drinker
+EXCEPT
+SELECT name
+FROM temp;

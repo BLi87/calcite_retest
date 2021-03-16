@@ -1,0 +1,7 @@
+select distinct name 
+from drinker 
+where name not in 
+	(select drinker 
+	 from ((select drinker, frequents.bar, beer from frequents, serves where frequents.bar=serves.bar)
+	       except 
+	       (select drinker, bar, serves.beer from serves, likes where serves.beer=likes.beer)) T);

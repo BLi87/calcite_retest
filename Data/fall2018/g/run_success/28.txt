@@ -1,0 +1,9 @@
+select distinct fr1.bar, fr1.drinker
+from  frequents fr1
+where not exists
+(
+	select 1
+    from  frequents fr2
+    where fr1.bar = fr2.bar
+    and fr1.times_a_week < fr2.times_a_week
+);

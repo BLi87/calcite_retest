@@ -1,0 +1,13 @@
+(SELECT bar2, bar1
+FROM ((SELECT Serves.bar AS bar1, beer, Bar.name AS bar2
+FROM Serves, Bar)
+EXCEPT
+(SELECT bar2, beer, bar1 FROM (SELECT Serves.bar AS bar1, beer, Bar.name AS bar2
+FROM Serves, Bar) AS foo)) AS foo1)
+EXCEPT
+(SELECT bar1, bar2
+FROM ((SELECT Serves.bar AS bar1, beer, Bar.name AS bar2
+FROM Serves, Bar)
+EXCEPT
+(SELECT bar2, beer, bar1 FROM (SELECT Serves.bar AS bar1, beer, Bar.name AS bar2
+FROM Serves, Bar) AS foo)) AS foo2);

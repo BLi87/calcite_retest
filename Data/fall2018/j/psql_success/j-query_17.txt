@@ -1,0 +1,17 @@
+(select distinct abc.b1, abc.b2 from
+(select s3.bar as b2, s4.bar as b1, s3.beer
+from serves as s3, serves as s4
+where s3.bar<> s4.bar and s3.beer<>s4.beer
+except
+select s1.bar as b2, s2.bar as b1, s1.beer
+from serves as s1, serves as s2
+where s1.bar<>s2.bar and s1.beer = s2.beer) as abc)
+except all
+(select distinct xyz.b1, xyz.b2 from
+(select s3.bar as b1, s4.bar as b2, s3.beer
+from serves as s3, serves as s4
+where s3.bar<> s4.bar and s3.beer<>s4.beer
+except
+select s1.bar as b1, s2.bar as b2, s1.beer
+from serves as s1, serves as s2
+where s1.bar<>s2.bar and s1.beer = s2.beer) as xyz);

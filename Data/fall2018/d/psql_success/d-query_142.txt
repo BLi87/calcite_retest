@@ -1,0 +1,4 @@
+--(d) Find the names of drinkers who frequent both James Joyce Pub and Satisfaction. 
+select f1.drinker
+from frequents f1, frequents f2
+where f1.drinker = f2.drinker and f1.bar = 'James Joyce Pub' and f2.bar = 'Satisfaction';

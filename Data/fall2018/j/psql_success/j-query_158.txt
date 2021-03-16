@@ -1,0 +1,11 @@
+select bar1, bar2 from (
+select s1.bar as bar1, s1.beer as beer1, s2.bar as bar2, s2.beer as beer2 from serves as s1, serves as s2 where s1.bar != s2.bar
+) as T
+
+except
+
+select bar1, bar2 from (
+select serves.bar as bar1, bar.name as bar2, serves.beer as beer from serves, bar
+except
+select bar.name as bar1, serves.bar as bar2, serves.beer as beer from serves, bar
+) as X;

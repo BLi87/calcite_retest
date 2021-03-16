@@ -1,0 +1,9 @@
+WITH beermax AS (
+    SELECT beer, Max(price) as price
+    FROM serves
+    WHERE serves.beer in (SELECT beer FROM likes WHERE drinker = 'Dan')
+    Group by beer
+)
+select serves.beer,bar
+from serves,beermax
+where serves.beer = beermax.beer and serves.price = beermax.price

@@ -1,0 +1,4 @@
+
+select name, address
+from bar
+where name in (select distinct bar from serves where beer = 'Corona' and price <= 3)

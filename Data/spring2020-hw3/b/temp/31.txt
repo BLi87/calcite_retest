@@ -1,0 +1,17 @@
+WITH pairs AS (
+    SELECT d1.name AS drinker1, d2.name AS drinker2
+    FROM drinker AS d1, drinker AS d2
+    WHERE d1.name <> d2.name
+),
+remove AS (
+    SELECT drinker1, drinker2, likes.beer AS beer
+    FROM (
+            pairs JOIN likes ON drinker1 = likes.drinker 
+    )
+    EXCEPT
+    SELECT drinker1, drinker2, likes.beer AS beer
+    FROM (
+            pairs JOIN likes ON drinker2 = likes.drinker 
+    )
+)
+SELECT drinker1, drinker2 FROM pairs EXCEPT SELECT drinker1, drinker2 FROM remove

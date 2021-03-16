@@ -1,0 +1,5 @@
+Select s1.beer, s1.bar
+From Serves as s1
+Where s1.beer not in ( select s2.beer
+			from Serves as s2
+			where s2.bar<>s1.bar and s2.beer=s1.beer);

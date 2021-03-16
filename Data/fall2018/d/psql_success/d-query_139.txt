@@ -1,0 +1,7 @@
+(SELECT drinker
+FROM Frequents
+WHERE bar = 'James Joyce Pub')
+INTERSECT
+(SELECT drinker
+FROM Frequents
+WHERE bar = 'Satisfaction');

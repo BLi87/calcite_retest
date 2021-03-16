@@ -1,0 +1,6 @@
+--(g) For each bar, find the drinker who frequents it the greatest number of times. Your output should be a list of (bar, drinker) pairs. If multiple drinkers tie for the most frequent visitor to a bar, list them all as separate pairs. 
+select frequents.bar, frequents.drinker
+from frequents, (select bar, max(times_a_week)
+                 from frequents
+                 group by bar) as most_frequent  -- Maximum times a week for each bar
+where frequents.bar = most_frequent.bar and frequents.times_a_week = most_frequent.max;

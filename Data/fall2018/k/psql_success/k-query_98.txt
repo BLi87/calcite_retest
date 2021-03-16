@@ -1,0 +1,10 @@
+SELECT bar, SUM(amount) as amount
+FROM ((SELECT bar, SUM(times_a_week * price) AS amount
+	  FROM serves NATURAL JOIN frequents NATURAL JOIN likes
+ 	  GROUP BY bar)
+	  UNION
+	  (SELECT name AS bar, 0 as amount
+	   FROM bar)) AS tabl
+GROUP BY bar
+ORDER BY amount DESC, bar ASC;
+/*consulted GTA Yameng*/

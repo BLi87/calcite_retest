@@ -1,0 +1,27 @@
+(
+	(
+		SELECT DISTINCT s1.bar, s2.bar 
+		FROM Serves AS s1, Serves AS s2 
+		WHERE s1.bar <> s2.bar
+	) 
+	EXCEPT 
+	(
+		SELECT DISTINCT s1.bar, s2.bar 
+		FROM Serves AS s1 JOIN Serves AS s2 ON s1.bar <> s2.bar 
+		WHERE s1.beer NOT IN (SELECT beer FROM Serves WHERE bar = s2.bar)
+	)
+)
+EXCEPT
+(
+	(
+		SELECT DISTINCT s1.bar, s2.bar 
+		FROM Serves AS s1, Serves AS s2 
+		WHERE s1.bar <> s2.bar
+	) 
+	EXCEPT 
+	(
+		SELECT DISTINCT s1.bar, s2.bar 
+		FROM Serves AS s1 JOIN Serves AS s2 ON s1.bar <> s2.bar 
+		WHERE s2.beer NOT IN (SELECT beer FROM Serves WHERE bar = s1.bar)
+	)
+);

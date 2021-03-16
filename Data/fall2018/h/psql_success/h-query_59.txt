@@ -1,0 +1,20 @@
+SELECT
+name
+FROM 
+Drinker
+EXCEPT
+(SELECT
+drinker
+FROM
+(SELECT
+drinker,
+bar
+FROM
+Frequents
+EXCEPT
+(SELECT
+Likes.drinker,
+bar
+FROM
+Likes
+JOIN Serves ON Serves.beer = Likes.beer))q1)

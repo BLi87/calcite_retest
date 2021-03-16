@@ -1,0 +1,9 @@
+with cnt as(SELECT beer, COUNT(*)
+FROM likes 
+GROUP BY beer), average as (SELECT beer, AVG(price)
+FROM serves
+GROUP BY beer), countquery1 as(select * from beer left join cnt on beer.name = cnt.beer),
+averagequery1 as(select* from beer left join average on beer.name=average.beer)
+select countquery1.name as beer, coalesce(countquery1.count,0) as cnt, averagequery1.avg as avg
+from countquery1 join averagequery1 on countquery1.name=averagequery1.name
+order by count desc nulls last, beer asc nulls last

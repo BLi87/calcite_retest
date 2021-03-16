@@ -1,0 +1,6 @@
+select bar,name from serves, bar where bar<>name
+	except 
+	(select bar,name from 
+		(select bar,name,beer from serves,bar AS barMany except 
+				select name,bar,beer from serves, bar AS barMany2 
+				) AS barDiff);

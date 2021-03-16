@@ -1,0 +1,2 @@
+/*SELECT DISTINCT bar FROM Frequents WHERE drinker NOT IN ('Dan', 'Ben');*/
+((SELECT bar FROM Frequents WHERE drinker = 'Dan') EXCEPT (SELECT bar FROM Frequents WHERE drinker = 'Ben')) UNION ((SELECT bar FROM Frequents WHERE drinker = 'Ben') EXCEPT (SELECT bar FROM Frequents WHERE drinker = 'Dan'));

@@ -1,0 +1,16 @@
+WITH temp(bar1, beer, bar2) AS (
+  SELECT DISTINCT bar, beer, name
+  FROM (SELECT bar, beer FROM serves) barbeer, (SELECT name FROM bar) barbeer2
+),
+temp2(bar1, beer, bar2) AS (
+  SELECT *
+  FROM (
+    (SELECT * FROM temp)
+    EXCEPT
+    (SELECT bar2, beer, bar1 FROM temp)
+  ) barbeer3
+)
+
+(SELECT bar2, bar1 FROM temp2)
+EXCEPT
+(SELECT bar1, bar2 FROM temp2);

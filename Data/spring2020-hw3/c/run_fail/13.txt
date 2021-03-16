@@ -1,0 +1,11 @@
+with negate as
+((select distinct f.drinker, s.beer
+from frequents f, serves s
+where f.bar = s.bar)
+except
+(select * from likes))
+
+(select d.name 
+from drinker d)
+except 
+(select n.drinker from negate n)

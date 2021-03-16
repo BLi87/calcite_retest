@@ -1,0 +1,1 @@
+select f3.bar, f3.drinker from (select max(times_a_week) as times_a_week,bar from Frequents f1 group by bar)f2, Frequents f3 where f2.times_a_week=f3.times_a_week and f2.bar=f3.bar order by f3.bar;

@@ -1,0 +1,1 @@
+select distinct on (f3.bar) f3.bar from frequents as f1, frequents as f2, frequents as f3 where (f1.drinker=  'Ben' OR f2.drinker = 'Dan') and (f3.bar = f1.bar and f3.bar = f2.bar) EXCEPT ALL (select distinct on (bar) bar from frequents where frequents.drinker = 'Dan' INTERSECT ALL select distinct on (bar) bar from frequents where frequents.drinker = 'Ben');

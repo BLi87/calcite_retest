@@ -1,0 +1,3 @@
+SELECT Frequents.bar, drinker FROM Frequents,
+(SELECT bar, MAX(times_a_week) FROM Frequents GROUP BY bar) AS Max_freq
+WHERE Frequents.bar = Max_freq.bar AND Frequents.times_a_week =  Max_freq.max;

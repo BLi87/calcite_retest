@@ -1,0 +1,3 @@
+select distinct a.beer
+from serves a
+where a.bar = 'James Joyce Pub';

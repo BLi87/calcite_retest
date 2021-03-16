@@ -1,0 +1,3 @@
+select distinct serves1.bar
+from serves serves1, serves serves2
+where serves1.beer = serves2.beer and serves1.price < serves2.price

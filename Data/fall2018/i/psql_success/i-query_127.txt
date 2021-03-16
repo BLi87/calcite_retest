@@ -1,0 +1,24 @@
+/*SELECT DISTINCT drinker.name
+FROM drinker
+EXCEPT (
+SELECT DISTINCT t1.drinker FROM (
+(SELECT frequents.drinker, frequents.bar FROM serves, frequents WHERE frequents.bar = serves.bar) 
+EXCEPT (SELECT * FROM likes)) AS t1)
+--list of drinkers, the bars they go to, and the beers they serve //deleted bars, beer to match columns
+--list of drinkers, the bars they go to, and the beers they serve that are not what they like
+; */
+
+--need to find drinkers who frequent bar that had even one beer they didn't like
+--subtract from main list of drinkers
+
+--first find table of bars that serve beers people like
+
+SELECT DISTINCT drinker.name
+FROM drinker
+WHERE NOT EXISTS (
+SELECT DISTINCT t1.drinker FROM (
+(SELECT frequents.drinker, frequents.bar FROM serves, frequents WHERE frequents.bar = serves.bar) 
+EXCEPT (SELECT * FROM likes)) AS t1)
+--list of drinkers, the bars they go to, and the beers they serve //deleted bars, beer to match columns
+--list of drinkers, the bars they go to, and the beers they serve that are not what they like
+;

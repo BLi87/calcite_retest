@@ -1,0 +1,12 @@
+(SELECT bar
+FROM Frequents
+WHERE drinker = 'Ben' OR drinker = 'Dan')
+EXCEPT
+(SELECT T.Bar
+FROM (SELECT bar FROM Frequents
+      WHERE drinker = 'Dan')
+      AS T,
+      (SELECT bar FROM Frequents
+      WHERE drinker = 'Ben')
+      AS R
+WHERE T.bar = R.bar);

@@ -1,0 +1,6 @@
+SELECT DISTINCT name, address
+FROM bar, 
+(SELECT DISTINCT bar
+FROM serves
+WHERE beer = 'Corona' AND price <= 3.0) AS T
+WHERE bar.name = T.bar;

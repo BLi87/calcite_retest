@@ -1,0 +1,11 @@
+WITH serveamount AS
+
+(SELECT s1.bar AS barname, s1.price * f1.times_a_week AS amount
+FROM serves AS s1, likes AS l1, frequents AS f1
+WHERE (s1.bar = f1.bar AND f1.drinker = l1.drinker AND s1.beer = l1.beer))
+
+SELECT bar.name, COALESCE(sum(amount),0) AS T FROM bar
+LEFT JOIN serveamount
+ON bar.name = serveamount.barname
+GROUP BY bar.name
+ORDER BY T DESC, Bar.name ASC;

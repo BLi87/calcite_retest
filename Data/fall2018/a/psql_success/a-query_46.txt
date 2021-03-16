@@ -1,0 +1,1 @@
+Select beer from Serves where bar='James Joyce Pub';

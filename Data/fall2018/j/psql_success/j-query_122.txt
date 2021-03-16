@@ -1,0 +1,5 @@
+SELECT cro1.name, cro1.bar FROM (SELECT s.bar, s.beer, b.name FROM Bar b CROSS JOIN Serves s EXCEPT SELECT b.name, s.beer, s.bar FROM Bar b CROSS JOIN Serves s) AS cro1
+
+EXCEPT
+
+SELECT cro2.bar, cro2.name FROM (SELECT s.bar, s.beer, b.name FROM Bar b CROSS JOIN Serves s EXCEPT SELECT b.name, s.beer, s.bar FROM Bar b CROSS JOIN Serves s) AS cro2;

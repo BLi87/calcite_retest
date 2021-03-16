@@ -1,0 +1,19 @@
+/* Find names of all drinkers who frequent only those bars that serve only beers they like.
+Bars which don't serve anything should not disqualify someone.
+If a drinker doesn't frequent any bar, he or she should still be in the list vacuously. */
+
+SELECT name
+FROM drinker
+WHERE name NOT IN (
+    SELECT drinker
+    FROM frequents AS f
+    WHERE f.bar IN (
+        SELECT bar
+        FROM serves
+        WHERE serves.beer NOT IN (
+            SELECT beer
+            FROM likes
+            WHERE likes.drinker = f.drinker
+        )
+    )
+);

@@ -1,0 +1,1 @@
+SELECT DISTINCT bar from serves s,beer b where b.brewer= 'Grupo Modelo' AND s.beer = b.name

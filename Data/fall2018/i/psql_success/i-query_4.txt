@@ -1,0 +1,9 @@
+with pnlb(people,beer) as 
+(select d.name, b.name from drinker d, beer b
+where (d.name, b.name) not in 
+(select drinker, beer from likes))
+
+select name from drinker 
+where name not in 
+(select f.drinker from frequents f, serves s, pnlb p
+where f.bar = s.bar and p.beer = s.beer and f.drinker = p.people);

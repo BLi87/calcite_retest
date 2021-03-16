@@ -1,0 +1,11 @@
+With newLikes as (select drinker.name as drinker, likes.beer as beer 
+from drinker left join likes on drinker.name = likes.drinker)
+(select l1.drinker as drinker1, l2.drinker as drinker2
+from newLikes l1, newLikes l2 where l1.drinker != l2.drinker)
+except
+(select joined.drinker1, joined.drinker2
+from ((select l3.drinker as drinker1, l4.drinker as drinker2, l3.beer
+from newLikes l3, newLikes l4 where l3.drinker != l4.drinker)
+except 
+(select l5.drinker as drinker1, l6.drinker as drinker2, l6.beer
+from newLikes l5, newLikes l6 where l5.drinker != l6.drinker)) as joined)

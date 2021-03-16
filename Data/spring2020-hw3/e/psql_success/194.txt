@@ -1,0 +1,12 @@
+select drinker.name as drinker, people.bar as bar
+from
+drinker left join
+(select first.drinker, f2.bar
+from
+(select f.drinker as drinker, max(f.times_a_week) as largest
+from frequents f
+--where f.drinker <> 'Richard'
+group by f.drinker ) as first
+left join frequents f2
+on first.drinker = f2.drinker and first.largest = f2.times_a_week) as people
+on drinker.name = people.drinker

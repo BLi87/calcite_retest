@@ -1,0 +1,10 @@
+With beersAndDrinkers as (SELECT drinker, name FROM likes
+RIGHT OUTER JOIN beer ON beer.name = likes.beer)
+
+select beersAndPrices.name, beersAndPrices.count, AVG(price)
+FROM (select name, COUNT(drinker)
+FROM beersAndDrinkers GROUP BY name) AS beersAndPrices
+LEFT OUTER JOIN serves 
+ON serves.beer = beersAndPrices.name
+GROUP BY beersAndPrices.name, beersAndPrices.count
+ORDER BY beersAndPrices.count DESC, beersAndPrices.name

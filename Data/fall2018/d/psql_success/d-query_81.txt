@@ -1,0 +1,7 @@
+SELECT View1.drinker
+FROM (SELECT drinker 
+FROM Frequents
+WHERE bar = 'James Joyce Pub') AS View1, (SELECT drinker 
+FROM Frequents
+WHERE bar = 'Satisfaction') AS View2
+WHERE View1.drinker = View2.drinker;

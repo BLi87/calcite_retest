@@ -1,0 +1,16 @@
+SELECT name as drinker
+FROM Drinker
+EXCEPT ALL
+/* drinkers who frequent a bar that have no beers they like*/
+SELECT drinker 
+FROM (
+    /* all bars drinkers go to*/
+    SELECT DISTINCT f1.drinker, s1.bar 
+    FROM Serves AS s1 JOIN Frequents AS f1
+    ON s1.bar=f1.bar
+    EXCEPT ALL
+    /* bars that serve drink that drinker likes*/
+    SELECT DISTINCT l1.drinker, s2.bar
+    FROM Serves AS s2 JOIN Likes AS l1
+    ON s2.beer=l1.beer
+) AS T;

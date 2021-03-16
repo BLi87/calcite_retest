@@ -1,0 +1,16 @@
+
+SELECT bar1, bar2
+FROM
+((SELECT s1.bar AS bar1, s2.bar AS bar2
+FROM serves as s1, serves as s2)
+
+EXCEPT
+
+(SELECT bar1, bar2
+FROM
+((SELECT s1.bar AS bar1, s2.bar as bar2, s1.beer
+FROM serves as s1, serves as s2)
+EXCEPT
+(SELECT s1.bar AS bar1, s2.bar AS bar2, s2.beer
+FROM serves as s1, serves as s2)) as foo)) as T
+WHERE bar1<>bar2;

@@ -1,0 +1,9 @@
+select name, coalesce(t.amount,0) as amount 
+from Bar 
+left join 
+(select c.bar, SUM(c.amount) as amount from 
+(select b.bar, b.times_a_week*b.price as amount from likes l natural join 
+(select * from frequents f natural join serves s) 
+as b) 
+as c group by c.bar) 
+as t on name = t.bar order by amount desc, name;

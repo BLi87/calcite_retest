@@ -1,0 +1,4 @@
+SELECT name FROM  drinker 
+EXCEPT (SELECT DISTINCT drinker FROM 
+		(SELECT drinker, bar FROM frequents except 
+			(SELECT DISTINCT drinker, bar FROM likes natural JOIN serves)) AS badDrinker);

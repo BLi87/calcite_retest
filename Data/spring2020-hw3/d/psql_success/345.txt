@@ -1,0 +1,34 @@
+
+
+
+WITH beercount2  AS (select beer, count(drinker) as cnt
+from likes
+group by beer),
+
+beercount as (
+select beer.name as beer, beercount2.cnt
+from beer
+left join beercount2
+on beercount2.beer = beer.name),
+
+beerprice  AS (select beer, AVG(price) as avg
+from serves
+group by beer), final as (
+
+SELECT beercount.beer, cnt, avg
+FROM beercount
+LEFT JOIN beerprice
+ON beercount.beer = beerprice.beer
+ORDER BY cnt DESC, beer ASC), 
+
+result as (
+SELECT beerprice.beer, cnt, beerprice.avg
+FROM beerprice
+left JOIN final
+ON beerprice.beer = final.beer and beerprice.avg = final.avg)
+SELECT beer,COALESCE(cnt, 0) as cnt, avg from result
+ORDER BY cnt DESC, beer ASC
+
+
+
+

@@ -1,0 +1,26 @@
+SELECT DISTINCT s2.bar, s1.bar
+FROM serves AS s1, serves as s2
+WHERE s1.bar != s2.bar AND
+EXISTS (
+	SELECT beer
+	FROM serves AS s3
+	WHERE s3.bar = s1.bar
+
+	EXCEPT
+
+	SELECT beer
+	FROM serves AS s4
+	WHERE s4.bar = s2.bar
+) 
+AND
+NOT EXISTS (
+	SELECT beer
+	FROM serves AS s4
+	WHERE s4.bar = s2.bar
+
+	EXCEPT
+
+	SELECT beer
+	FROM serves AS s3
+	WHERE s3.bar = s1.bar
+);

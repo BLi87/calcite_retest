@@ -1,0 +1,1 @@
+SELECT distinct likes1.drinker as drinker1,likes2.drinker as drinker2,likes1.beer FROM likes as likes1,likes as likes2 where likes1.beer=likes2.beer and likes1.drinker!=likes2.drinker and likes1.drinker<likes2.drinker

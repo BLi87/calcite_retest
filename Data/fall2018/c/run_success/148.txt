@@ -1,0 +1,5 @@
+SELECT DISTINCT bar, address
+FROM serves AS s 
+INNER JOIN bar AS b 
+ON s.bar=b.name
+WHERE (s.beer='Corona' AND s.price<=3.00);

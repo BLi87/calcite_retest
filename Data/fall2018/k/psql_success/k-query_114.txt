@@ -1,0 +1,11 @@
+SELECT G.name, G.total FROM
+(SELECT T.name, SUM(T.num) as total FROM
+(SELECT bar as name, 0 as num FROM serves
+UNION
+(SELECT U.bar, SUM(U.times_a_week*U.price) FROM
+(SELECT frequents.bar, serves.price, frequents.times_a_week
+FROM serves, likes, frequents
+WHERE serves.beer=likes.beer AND frequents.bar=serves.bar AND likes.drinker=frequents.drinker) AS U
+GROUP BY U.bar)) AS T
+GROUP BY T.name) AS G
+ORDER BY G.total DESC;

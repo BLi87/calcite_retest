@@ -1,0 +1,11 @@
+select d.name
+from drinker d
+except
+select t2.drinker
+from (select frequents.drinker, serves.bar, serves.beer 
+from serves inner join frequents 
+on serves.bar = frequents.bar
+except
+select likes.drinker, frequents.bar, likes.beer 
+from likes inner join frequents 
+on likes.drinker = frequents.drinker) t2;

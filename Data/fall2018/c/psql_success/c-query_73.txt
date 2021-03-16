@@ -1,0 +1,7 @@
+/* Find the names and addresses of bars that serve Corona for no more than $3.00. */
+
+select distinct bar, address
+from serves
+join bar
+on serves.bar=bar.name
+where serves.price <= 3.00 and beer='Corona';

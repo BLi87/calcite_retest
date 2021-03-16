@@ -1,0 +1,19 @@
+With LikeCount as (
+SELECT beer.name, COUNT(likes.beer)
+FROM likes
+RIGHT OUTER JOIN beer
+ON likes.beer = beer.name
+GROUP BY beer.name
+),
+AvgPrice as (
+SELECT name, avg(price)
+FROM serves
+RIGHT OUTER JOIN beer
+ON serves.beer = beer.name
+GROUP BY beer.name
+)
+SELECT LikeCount.name, count as cnt, avg
+FROM LikeCount, AvgPrice
+WHERE LikeCount.name = AvgPrice.name
+ORDER BY count DESC, LikeCount.name
+

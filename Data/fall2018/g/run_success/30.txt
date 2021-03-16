@@ -1,0 +1,1 @@
+select bar, drinker  from frequents except select f2.bar,f2.drinker  from frequents f1, frequents f2 where f1.bar = f2.bar and f2.times_a_week < f1.times_a_week;

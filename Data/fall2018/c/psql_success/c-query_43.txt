@@ -1,0 +1,5 @@
+SELECT s.bar, b.address
+	FROM serves AS s, bar AS b
+	WHERE s.beer = 'Corona'
+		AND s.price <= 3
+		AND s.bar = b.name;

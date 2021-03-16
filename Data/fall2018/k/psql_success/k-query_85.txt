@@ -1,0 +1,21 @@
+WITH NONZEROBARS(bar, amount) AS
+	(SELECT temp3.bar AS bar, SUM(amount) AS amount
+	FROM 
+		(SELECT temp2.bar, temp2.times_a_week*temp2.price AS amount
+		FROM
+			(SELECT f.drinker, f.bar, f.times_a_week, temp.beer, temp.price
+			FROM Frequents f,
+				(SELECT l.drinker, l.beer, s.bar, s.price
+				FROM Likes l, Serves s
+				WHERE l.beer = s.beer) AS temp
+			WHERE f.drinker = temp.drinker
+			AND f.bar = temp.bar) AS temp2) AS temp3
+	GROUP BY bar)
+SELECT b.name AS bar,
+	CASE WHEN (b.name IN (SELECT bar FROM NONZEROBARS)) THEN 
+		(SELECT amount FROM NONZEROBARS WHERE bar=b.name)
+		ELSE 0
+	END
+	AS amount
+FROM Bar b
+ORDER BY amount DESC, bar ASC;

@@ -1,0 +1,1 @@
+SELECT frequents.bar FROM frequents WHERE frequents.drinker = 'Dan' EXCEPT SELECT frequents.bar FROM frequents WHERE frequents.drinker = 'Ben' UNION (SELECT frequents.bar FROM frequents WHERE frequents.drinker = 'Ben' EXCEPT SELECT frequents.bar FROM frequents WHERE frequents.drinker = 'Dan');

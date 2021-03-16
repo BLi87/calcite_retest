@@ -1,0 +1,1 @@
+SELECT bar.name, bar.address FROM bar JOIN serves ON bar.name = serves.bar AND serves.beer = 'Corona' AND serves.price <= 3.00;

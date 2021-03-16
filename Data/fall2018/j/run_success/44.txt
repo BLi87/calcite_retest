@@ -1,0 +1,6 @@
+SELECT DISTINCT s1.bar, s2.bar
+FROM serves as s1, serves as s2
+WHERE s1.bar<>s2.bar
+EXCEPT (SELECT DISTINCT serves1.bar, serves2.bar
+FROM serves as serves1, serves as serves2
+WHERE serves1.bar<>serves2.bar AND serves1.beer NOT IN (SELECT beer FROM serves as s2 WHERE s2.bar=serves2.bar));

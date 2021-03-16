@@ -1,0 +1,9 @@
+WITH temp1 as (select count(likes.beer), beer.name
+from beer left join likes on beer.name = likes.beer
+group by beer.name),
+temp2 as (select avg(price), serves.beer
+from serves
+group by serves.beer)
+select temp1.name, temp1.count, temp2.avg
+from temp1 left join temp2 on temp1.name = temp2.beer
+order by count desc, beer asc

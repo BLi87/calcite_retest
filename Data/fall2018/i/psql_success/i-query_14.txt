@@ -1,0 +1,1 @@
+select name from drinker except select drinker from ( select drinker, beer from (frequents natural join serves) as joined except select drinker, beer from likes ) as foo;

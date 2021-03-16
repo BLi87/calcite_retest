@@ -1,0 +1,52 @@
+SELECT DISTINCT bar1, bar2
+FROM
+((SELECT Serves1.bar AS bar1, Serves2.bar AS bar2, Serves1.beer
+FROM Serves AS Serves1
+INNER JOIN Serves AS Serves2
+ON Serves1.bar != Serves2.bar
+EXCEPT
+SELECT Serves1.bar AS bar1, Serves2.bar AS bar2, Serves2.beer
+FROM Serves AS Serves1
+INNER JOIN Serves AS Serves2
+ON Serves1.bar != Serves2.bar) AS derivedTable
+CROSS JOIN 
+(SELECT Serves3.bar AS bar3, Serves4.bar AS bar4, Serves3.beer AS beer2
+FROM Serves AS Serves3
+INNER JOIN Serves AS Serves4
+ON Serves3.bar != Serves4.bar
+EXCEPT
+SELECT Serves3.bar AS bar3, Serves4.bar AS bar4, Serves4.beer AS beer2
+FROM Serves AS Serves3
+INNER JOIN Serves AS Serves4
+ON Serves3.bar != Serves4.bar) as derivedTable2)
+EXCEPT
+SELECT DISTINCT bar1, bar2
+FROM
+((SELECT Serves1.bar AS bar1, Serves2.bar AS bar2, Serves1.beer
+FROM Serves AS Serves1
+INNER JOIN Serves AS Serves2
+ON Serves1.bar != Serves2.bar
+EXCEPT
+SELECT Serves1.bar AS bar1, Serves2.bar AS bar2, Serves2.beer
+FROM Serves AS Serves1
+INNER JOIN Serves AS Serves2
+ON Serves1.bar != Serves2.bar) AS derivedTable
+CROSS JOIN 
+(SELECT Serves3.bar AS bar3, Serves4.bar AS bar4, Serves3.beer AS beer2
+FROM Serves AS Serves3
+INNER JOIN Serves AS Serves4
+ON Serves3.bar != Serves4.bar
+EXCEPT
+SELECT Serves3.bar AS bar3, Serves4.bar AS bar4, Serves4.beer AS beer2
+FROM Serves AS Serves3
+INNER JOIN Serves AS Serves4
+ON Serves3.bar != Serves4.bar) as derivedTable2)
+WHERE bar1=bar4
+AND bar2=bar3;
+
+
+
+
+
+
+

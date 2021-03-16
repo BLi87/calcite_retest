@@ -1,0 +1,8 @@
+
+(SELECT b1.name AS po, b2.name AS pi FROM Bar AS b1, Bar AS b2 WHERE NOT b1.name = b2.name)
+EXCEPT
+(SELECT F.po, F.pi FROM (
+  (SELECT s1.bar AS po, b.name AS pi, s1.beer FROM Serves AS s1, Bar AS b)
+  EXCEPT 
+  (SELECT s1.bar AS po, b.bar AS pi, s1.beer FROM Serves AS s1, Serves AS b WHERE s1.beer = b.beer)
+) AS F);

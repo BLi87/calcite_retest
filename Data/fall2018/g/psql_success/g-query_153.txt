@@ -1,0 +1,1 @@
+SELECT DISTINCT A.bar, A.drinker FROM Frequents AS A WHERE NOT EXISTS(SELECT drinker FROM Frequents WHERE(A.bar = bar AND A.times_a_week < times_a_week));

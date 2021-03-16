@@ -1,0 +1,22 @@
+SELECT bar, name
+FROM 
+(
+ SELECT name, bar
+ FROM
+ (SELECT name, bar, beer 
+ FROM bar 
+ CROSS JOIN serves) AS foo
+ EXCEPT
+(
+ SELECT name, bar
+FROM
+( SELECT name, bar, beer 
+ FROM bar 
+ CROSS JOIN serves
+ EXCEPT
+ SELECT bar, name, beer 
+ FROM serves
+ CROSS JOIN bar) AS fee
+)
+) AS fi
+WHERE bar<>name;

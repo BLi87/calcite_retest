@@ -1,0 +1,3 @@
+select serves.beer, serves.bar
+from serves, likes
+where likes.drinker = 'Dan' and  likes.beer = serves.beer and serves.price >= ALL(SELECT serves.price FROM serves where likes.drinker = 'Dan' and  likes.beer = serves.beer );

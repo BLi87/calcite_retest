@@ -1,0 +1,1 @@
+select distinct freq1.drinker from frequents as freq1, frequents as freq2 where freq1.drinker=freq2.drinker and (freq1.bar='Satisfaction' and freq2.bar='James Joyce Pub');

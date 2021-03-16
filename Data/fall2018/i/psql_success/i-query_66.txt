@@ -1,0 +1,37 @@
+WITH
+tmp0(drinker) AS
+(SELECT name FROM Drinker),
+
+tmp1(beer) AS
+(SELECT name FROM beer),
+
+tmp2(drinker, beer) AS
+(SELECT drinker, beer FROM (tmp0 CROSS JOIN tmp1)),
+
+tmp3(drinker, beer) AS
+(SELECT * FROM Likes),
+
+tmp4(drinker, beer) AS
+(SELECT * FROM tmp2 EXCEPT SELECT * FROM Likes),
+
+tmp5(bar, beer) AS
+(SELECT bar,beer FROM Serves),
+
+tmp6(drinker, bar) AS
+(SELECT DISTINCT drinker, bar FROM (tmp4 NATURAL JOIN tmp5)),
+
+tmp7(drinker, bar) AS
+(SELECT drinker, bar FROM Frequents),
+
+
+tmp7b(drinker, bar) AS
+(SELECT * FROM tmp6 INTERSECT SELECT * FROM tmp7),
+
+
+tmp8(drinker) AS
+(SELECT DISTINCT drinker FROM tmp7b),
+
+tmp9(drinker) AS
+(SELECT name FROM Drinker)
+
+SELECT * FROM tmp9 EXCEPT SELECT * FROM tmp8;

@@ -1,0 +1,4 @@
+with like1 as ((select l1.drinker as drinker1, l2.drinker as drinker2 from likes as l1, likes as l2 where l1.drinker!=l2.drinker) except (select drinker1, drinker2 from ((select l1.drinker as drinker1,l2.drinker as drinker2,l1.beer as beer from likes as l1, likes as l2 where l1.drinker!=l2.drinker) except (select l1.drinker as drinker1,l2.drinker as drinker2,l2.beer as beer from likes as l1, likes as l2 where l1.drinker!=l2.drinker)) as like4))
+select drinker1, drinker2 from (((select drinker1,drinker2 from like1) union (select drinker1, likes.drinker as drinker2 from ((select name as drinker1 from drinker) except (select drinker as drinker1 from likes)) as d1, likes) 
+) 
+union (select d2.drinker as drinker1,d3.drinker as drinker2 from ((select name as drinker from drinker) except (select drinker from likes)) as d2,((select name as drinker from drinker) except (select drinker from likes)) as d3 where d2.drinker!=d3.drinker)) as d4

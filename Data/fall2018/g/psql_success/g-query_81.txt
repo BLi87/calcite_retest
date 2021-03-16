@@ -1,0 +1,10 @@
+/* For each bar, find the drinker who frequents it the most. */
+
+SELECT bar, drinker
+FROM frequents AS f
+WHERE NOT EXISTS (
+    SELECT drinker 
+    FROM frequents
+    WHERE f.bar = frequents.bar
+    AND frequents.times_a_week > f.times_a_week
+);

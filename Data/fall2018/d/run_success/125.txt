@@ -1,0 +1,5 @@
+select distinct f1.drinker
+from frequents f1
+full join frequents f2
+on f1.drinker = f2.drinker
+where f1.bar = 'James Joyce Pub' and f2.bar = 'Satisfaction';

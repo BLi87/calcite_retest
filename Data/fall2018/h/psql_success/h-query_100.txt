@@ -1,0 +1,26 @@
+
+
+
+SELECT name
+FROM drinker
+
+EXCEPT
+
+SELECT t.drinker
+FROM 
+	(SELECT frequents.drinker, frequents.bar
+	FROM frequents
+
+	EXCEPT
+
+	SELECT  so.drinker, so.bar
+	FROM    (
+	          SELECT  likes.drinker,
+	                  serves.bar,
+	                  likes.beer
+	          FROM    serves
+	          JOIN    likes
+	                  ON serves.beer = likes.beer
+	        ) AS so
+	JOIN    frequents 
+	        ON frequents.drinker = so.drinker AND frequents.bar = so.bar) as t; 

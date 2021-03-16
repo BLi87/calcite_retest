@@ -1,0 +1,12 @@
+SELECT f.bar, SUM(f.times_a_week * s.price) AS amount
+FROM frequents AS f, serves AS s, likes AS l 
+WHERE f.drinker = l.drinker AND l.beer = s.beer AND s.bar = f.bar
+GROUP BY f.bar
+ORDER BY amount DESC, f.bar
+;
+/* amount = price of drink * how many times/week it was bought
+find the table of drinkers who go to bars that serve some beers they like, and the price of that beer
+and how many times the drinker goes to said bar.
+and then group by bar to see how much was spent at that bar. 
+Then order by decreasing amount
+then check for null case at the beginning ... but how? */

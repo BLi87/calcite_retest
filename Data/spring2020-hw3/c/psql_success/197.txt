@@ -1,0 +1,4 @@
+with lTable as (select l.beer, l.drinker, s.bar from likes l, serves s where l.beer = s.beer),
+bTable as (select s.beer, f.drinker, f.bar from frequents f, serves s where f.bar = s.bar),
+dislikes as (select * from bTable except (select * from lTable))
+select d.name from drinker d except (select dislikes.drinker from dislikes)

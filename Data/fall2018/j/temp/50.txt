@@ -1,0 +1,11 @@
+
+WITH incBar AS
+  (SELECT bar, COUNT(beer) FROM serves GROUP BY bar)
+
+SELECT bar1, bar2
+FROM
+(
+  (SELECT bar1, bar2, count FROM (SELECT i1.bar AS bar1, i2.bar AS bar2, COUNT(*) AS count FROM incBar AS i1, incBar AS i2, serves as s WHERE i1.count < i2.count AND s.bar = i1.bar GROUP BY bar1, bar2) AS T)
+  INTERSECT
+  (SELECT bar1, bar2, count FROM (SELECT s1.bar AS bar1, s2.bar AS bar2, COUNT(*) AS count FROM serves AS s1, serves AS s2 WHERE s1.beer = s2.beer GROUP BY bar1, bar2) AS F)
+) AS M;

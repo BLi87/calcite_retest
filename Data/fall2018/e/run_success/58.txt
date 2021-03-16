@@ -1,0 +1,1 @@
+((select bar from frequents where drinker='Ben') EXCEPT (select bar from frequents where drinker='Dan')) UNION ((select bar from frequents where drinker='Dan') EXCEPT (select bar from frequents where drinker='Ben'));

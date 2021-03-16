@@ -1,0 +1,8 @@
+SELECT frequents.bar, drinker
+FROM frequents, 
+	(SELECT bar, MAX(times_a_week)
+	FROM frequents
+	GROUP BY bar)
+	AS maxes
+WHERE frequents.bar = maxes.bar
+AND frequents.times_a_week = maxes.MAX;

@@ -1,0 +1,1 @@
+select beer,bar from Serves pair where pair.beer in (select uniq.beer from Serves uniq group by beer having count(*)=1);

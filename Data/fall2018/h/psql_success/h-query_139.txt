@@ -1,0 +1,1 @@
+SELECT name FROM drinker WHERE name NOT IN (SELECT drinker FROM ((SELECT drinker,bar FROM frequents) EXCEPT (SELECT drinker,bar FROM likes AS l, serves AS s WHERE l.beer=s.beer)) AS temp);

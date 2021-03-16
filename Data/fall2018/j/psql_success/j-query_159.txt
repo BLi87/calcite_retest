@@ -1,0 +1,19 @@
+SELECT B1.name, B2.name
+FROM bar as B1, bar as B2
+
+EXCEPT
+
+(SELECT G.bar1, G.bar2
+FROM (SELECT T1.bar as bar1, T2.bar as bar2, T1.beer
+FROM serves T1, serves T2
+
+EXCEPT
+
+SELECT T1.bar, T2.bar, T2.beer
+FROM serves T1, serves T2
+WHERE T1.beer = T2.beer AND NOT(T1.bar = T2.bar)) as G);
+
+
+
+
+

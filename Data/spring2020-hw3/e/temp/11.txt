@@ -1,0 +1,11 @@
+SELECT drinker.name AS name, a.bar AS bar
+FROM drinker LEFT OUTER JOIN 
+
+((SELECT drinker, bar
+FROM Frequents f)
+
+EXCEPT
+
+(SELECT f.drinker, f.bar
+FROM Frequents f, Frequents sec
+WHERE f.times_a_week < sec.times_a_week AND f.drinker = sec.drinker)) AS a ON name = drinker

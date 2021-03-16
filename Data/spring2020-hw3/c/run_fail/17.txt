@@ -1,0 +1,8 @@
+with temp1 as (select drinker.name as drinker, beer.name as beer from drinker, beer except select* from likes)
+select distinct drinker.name as name from drinker
+except
+select distinct frequents.drinker as name
+from frequents, serves, temp1
+where frequents.bar = serves.bar
+  and frequents.drinker = temp1.drinker
+  and serves.beer = temp1.beer

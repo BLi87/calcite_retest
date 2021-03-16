@@ -1,0 +1,4 @@
+SELECT Frequents.drinker FROM Frequents, Frequents AS Frequents2
+WHERE Frequents.bar = 'James Joyce Pub'
+AND Frequents2.bar = 'Satisfaction'
+AND Frequents.drinker = Frequents2.drinker;

@@ -1,0 +1,5 @@
+SELECT DISTINCT S1.bar
+FROM serves S1, serves S2 
+WHERE S1.bar <> S2.bar 
+AND S1.beer = S2.beer
+AND S1.price < S2.price

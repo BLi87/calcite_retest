@@ -1,0 +1,3 @@
+select name, address
+from bar join serves on name = bar
+where beer = 'Corona' AND price <= 3.00;

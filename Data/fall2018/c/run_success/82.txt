@@ -1,0 +1,1 @@
+SELECT name, address FROM Bar INNER JOIN Serves ON Bar.name = Serves.bar WHERE beer = 'Corona' AND price <= 3.00;

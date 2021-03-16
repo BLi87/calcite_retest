@@ -1,0 +1,27 @@
+SELECT root.bar2, root.bar FROM
+
+(SELECT DISTINCT A.bar, B.bar AS bar2, A.beer
+FROM serves A, serves B
+WHERE  A.bar <> B.bar
+
+EXCEPT
+
+SELECT DISTINCT A.bar, B.bar AS bar2, B.beer
+FROM serves A, serves B
+WHERE A.beer = B.beer
+AND A.bar <> B.bar) root
+
+EXCEPT
+
+SELECT sub.bar, sub.bar2 FROM
+
+(SELECT DISTINCT A.bar, B.bar AS bar2, A.beer
+FROM serves A, serves B
+WHERE  A.bar <> B.bar
+
+EXCEPT
+
+SELECT DISTINCT A.bar, B.bar AS bar2, B.beer
+FROM serves A, serves B
+WHERE A.beer = B.beer
+AND A.bar <> B.bar) sub;

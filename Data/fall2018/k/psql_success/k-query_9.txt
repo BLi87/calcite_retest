@@ -1,0 +1,26 @@
+SELECT
+bar,
+SUM(price) AS amount,
+CASE WHEN SUM(price) = 0 THEN '0'
+-- case when sum is equal to 0
+ELSE SUM(PRICE) = SUM(PRICE)
+-- every other case
+END
+FROM
+(SELECT
+bar,
+drinker,
+Serves.beer,
+price
+FROM
+Serves
+JOIN
+Likes
+ON serves.beer = likes.beer) ALLBEERS
+-- the bars that only serve beers that are in both Likes and Serves
+GROUP BY
+bar
+-- need a group by with an aggregate function
+ORDER BY
+amount DESC
+-- order by amount descending

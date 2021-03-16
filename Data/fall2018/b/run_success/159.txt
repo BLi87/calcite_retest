@@ -1,0 +1,6 @@
+SELECT drinker
+FROM frequents
+WHERE bar IN (SELECT bar
+			FROM serves
+			WHERE beer = 'Corona')
+GROUP BY drinker;

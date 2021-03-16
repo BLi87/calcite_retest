@@ -1,0 +1,6 @@
+(SELECT name FROM Drinker) EXCEPT
+(SELECT DISTINCT Frequents.drinker FROM Frequents,
+(SELECT drinker, bar FROM Likes NATURAL JOIN Serves) AS Okay
+WHERE Frequents.drinker = Okay.drinker AND Frequents.bar NOT IN
+(SELECT bar FROM (SELECT drinker, bar FROM Likes NATURAL JOIN Serves) AS Okay
+WHERE Okay.drinker = Frequents.drinker));

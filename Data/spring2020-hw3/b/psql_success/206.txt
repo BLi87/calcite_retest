@@ -1,0 +1,15 @@
+SELECT distinct D1.name, D2.name
+FROM drinker D1, drinker D2
+WHERE D1.name <> D2.name AND (
+NOT EXISTS 
+((SELECT likes.beer
+FROM drinker LEFT OUTER JOIN likes ON D1.name = likes.drinker) 
+except 
+(SELECT likes.beer
+FROM drinker LEFT OUTER JOIN likes ON D2.name = likes.drinker))
+OR EXISTS(
+SELECT likes.drinker
+FROM drinker LEFT OUTER JOIN likes ON drinker.name = likes.drinker
+WHERE likes.drinker IS NULL
+))
+

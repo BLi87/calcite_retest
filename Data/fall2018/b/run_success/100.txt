@@ -1,0 +1,4 @@
+SELECT f.drinker
+FROM Frequents f, Serves s
+WHERE f.bar = s.bar AND s.beer = 'Corona'
+GROUP BY f.drinker;

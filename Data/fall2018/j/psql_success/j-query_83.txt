@@ -1,0 +1,31 @@
+
+
+--e1:
+--SELECT Serves.bar, Serves.beer, Bar.name
+---FROM Serves, Bar
+
+--e2:
+
+-- (SELECT Serves.bar, Serves.beer, Bar.name
+-- FROM Serves, Bar)
+-- EXCEPT
+-- (SELECT Bar.name, Serves.beer, Serves.bar
+-- FROM Serves, Bar)
+
+--final:
+(SELECT e2.bar2, e2.bar1 FROM
+((SELECT Serves.bar AS bar1, Serves.beer, Bar.name AS bar2
+ FROM Serves, Bar)
+EXCEPT
+(SELECT Bar.name, Serves.beer, Serves.bar
+FROM Serves, Bar)) AS e2)
+
+EXCEPT
+
+(SELECT e3.bar1, e3.bar2 FROM
+((SELECT Serves.bar AS bar1, Serves.beer, Bar.name AS bar2
+ FROM Serves, Bar)
+EXCEPT
+(SELECT Bar.name, Serves.beer, Serves.bar
+FROM Serves, Bar)) AS e3);
+

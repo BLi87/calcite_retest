@@ -1,0 +1,6 @@
+SELECT name,address 
+FROM serves 
+JOIN bar 
+    ON serves.bar=bar.name 
+WHERE beer='Corona' 
+    AND price<=3;

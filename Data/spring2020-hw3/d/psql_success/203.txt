@@ -1,0 +1,8 @@
+WITH Temp1 AS (SELECT B.name as beer, AVG(S.price) as price
+FROM beer B LEFT OUTER JOIN serves S ON B.name = S.beer
+GROUP BY B.name)
+SELECT B.name as beer, COUNT(L.drinker) as cnt, AVG(Temp1.price) as avg
+FROM (beer B LEFT OUTER JOIN likes L ON B.name = L.beer), Temp1
+WHERE Temp1.beer = B.name
+GROUP BY B.name
+ORDER BY COUNT(L.drinker) DESC, B.name ASC;

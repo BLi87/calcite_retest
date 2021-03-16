@@ -1,0 +1,19 @@
+WITH drinkerpairs AS
+(SELECT l1.name AS "d1", l2.name AS "d2"
+FROM drinker as l1, drinker as l2
+WHERE l1.name != l2.name),
+d1likes AS
+(SELECT d1, d2, beer
+FROM likes, drinkerpairs
+WHERE drinker = d1),
+difference AS
+(SELECT *
+FROM d1likes
+EXCEPT (SELECT d1, d2, beer
+FROM likes, drinkerpairs
+WHERE drinker = d2))
+
+SELECT d1 AS "drinker1", d2 AS "drinker2"
+FROM drinkerpairs
+EXCEPT(SELECT d1, d2
+FROM difference);

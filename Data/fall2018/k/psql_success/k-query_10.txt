@@ -1,0 +1,10 @@
+SELECT Bar.name,COALESCE(sum(amount),0) AS result
+FROM Bar
+LEFT JOIN (SELECT Serves.bar AS bar_name, Serves.price * Frequents.times_a_week AS amount
+FROM Serves, Frequents, Likes
+WHERE Frequents.bar = Serves.bar
+AND Likes.drinker = Frequents.drinker
+AND Serves.beer = Likes.beer) AS temp 
+ON Bar.name = temp.bar_name
+GROUP BY Bar.name
+ORDER BY result DESC, Bar.name ASC;

@@ -1,0 +1,14 @@
+/*SELECT DISTINCT f1.bar, f1.drinker
+FROM frequents, (SELECT * FROM frequents) AS f1
+WHERE f1.bar = frequents.bar AND f1.times_a_week >= ALL(SELECT frequents.times_a_week FROM frequents);
+这里的问题是如果最高的times_a_week是1，而其他的bar的最高的次数是2，那么这个bar就不会出现在最后的表中*/
+
+SELECT DISTINCT bar, drinker FROM frequents
+
+EXCEPT
+
+(
+SELECT DISTINCT t1.bar, t1.drinker
+FROM frequents AS T1, frequents AS T2
+WHERE T1.times_a_week < T2.times_a_week AND T1.bar = T2.bar
+);

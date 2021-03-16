@@ -1,0 +1,9 @@
+SELECT jjpDrinkers.drinker
+FROM (SELECT frequents.drinker
+	FROM frequents
+	WHERE frequents.bar='James Joyce Pub') AS jjpDrinkers, 
+	(SELECT frequents.drinker
+	FROM frequents
+	WHERE frequents.bar='Satisfaction') AS satDrinkers
+WHERE jjpDrinkers.drinker=satDrinkers.drinker;
+

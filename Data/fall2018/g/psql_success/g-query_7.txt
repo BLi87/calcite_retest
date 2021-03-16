@@ -1,0 +1,1 @@
+SELECT DISTINCT bar, drinker  FROM (SELECT F1.bar, F1.drinker FROM Frequents AS F1 EXCEPT (SELECT F2.bar, F2.drinker  FROM Frequents AS F2 , Frequents AS F3 WHERE F2.times_a_week  < F3.times_a_week AND F2.bar = F3.bar)) AS solution;

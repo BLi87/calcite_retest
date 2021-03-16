@@ -1,0 +1,10 @@
+select u.bar from (
+select BnotD.bar from (
+(select bar from frequents where drinker = 'Ben')
+except 
+(select bar from frequents where drinker = 'Dan')) BnotD
+union 
+select DnotB.bar from (
+(select bar from frequents where drinker = 'Dan')
+except 
+(select bar from frequents where drinker = 'Ben')) DnotB) as u;

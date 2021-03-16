@@ -1,0 +1,5 @@
+SELECT DISTINCT name
+  FROM drinker
+  WHERE NOT EXISTS
+  (SELECT serves.bar FROM serves, frequents WHERE frequents.bar=serves.bar AND drinker.name=frequents.drinker AND
+    serves.beer NOT IN(SELECT likes.beer FROM likes WHERE drinker.name=likes.drinker));

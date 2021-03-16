@@ -1,0 +1,15 @@
+SELECT DISTINCT name FROM drinker
+EXCEPT
+SELECT DISTINCT drinker
+	FROM ((SELECT f.drinker, bar as fBar, beer as unlBeer
+				FROM frequents as f 
+					FULL OUTER JOIN 
+					(SELECT drinker.name as drinker, beer.name as beer
+						FROM drinker cross join beer
+					EXCEPT
+					SELECT * from likes) 
+					as l
+					ON f.drinker = l.drinker) as fAndL
+					FULL OUTER JOIN serves as s
+					ON fAndL.fbar = s.bar)
+	WHERE unlbeer = beer

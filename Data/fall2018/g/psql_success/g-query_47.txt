@@ -1,0 +1,1 @@
+(select frequents1.bar, frequents1.drinker from frequents frequents1, frequents frequents2 where frequents1.bar=frequents2.bar and frequents1.times_a_week>=frequents2.times_a_week) except (select frequents2.bar, frequents2.drinker from frequents frequents1, frequents frequents2 where frequents1.bar=frequents2.bar and frequents1.times_a_week>frequents2.times_a_week);

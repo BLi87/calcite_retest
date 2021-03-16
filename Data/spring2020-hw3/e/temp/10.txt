@@ -1,0 +1,3 @@
+SELECT name, bar
+FROM (drinker LEFT OUTER JOIN frequents ON name = drinker)
+WHERE times_a_week >= ALL(SELECT times_a_week FROM frequents F WHERE name = F.drinker);

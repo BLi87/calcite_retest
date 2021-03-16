@@ -1,0 +1,1 @@
+select distinct A.drinker drinker1, B.drinker drinker2, A.beer from likes A, likes B where A.drinker <> B.drinker and A.beer = B.beer and A.drinker < B.drinker order by drinker1

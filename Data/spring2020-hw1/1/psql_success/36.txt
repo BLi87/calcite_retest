@@ -1,0 +1,4 @@
+select S.bar
+  from serves S
+  where beer ='Corona'
+  

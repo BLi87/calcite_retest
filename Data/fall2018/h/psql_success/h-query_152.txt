@@ -1,0 +1,9 @@
+SELECT name FROM drinker
+EXCEPT
+(SELECT drinker FROM
+(SELECT drinker, bar FROM frequents
+EXCEPT
+SELECT drinker, bar FROM
+(SELECT drinker, bar, beer FROM (SELECT * FROM (frequents NATURAL JOIN serves)) AS fs
+INTERSECT
+SELECT drinker, bar, beer FROM (SELECT * FROM (frequents NATURAL JOIN likes)) AS fl) AS fsl) AS dislikes);

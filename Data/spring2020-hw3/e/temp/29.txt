@@ -1,0 +1,10 @@
+with
+
+maxFrequents as (select drinker, max(times_a_week) as times_a_week from frequents group by drinker), /*no nulls*/
+
+drinkerBar as (select drinker, bar from maxFrequents natural join frequents), /* no nulls*/
+
+drinkers as (select name as drinker from drinker)
+
+select drinkers.drinker, drinkerBar.bar from drinkers left outer join drinkerBar on drinkers.drinker = drinkerBar.drinker;
+

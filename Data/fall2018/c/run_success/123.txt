@@ -1,0 +1,6 @@
+Select name, address
+From bar
+Where name IN (Select bar
+				From serves
+				Where beer = 'Corona'
+				And price <= 3);

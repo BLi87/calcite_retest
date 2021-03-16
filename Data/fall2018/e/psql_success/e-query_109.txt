@@ -1,0 +1,17 @@
+WITH danList(drinker) AS (
+  SELECT DISTINCT bar
+  FROM frequents
+  WHERE drinker = 'Dan'
+),
+  benList(drinker) AS (
+  SELECT DISTINCT bar
+  FROM frequents
+  WHERE drinker = 'Ben')
+
+((SELECT * FROM danList)
+ UNION
+ (SELECT * FROM benList))
+EXCEPT
+((SELECT * FROM danList)
+ INTERSECT
+ (SELECT * FROM benList));

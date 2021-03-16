@@ -1,0 +1,18 @@
+select distinct drinker.name as drinker from drinker 
+except 
+(
+	select distinct drinker 
+	from drinker,
+	(
+		select distinct drinker.name as drinker,frequents.bar as bar from drinker,frequents where drinker.name=frequents.drinker
+		except
+		(select distinct X.drinker as drinker,X.bar as bar from 
+		(
+			(select distinct drinker.name as drinker, frequents.bar as bar from frequents,drinker where drinker.name=frequents.drinker)
+			intersect 
+			(select distinct likes.drinker as drinker, serves.bar as bar from serves,likes where serves.beer=likes.beer)
+		)
+		 as X)
+	) as T where drinker.name=T.drinker 
+);
+

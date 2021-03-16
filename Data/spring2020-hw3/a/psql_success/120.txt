@@ -1,0 +1,8 @@
+SELECT DISTINCT l.beer, s.bar
+FROM serves as s, likes as l
+WHERE l.drinker = 'Dan' AND (l.beer, s.bar) IN 
+(SELECT beer, bar
+FROM serves 
+WHERE (beer, bar) NOT IN (SELECT a.beer, a.bar
+	FROM serves as a, serves as b
+	WHERE a.price < b.price AND a.bar <> b.bar AND a.beer = b.beer));

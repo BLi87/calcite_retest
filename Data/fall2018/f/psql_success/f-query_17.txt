@@ -1,0 +1,2 @@
+SELECT beer, bar FROM Serves as s WHERE beer NOT IN
+(SELECT beer FROM Serves WHERE bar <> s.bar);

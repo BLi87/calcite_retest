@@ -1,0 +1,1 @@
+select s.drinker from Frequents f,(select drinker from Frequents where bar = 'James Joyce Pub') as s where s.drinker = f.drinker and f.bar = 'Satisfaction';

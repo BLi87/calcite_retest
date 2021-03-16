@@ -1,0 +1,14 @@
+SELECT frequents.drinker, frequents.bar
+FROM frequents, 
+(SELECT f.drinker, max(f.times_a_week) maximum
+ FROM frequents f
+ GROUP BY f.drinker) mf
+WHERE mf.maximum = frequents.times_a_week
+AND frequents.drinker = mf.drinker
+
+UNION
+
+(SELECT nd.name, NULL
+FROM (SELECT drinker.name
+FROM drinker
+WHERE drinker.name NOT IN (SELECT frequents.drinker FROM frequents)) nd)

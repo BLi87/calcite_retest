@@ -1,0 +1,5 @@
+SELECT DISTINCT d.name, b.name, b.address
+  FROM frequents f, drinker d, bar b
+  WHERE f.drinker=d.name
+  AND f.bar=b.name
+  AND f.times_a_week<2;

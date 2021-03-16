@@ -1,0 +1,1 @@
+SELECT s1.bar, address FROM bar JOIN (SELECT bar FROM serves AS s1 WHERE price <= 3.00 AND beer = 'Corona') AS s1 ON s1.bar = bar.name;

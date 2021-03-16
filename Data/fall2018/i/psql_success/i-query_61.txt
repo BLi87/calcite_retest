@@ -1,0 +1,14 @@
+WITH Dont_like AS
+(SELECT DISTINCT Drinker.name AS drinker, Beer.name AS beer
+FROM Beer, Drinker
+EXCEPT
+SELECT *
+FROM Likes)
+SELECT name AS drinker
+FROM Drinker
+EXCEPT
+SELECT drinker
+FROM Frequents, Serves
+WHERE Frequents.bar = Serves.bar
+AND (drinker, beer) IN
+(SELECT * FROM Dont_like);

@@ -1,0 +1,19 @@
+WITH 
+tmp1(drinker1, bar1, times_a_week1) AS
+(SELECT * FROM frequents),
+
+tmp2(drinker2, bar2, times_a_week2) AS
+(SELECT * FROM frequents),
+
+tmp3(drinker, bar, times_a_week) AS
+(SELECT drinker1, bar1, times_a_week1 FROM (tmp1 JOIN tmp2 ON tmp1.times_a_week1<tmp2.times_a_week2 AND tmp1.bar1=tmp2.bar2)),
+
+tmp4(drinker, bar, times_a_week) AS
+(SELECT * FROM frequents EXCEPT SELECT * FROM tmp3),
+
+ans(bar, drinker) AS
+(
+	SELECT bar, drinker FROM tmp4
+)
+
+SELECT * FROM ans;

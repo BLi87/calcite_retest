@@ -1,0 +1,1 @@
+(select f1.bar from Frequents f1 where f1.drinker='Ben') union (select f2.bar from Frequents f2 where f2.drinker='Dan') except ((select f1.bar from Frequents f1 where f1.drinker='Ben') intersect (select f2.bar from Frequents f2 where f2.drinker='Dan'));

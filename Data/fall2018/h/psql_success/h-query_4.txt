@@ -1,0 +1,1 @@
+(select name from drinker) except (with badDrinkers as ((select drinker, bar from frequents) except (select drinker, bar from likes join serves on likes.beer = serves.beer)) select drinker from badDrinkers);

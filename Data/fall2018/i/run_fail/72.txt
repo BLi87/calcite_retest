@@ -1,0 +1,6 @@
+WITH fs(drinker, beer) AS (SELECT drinker, beer from frequents, serves WHERE frequents.bar = serves.bar), 
+fsl(drinker, beer) AS (SELECT drinker, beer FROM fs EXCEPT SELECT drinker, beer FROM likes ) 
+
+SELECT name AS drinker FROM drinker 
+EXCEPT 
+SELECT  drinker FROM fsl;

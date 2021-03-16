@@ -1,0 +1,4 @@
+SELECT l.drinker AS drinker1, l2.drinker AS drinker2, l.beer
+FROM likes l, likes l2
+WHERE l.drinker != l2.drinker AND l.beer = l2.beer AND l.drinker < l2.drinker
+ORDER BY drinker1 asc, drinker2 asc

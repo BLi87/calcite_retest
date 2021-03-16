@@ -1,0 +1,15 @@
+SELECT name, final FROM 
+
+(SELECT name, coalesce (sum,0) AS final FROM 
+(SELECT name, sum FROM bar b LEFT OUTER JOIN 
+(SELECT bar, sum(p) FROM 
+(SELECT bar,drinker,price * times_a_week AS p FROM 
+(SELECT * FROM likes NATURAL JOIN 
+(SELECT * FROM serves NATURAL JOIN frequents)
+ AS y) 
+ AS z) 
+ AS k group by bar) 
+AS t on t.bar = b.name) AS x) 
+AS final_sub ORDER BY final desc, name;
+
+/* Worked with Trilok Sadarangani */

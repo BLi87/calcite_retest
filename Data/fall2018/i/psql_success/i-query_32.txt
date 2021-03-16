@@ -1,0 +1,14 @@
+SELECT name FROM drinker
+
+EXCEPT
+
+SELECT T.drinker AS name
+
+FROM 
+(
+SELECT frequents.drinker, serves.beer FROM frequents, serves WHERE frequents.bar=serves.bar
+
+EXCEPT
+
+SELECT * FROM likes
+) AS T

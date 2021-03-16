@@ -1,0 +1,9 @@
+WITH ExpensiveBeer AS
+(SELECT x.beer, max(y.price)
+FROM likes x, serves y
+WHERE x.drinker = 'Dan' and x.beer=y.beer
+GROUP BY x.beer)
+
+SELECT ExpensiveBeer.beer, bar
+FROM ExpensiveBeer, serves
+WHERE ExpensiveBeer.max = serves.price and ExpensiveBeer.beer = serves.beer

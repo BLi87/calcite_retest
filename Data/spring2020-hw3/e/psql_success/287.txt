@@ -1,0 +1,2 @@
+select distinct(c.drinker), c.bar from ((select l.drinker, f.bar from likes l, frequents f where l.drinker = f.drinker)
+except all (select a.drinker, a.bar from (select likes.drinker, frequents.bar, frequents.times_a_week from likes, frequents where likes.drinker = frequents.drinker) as a, (select likes.drinker, frequents.bar, frequents.times_a_week from likes, frequents where likes.drinker = frequents.drinker) as b where a.times_a_week < b.times_a_week and a.drinker = b.drinker)) as c;

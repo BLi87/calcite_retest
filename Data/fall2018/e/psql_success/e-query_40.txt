@@ -1,0 +1,17 @@
+(SELECT bar
+FROM frequents
+WHERE drinker='Dan'
+EXCEPT
+(SELECT bar
+FROM frequents
+WHERE drinker='Ben'))
+
+UNION
+
+(SELECT bar
+FROM frequents
+WHERE drinker='Ben'
+EXCEPT
+(SELECT bar
+FROM frequents
+WHERE drinker='Dan'));

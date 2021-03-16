@@ -1,0 +1,3 @@
+SELECT DISTINCT a.beer, s1.bar
+from likes a, serves s1
+where (a.drinker = 'Dan' and s1.beer = a.beer and s1.price = (SELECT MAX(price) from serves s2 where s1.beer = s2.beer))

@@ -1,0 +1,22 @@
+SELECT DISTINCT drinker.name
+FROM drinker
+EXCEPT ALL
+SELECT DISTINCT not_likes.name
+FROM
+(SELECT drinkers.name, serves.bar, serves.beer
+FROM serves
+INNER JOIN
+(SELECT drinker.name, frequents.bar
+FROM drinker
+LEFT JOIN frequents
+ON frequents.drinker = drinker.name) as drinkers
+ON drinkers.bar = serves.bar
+EXCEPT ALL
+SELECT drinkers.name, drinkers.bar, likes.beer
+FROM likes
+RIGHT JOIN
+(SELECT drinker.name, frequents.bar
+FROM drinker
+LEFT JOIN frequents
+ON frequents.drinker = drinker.name) as drinkers
+ON drinkers.name = likes.drinker) as not_likes

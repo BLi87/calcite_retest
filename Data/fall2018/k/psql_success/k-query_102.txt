@@ -1,0 +1,21 @@
+SELECT fin.bar AS bar, fin.amount
+FROM(    
+    (
+      SELECT DISTINCT tab.bar AS bar, SUM(tab.num) AS amount
+      FROM(
+          SELECT F.drinker AS drinker, F.times_a_week*S.price AS num, F.bar AS bar /* gets table of all drinkers, the bars they go to, and the weekly price for that beer*/
+          FROM Frequents AS F, Serves AS S 
+          WHERE F.bar = S.bar AND S.beer IN ( /* checks to see if the beer served by that bar is one that the drinker likes; aka checks to see if drinker will buy the beer*/
+              SELECT Likes.beer FROM Likes WHERE F.drinker = Likes.drinker) /* all beers that a drinker likes*/
+
+      ) AS tab
+    GROUP BY tab.bar /* groups it by bar; the sum totals all users' expenses per bar */
+    )
+    UNION ALL 
+   (SELECT DISTINCT b.name AS bar , 0 AS amount FROM Bar AS b WHERE NOT EXISTS
+        (SELECT Frequents.bar FROM Likes, Serves, Frequents WHERE Likes.beer = Serves.beer AND Frequents.drinker = Likes.drinker AND Frequents.bar = Serves.bar AND b.name = Frequents.bar)
+    ) 
+) AS fin
+ORDER by fin.amount DESC, bar;
+    
+ 

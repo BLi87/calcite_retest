@@ -1,0 +1,4 @@
+--(b) Find the names of drinkers who frequent any bar serving Corona. 
+select distinct frequents.drinker 
+from frequents, serves 
+where frequents.bar = serves.bar  and serves.beer = 'Corona';

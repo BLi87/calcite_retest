@@ -1,0 +1,19 @@
+SELECT DISTINCT name
+FROM drinker
+
+EXCEPT
+
+SELECT DISTINCT lfsd.drinker
+FROM (
+	(SELECT DISTINCT lf.drinker, lfs.beer
+	FROM (
+		SELECT DISTINCT *
+		FROM likes NATURAL JOIN frequents
+	) AS lf, serves AS lfs
+	WHERE (lf.bar = lfs.bar AND NOT lf.beer = lfs.beer)
+
+	EXCEPT
+
+	SELECT *
+	FROM likes)) AS lfsd
+;

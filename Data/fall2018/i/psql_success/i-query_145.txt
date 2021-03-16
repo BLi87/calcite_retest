@@ -1,0 +1,17 @@
+SELECT name as drinker 
+FROM drinker 
+EXCEPT 
+SELECT t.drinker 
+FROM (
+    (SELECT frequents.drinker, frequents.bar, serves.beer 
+    FROM frequents 
+    JOIN serves 
+    ON frequents.bar=serves.bar)
+    EXCEPT
+    (SELECT frequents.drinker,frequents.bar,serves.beer 
+    FROM frequents 
+    JOIN serves on frequents.bar=serves.bar 
+    JOIN likes 
+    ON frequents.drinker=likes.drinker AND serves.beer=likes.beer)
+) AS t 
+GROUP BY drinker;

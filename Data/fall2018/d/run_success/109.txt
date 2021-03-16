@@ -1,0 +1,1 @@
+select frequents.drinker from frequents, frequents as f1 where frequents.drinker = f1.drinker and frequents.bar = 'James Joyce Pub' and f1.bar = 'Satisfaction';

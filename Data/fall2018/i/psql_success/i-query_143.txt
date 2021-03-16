@@ -1,0 +1,1 @@
+(select drinker.name from drinker) EXCEPT ALL (select distinct final.drinker from ((select c1.bar, c1.drinker, serves.beer from (select frequents.bar, frequents.drinker from frequents) as c1, serves where c1.bar = serves.bar) EXCEPT ALL (select frequents.bar, frequents.drinker, likes.beer from frequents, likes where frequents.drinker = likes.drinker)) as final);

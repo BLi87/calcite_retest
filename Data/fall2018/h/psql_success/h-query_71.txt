@@ -1,0 +1,14 @@
+SELECT name 
+FROM drinker
+
+EXCEPT 
+
+SELECT drinker 
+FROM ((SELECT drinker, bar
+	FROM frequents)
+	EXCEPT 
+
+	(SELECT first.drinker, first.bar
+	FROM (SELECT likes.drinker, serves.bar 
+			FROM serves, likes
+			WHERE serves.beer = likes.beer) first)) second;

@@ -1,0 +1,11 @@
+select distinct D.name
+from drinker D
+where not exists
+(select drinker, bar from frequents where drinker=D.name
+except
+select distinct L.drinker, S1.bar
+from serves S1, likes L
+where L.drinker = D.name and S1.beer = L.beer and not exists
+(select S2.beer from serves S2 where S2.bar = S1.bar
+except
+select beer from likes where drinker = D.name))

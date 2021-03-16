@@ -1,0 +1,20 @@
+SELECT
+bar2,
+bar1
+FROM
+(SELECT bar2 as bar1, beer, bar1 as bar2 FROM
+(SELECT bar AS bar1, beer, name AS bar2 FROM (SELECT bar, beer FROM SERVES) AS Serves1 CROSS JOIN (SELECT name FROM Bar) AS bar1) AS E1
+-- bar1 serves beer it is paired with each bar2 = e1
+EXCEPT
+(SELECT bar AS bar2, beer, name AS bar1 FROM (SELECT bar, beer FROM SERVES) AS Serves1 CROSS JOIN (SELECT name FROM Bar) AS bar1)) AS E2
+-- bar2 doesn't serve beer but bar1 does = e2
+EXCEPT
+(SELECT bar1, bar2 FROM
+(SELECT bar2 as bar1, beer, bar1 as bar2 FROM
+(SELECT bar AS bar1, beer, name AS bar2 FROM (SELECT bar, beer FROM SERVES) AS Serves1 CROSS JOIN (SELECT name FROM Bar) AS bar1) AS E1
+EXCEPT
+(SELECT bar AS bar2, beer, name AS bar1 FROM (SELECT bar, beer FROM SERVES) AS Serves1 CROSS JOIN (SELECT name FROM Bar) AS bar1)) AS E2
+)
+--(bar1,bar2) is in e2 but bar2 does not serve every beer bar1 serves
+--the answer will come out as (bar2,bar1) from e2 to make sure that bar2 serves some that bar1 doesnt
+;

@@ -1,0 +1,5 @@
+SELECT serves.bar, SUM(price*times_a_week) AS amount
+ 	FROM serves, frequents, likes
+ 	WHERE serves.bar = frequents.bar AND likes.beer = serves.beer
+ 	GROUP BY serves.bar
+	ORDER BY amount DESC;

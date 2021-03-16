@@ -1,0 +1,8 @@
+SELECT DISTINCT bar, drinker
+FROM frequents AS f1
+WHERE times_a_week >= ALL(
+	SELECT times_a_week
+	FROM frequents AS f2
+	WHERE f1.bar = f2.bar
+)
+;

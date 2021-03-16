@@ -1,0 +1,14 @@
+(SELECT DISTINCT View3.name, View3.bar
+FROM (SELECT DISTINCT View2.name, View2.beer, View2.bar
+FROM ((SELECT DISTINCT bar, beer, name
+FROM Serves, Bar)
+EXCEPT ALL
+(SELECT DISTINCT name, beer, bar 
+FROM Serves, Bar)) AS View2) AS View3)
+EXCEPT ALL 
+(SELECT DISTINCT View1.bar, View1.name
+FROM ((SELECT DISTINCT bar, beer, name
+FROM Serves, bar)
+EXCEPT ALL
+(SELECT DISTINCT name, beer, bar
+FROM Serves, Bar)) AS View1);

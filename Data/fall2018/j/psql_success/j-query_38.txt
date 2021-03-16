@@ -1,0 +1,13 @@
+(select bar2, bar1 from 
+(select DISTINCT s1.bar bar1, s1.beer beer1, s2.bar bar2
+from serves s1, serves s2
+where s1.bar != s2.bar) A
+where (bar1, beer1) in (select bar, beer from serves) and (bar2, beer1) not in (select bar,beer from serves))
+
+except 
+
+(select bar1, bar2 from 
+(select DISTINCT s1.bar bar1, s1.beer beer1, s2.bar bar2
+from serves s1, serves s2
+where s1.bar != s2.bar) A
+where (bar1, beer1) in (select bar, beer from serves) and (bar2, beer1) not in (select bar,beer from serves));

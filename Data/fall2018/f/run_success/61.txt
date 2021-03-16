@@ -1,0 +1,1 @@
+select beer, bar from serves where beer not in (select s.beer from serves s, serves x where s.bar <> x.bar and s.beer = x.beer);

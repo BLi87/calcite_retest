@@ -1,0 +1,1 @@
+select bar, drinker from frequents except all (select bar, drinker from (select a.drinker, a.bar, a.times_a_week from frequents a inner join frequents b on a.times_a_week<b.times_a_week and a.bar = b.bar) as change_table);

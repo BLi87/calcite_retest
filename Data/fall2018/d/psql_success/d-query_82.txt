@@ -1,0 +1,1 @@
+SELECT drinker FROM (SELECT * FROM frequents WHERE bar = 'James Joyce Pub' OR bar = 'Satisfaction') AS serves  GROUP BY drinker HAVING COUNT(drinker) > 1;

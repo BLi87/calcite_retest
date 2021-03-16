@@ -1,0 +1,19 @@
+/*drinkers who frequent only bars that serve only beers they like*/
+SELECT name FROM drinker
+
+EXCEPT
+
+/* drinkers of bars with beers they dont like */
+SELECT l.drinker FROM
+
+	/* drinker and beers the bars they go to serve but dont like*/
+	((SELECT f.drinker, s.beer FROM 
+		(SELECT bar, beer FROM serves) AS s 
+			JOIN 
+		(SELECT drinker, bar FROM frequents) AS f 
+			ON s.bar = f.bar)
+	
+	EXCEPT 
+
+	(SELECT drinker, beer FROM likes)) AS l;
+

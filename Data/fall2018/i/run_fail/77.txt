@@ -1,0 +1,74 @@
+-- Find names of all drinkers who frequent 
+-- only those bars that serve only beers they like.
+
+-- select x.drinker
+-- from frequents x
+-- where (select * from frequents y, serves z, likes u
+--                   where x.drinker=y.drinker
+--                    and  y.bar = z.bar and z.beer = u.beer
+--                    and y.drinker = u.drinker)
+
+-- 1. Join frequents and serves, where the bar is the same 
+-- 2. Project the drinker and the serves.beer from this. This leaves 
+-- you with drinker,beer pairs.
+-- Eliminate duplicates.
+
+-- (SELECT DISTINCT drinker, serves.beer
+-- FROM frequents 
+-- FULL JOIN serves 
+-- ON frequents.bar = serves.bar 
+-- )
+
+
+
+-- 3. Diff these drinker/beer pairs with likes.
+-- This leaves you with drinker,beer pairs where drinkers 
+-- do not like the beer.
+
+-- (SELECT DISTINCT drinker, serves.beer
+-- FROM frequents 
+-- FULL JOIN serves 
+-- ON frequents.bar = serves.bar 
+-- )
+-- EXCEPT
+-- (
+-- SELECT drinker, beer 
+-- FROM likes); 
+
+
+
+-- 4. Since you know that these drinkers do not like these beers,
+-- and these beers were served at bars the drinkers went to,
+-- diff all drinkers minus these drinkers. 
+
+-- (SELECT name FROM drinker)
+
+-- EXCEPT
+-- (
+-- (SELECT drinker FROM 
+
+-- 	(SELECT DISTINCT drinker, serves.beer
+-- 	FROM frequents 
+-- 	FULL JOIN serves 
+-- 	ON frequents.bar = serves.bar 
+-- 	)
+-- 	EXCEPT
+-- 	(SELECT drinker, beer FROM likes)
+-- )
+
+-- AS alias
+-- );
+
+
+(SELECT name FROM drinker)
+EXCEPT
+(SELECT drinker FROM 
+	((SELECT DISTINCT drinker, serves.beer
+	  FROM frequents 
+	  FULL JOIN serves 
+	  ON frequents.bar = serves.bar)
+	 EXCEPT
+	 (SELECT drinker, beer FROM likes))
+	AS alias);
+
+

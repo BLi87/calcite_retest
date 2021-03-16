@@ -1,0 +1,14 @@
+(select name as drinker from drinker) 
+except (select distinct drinker from (
+(select drinker, bar from frequents)
+intersect (  
+(select drinker, bar from (
+(select name as drinker from drinker) as drinkers
+cross join 
+(select name as bar from bar) as bars)
+)
+except 
+(select distinct drinker, bar from 
+serves
+natural join 
+likes))) as res);

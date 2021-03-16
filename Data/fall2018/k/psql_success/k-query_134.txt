@@ -1,0 +1,21 @@
+with answer as ((with info as 
+
+(with likers as (select likes.drinker, beer, bar, times_a_week from likes join frequents on likes.drinker = frequents.drinker) select drinker, likers.beer, likers.bar, times_a_week, price from likers join serves on serves.beer = likers.beer and serves.bar = likers.bar)
+
+select bar, sum(times_a_week*price) as amount from info group by bar)
+
+union
+
+(with zeros as
+(select name from bar
+except
+
+(with info as 
+
+(with likers as (select likes.drinker, beer, bar, times_a_week from likes join frequents on likes.drinker = frequents.drinker) select drinker, likers.beer, likers.bar, times_a_week, price from likers join serves on serves.beer = likers.beer and serves.bar = likers.bar)
+
+select bar as name from info group by bar))
+
+select name, 0.0 as amount from zeros))
+
+select * from answer order by amount desc, bar;

@@ -1,0 +1,11 @@
+(select distinct bar from frequents
+where frequents.drinker='Ben')
+union
+(select distinct bar from frequents
+where frequents.drinker='Dan')
+except
+((select distinct bar from frequents
+where frequents.drinker='Dan')
+intersect
+select distinct bar from frequents
+where frequents.drinker='Ben');

@@ -1,0 +1,1 @@
+SELECT drinker FROM frequents WHERE bar = 'James Joyce Pub' AND drinker IN (SELECT drinker FROM frequents WHERE bar = 'Satisfaction');

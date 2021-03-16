@@ -1,0 +1,1 @@
+select bar, drinker from Frequents except select bar2 as bar, drinker2 as drinker from (select F1.bar as bar1, F1.drinker as drinker1, F2.bar as bar2, F2.drinker as drinker2 from Frequents as F1, Frequents as F2 where F1.bar = F2.bar and F1.times_a_week > F2.times_a_week) as T;

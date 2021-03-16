@@ -1,0 +1,13 @@
+SELECT
+  DISTINCT drinker
+FROM
+  (
+  frequents
+    NATURAL JOIN
+  (SELECT
+    *
+   FROM
+    serves
+   WHERE
+    beer = 'Corona') AS coronabar
+  );

@@ -1,0 +1,3 @@
+SELECT B.bar
+FROM serves B
+WHERE B.beer = 'Corona'

@@ -1,0 +1,1 @@
+SELECT * FROM ((SELECT name FROM drinker) EXCEPT (SELECT drinker AS name FROM (SELECT drinker, beer FROM ((SELECT t1.drinker, t2.beer FROM frequents t1, serves t2 WHERE t1.bar = t2.bar) EXCEPT (SELECT drinker, beer FROM likes )) AS foo1) AS foo2)) AS foo4;

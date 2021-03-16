@@ -1,0 +1,15 @@
+SELECT name
+FROM drinker
+
+EXCEPT
+
+SELECT drinker
+FROM 
+((SELECT drinker, beer
+FROM frequents F, serves S
+WHERE F.bar = S.bar)
+
+EXCEPT
+
+SELECT drinker, beer
+FROM likes) AS drinkers

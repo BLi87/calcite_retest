@@ -1,0 +1,1 @@
+(SELECT bar, drinker from Frequents) EXCEPT (SELECT s1.bar, s1.drinker FROM Frequents s1, Frequents s2 WHERE s1.times_a_week < s2.times_a_week AND s1.bar = s2.bar);

@@ -1,0 +1,25 @@
+SELECT d.name
+FROM (
+	(SELECT name from drinker)
+	
+	EXCEPT ALL
+	
+(
+	SELECT first.drinker
+	FROM
+	(
+
+		(SELECT frequents.drinker, frequents.bar, serves.beer
+		FROM serves, frequents
+		WHERE serves.bar = frequents.bar)
+
+		EXCEPT ALL
+
+		(SELECT likes.drinker, frequents.bar, likes.beer
+		FROM frequents, likes
+		WHERE frequents.drinker = likes.drinker)
+
+	) as first
+)
+
+) as d;

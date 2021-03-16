@@ -1,0 +1,23 @@
+SELECT name 
+FROM drinker 
+WHERE NOT EXISTS
+	
+(SELECT bar                   -- no bar frequented by the drinker that does not serve at least ONE beer they like 
+FROM frequents
+WHERE frequents.drinker = drinker.name
+		
+AND bar NOT IN 
+(SELECT bar
+FROM likes,serves
+WHERE likes.beer = serves.beer AND likes.drinker = drinker.name));
+
+
+
+
+
+
+
+
+
+
+

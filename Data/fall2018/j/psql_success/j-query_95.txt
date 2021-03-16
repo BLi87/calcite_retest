@@ -1,0 +1,19 @@
+WITH Bar_beer_count AS
+(SELECT bar, COUNT(*) AS count
+FROM Serves
+GROUP BY bar)
+SELECT DISTINCT bar1.name AS bar1, bar2.name AS bar2
+FROM Bar AS bar1, Bar AS bar2
+WHERE bar1.name != bar2.name
+EXCEPT
+SELECT DISTINCT bar1.bar AS bar1, bar2.bar AS bar2
+FROM serves AS bar1, serves AS bar2
+WHERE bar1.beer NOT IN
+(SELECT beer
+FROM serves
+WHERE serves.bar = bar2.bar)
+EXCEPT
+SELECT c1.bar, c2.bar
+FROM Bar_beer_count AS c1, Bar_beer_count AS c2
+WHERE c1.bar != c2.bar
+AND c1.count = c2.count;

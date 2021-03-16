@@ -1,0 +1,6 @@
+SELECT drinker.name FROM drinker WHERE drinker.name NOT IN
+(SELECT f.drinker FROM
+(SELECT frequents.drinker, frequents.bar FROM frequents EXCEPT
+(SELECT likes.drinker, serves.bar
+FROM likes
+JOIN serves ON likes.beer = serves.beer)) f);

@@ -1,0 +1,5 @@
+Select Distinct f.drinker, b.name, b.address
+From frequents f, drinker l, bar b
+Where f.times_a_week < 2 and
+  f.drinker = l.name and
+  b.name = f.bar

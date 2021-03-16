@@ -1,0 +1,11 @@
+SELECT
+Serves.bar,
+address
+FROM
+Serves
+JOIN 
+Bar ON Serves.bar = Bar.name
+WHERE
+beer = 'Corona'
+AND 
+price <= 3;

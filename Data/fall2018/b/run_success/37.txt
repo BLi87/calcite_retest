@@ -1,0 +1,5 @@
+SELECT drinker 
+FROM serves 
+NATURAL JOIN frequents 
+WHERE beer='Corona' 
+GROUP BY drinker;

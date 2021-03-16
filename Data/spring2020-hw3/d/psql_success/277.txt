@@ -1,0 +1,7 @@
+select beer.name, coalesce(number, 0) number, average 
+from beer left outer join (select beer, count(beer) number from likes group by beer) t1 
+on t1.beer = beer.name
+  left outer join
+(select beer, avg(price) average from serves group by beer) t2 
+on t2.beer = beer.name
+order by t1.number desc nulls last, t1.beer asc;

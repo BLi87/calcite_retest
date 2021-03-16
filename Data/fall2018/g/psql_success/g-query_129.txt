@@ -1,0 +1,7 @@
+SELECT a.bar, a.drinker
+FROM frequents a
+INNER JOIN (
+    SELECT bar, MAX(times_a_week) times_a_week
+    FROM frequents
+    GROUP BY bar
+) b ON a.bar = b.bar AND a.times_a_week = b.times_a_week;

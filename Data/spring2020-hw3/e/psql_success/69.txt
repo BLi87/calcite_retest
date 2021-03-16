@@ -1,0 +1,23 @@
+WITH maxNum AS (
+    SELECT f.drinker, max(f.times_a_week)
+    FROM frequents as f
+    GROUP BY f.drinker
+),
+
+noFreq AS (
+    SELECT d.name 
+    FROM drinker AS d 
+    WHERE d.name NOT IN (
+        SELECT DISTINCT f.drinker 
+        FROM frequents AS f 
+    )
+)
+
+
+SELECT f.drinker, f.bar 
+FROM frequents as f, maxNum as m 
+WHERE f.drinker = m.drinker AND f.times_a_week = m.max
+UNION (
+    SELECT noFreq.name, NULL 
+    FROM noFreq
+)

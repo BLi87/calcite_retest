@@ -1,0 +1,14 @@
+/*Find all drinkers except those that go to bars serving no beers they like*/
+SELECT name
+FROM Drinker
+WHERE name NOT IN
+/*Remove all drinkers who go to bars without any beers they like*/
+--Take all drinkers bar pairs where the drinker goes to bar
+(SELECT name
+FROM (SELECT drinker AS name, bar
+		FROM Frequents
+--Remove drinker bar pairs where the bar serves a drink the drinker likes
+		EXCEPT
+		(SELECT DISTINCT Frequents.drinker AS name, Frequents.bar AS bar
+		FROM Frequents, Likes, Serves
+		WHERE Frequents.drinker=Likes.drinker AND Frequents.bar=Serves.bar AND Likes.beer=Serves.beer)) AS M);

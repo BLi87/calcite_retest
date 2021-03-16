@@ -1,0 +1,1 @@
+select distinct drinker from frequents f, serves s where s.beer='Corona' and s.bar=f.bar;

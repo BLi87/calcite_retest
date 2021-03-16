@@ -1,0 +1,8 @@
+SELECT beer, bar
+FROM serves
+WHERE (beer, price) IN (SELECT DISTINCT beer, max(price)
+FROM serves
+WHERE beer IN (SELECT DISTINCT beer
+FROM likes
+WHERE drinker = 'Dan')
+GROUP BY beer);

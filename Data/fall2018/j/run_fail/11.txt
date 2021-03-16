@@ -1,0 +1,2 @@
+
+  SELECT b1.name, b2.name FROM bar b1, bar b2 WHERE b1.name <> b2.name AND ((SELECT COUNT(*) FROM serves where bar = b1.name) < (SELECT COUNT(*) FROM serves where bar = b2.name)) AND NOT EXISTS ((SELECT beer FROM serves serves1 WHERE serves1.bar = b1.name) EXCEPT (SELECT beer FROM serves serves2 WHERE serves2.bar = b2.name));

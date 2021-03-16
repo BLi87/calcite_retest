@@ -1,0 +1,10 @@
+select distinct d1.name as drinker1, d2.name as drinker2
+from drinker as d1, drinker as d2
+where d1.name <> d2.name and d1.name not in
+  (select likes3.drinker as name
+  from likes as likes3
+  where likes3.beer not in
+    (select likes4.beer
+    from likes as likes4
+    where likes4.drinker = d2.name)
+  )

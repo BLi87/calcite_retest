@@ -1,0 +1,10 @@
+with like_cnt as
+(select name, count(drinker)
+from beer left outer join likes on beer.name = likes.beer
+group by name),
+price_avg as
+(select name, avg(price)
+from beer left outer join serves on beer.name = serves.beer
+group by name)
+select like_cnt.name, count, avg from like_cnt, price_avg where like_cnt.name = price_avg.name
+order by count DESC, name ASC

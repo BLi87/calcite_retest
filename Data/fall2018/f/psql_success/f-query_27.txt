@@ -1,0 +1,9 @@
+(SELECT beer, bar
+FROM serves)
+EXCEPT ALL 
+(SELECT beer, bar
+FROM serves AS s
+WHERE EXISTS (SELECT beer, bar
+FROM serves
+WHERE beer = s.beer 
+AND bar <> s.bar));

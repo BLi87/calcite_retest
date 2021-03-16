@@ -1,0 +1,23 @@
+select b.bar, case when amount is null then 0
+					else amount
+					end
+from
+(select name as bar from bar) as b
+left outer join
+(select bar, sum(revenue) as amount
+from
+(select fs.drinker, l.beer, fs.bar, fs.price, fs.times_a_week, price*times_a_week as revenue
+	from likes as l
+	full outer join
+	(select f.drinker, f.bar, s.beer as sbeer, s.price, f.times_a_week
+	from
+	frequents as f
+	full outer join
+	serves as s
+	on f.bar = s.bar) as fs
+	on l.drinker = fs.drinker
+	where fs.sbeer = l.beer) as fls
+group by bar) as r
+on b.bar = r.bar
+
+order by amount DESC, bar

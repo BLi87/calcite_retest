@@ -1,0 +1,6 @@
+(SELECT beer, bar FROM Serves)
+EXCEPT
+(SELECT Serves2.beer, Serves2.bar
+FROM  Serves Serves1
+JOIN Serves Serves2 ON Serves1.beer = Serves2.beer 
+		AND Serves1.bar<>Serves2.bar)

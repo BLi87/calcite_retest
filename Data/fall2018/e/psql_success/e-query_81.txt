@@ -1,0 +1,18 @@
+
+SELECT f.bar 
+FROM frequents as f
+WHERE drinker = 'Ben'
+UNION
+SELECT f.bar 
+FROM frequents as f
+WHERE drinker = 'Dan'
+EXCEPT(
+SELECT f1.bar
+FROM frequents AS f1
+WHERE drinker = 'Ben'
+INTERSECT
+SELECT f2.bar
+FROM frequents AS f2
+WHERE drinker = 'Dan')
+
+;

@@ -1,0 +1,27 @@
+-- \project_{bar1.name,bar2.name} (
+-- \rename_{bar1:*} bar
+-- \join_{bar1.name<>bar2.name}
+-- \rename_{bar2:*} bar)
+-- \diff
+-- \project_{bar1,bar2}(
+-- \rename_{bar1,bar2,beer1} (
+-- (\project_{serves.bar,bar.name,serves.beer}(
+-- serves \join_{serves.bar<>bar.name} bar))
+-- \diff
+-- (\project_{bar.name,serves.bar,serves.beer}(
+-- bar \join_{serves.bar<>bar.name} serves))));
+
+
+(SELECT b1.name, Bar.name
+FROM Bar b1
+JOIN Bar ON b1.name <>Bar.name)
+EXCEPT
+(SELECT DISTINCT  barpair.bar, barpair.name
+FROM
+((SELECT DISTINCT s2.bar,Bar.name,s2.beer
+FROM Serves s2
+JOIN Bar ON s2.bar<>Bar.name)
+EXCEPT 
+(SELECT DISTINCT b2.name,Serves.bar,Serves.beer
+FROM Bar b2
+JOIN Serves ON Serves.bar<>b2.name)) barpair);

@@ -1,0 +1,11 @@
+WITH TMP1(beer) AS
+(SELECT DISTINCT pair1.beer
+FROM serves AS pair1, serves AS pair2
+WHERE pair1.bar != pair2.bar AND pair1.beer=pair2.beer)
+
+SELECT DISTINCT serves.beer, serves.bar
+FROM SERVES
+EXCEPT
+(SELECT DISTINCT serves.beer, serves.bar
+FROM TMP1, serves
+WHERE TMP1.beer=serves.beer);

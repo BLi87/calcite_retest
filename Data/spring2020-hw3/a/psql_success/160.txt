@@ -1,0 +1,8 @@
+Select distinct beer, bar
+From serves
+Where (beer, price) in (Select distinct beer, max(price)
+From serves
+Where beer in (Select beer
+  From likes s1
+  Where drinker='Dan')
+Group by beer);

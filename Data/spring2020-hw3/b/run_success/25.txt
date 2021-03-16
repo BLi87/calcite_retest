@@ -1,0 +1,6 @@
+select distinct L1.drinker, L2.drinker
+from likes L1, likes L2
+where L1.drinker <> L2.drinker
+  and L1.beer in (select L3.beer
+  from likes L3
+  where L2.drinker = L3.drinker);

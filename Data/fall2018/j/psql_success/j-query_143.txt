@@ -1,0 +1,2 @@
+WITH servesX AS (select * FROM serves) SELECT barB, barA FROM (SELECT serves.bar barA, beer, bar.name barB FROM serves CROSS JOIN bar EXCEPT SELECT bar.name barA, beer, serves.bar barB FROM serves CROSS JOIN bar) AS tup1 EXCEPT SELECT barA, barB FROM (SELECT serves.bar barA, beer, bar.name barB FROM SERVES CROSS JOIN bar EXCEPT SELECT bar.name barA, beer, serves.bar barB FROM serves cross join bar) as tup2;
+

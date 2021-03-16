@@ -1,0 +1,9 @@
+SELECT DISTINCT beer, bar 
+FROM Serves
+WHERE beer in
+	(SELECT beer 
+	FROM 
+		(SELECT Serves.beer, COUNT(Serves.beer)
+		FROM Serves
+		GROUP BY beer) AS beer_count
+	WHERE beer_count.count=1);

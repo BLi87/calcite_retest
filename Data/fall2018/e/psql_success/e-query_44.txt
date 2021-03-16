@@ -1,0 +1,12 @@
+SELECT frequents.bar
+FROM frequents
+WHERE drinker = 'Dan' or drinker = 'Ben'
+EXCEPT
+SELECT T.bar
+FROM
+  (
+  SELECT frequents1.bar AS bar, frequents2.drinker AS drinker2, frequents1.drinker AS drinker1, frequents1.times_a_week as number1, frequents2.times_a_week as number2
+  FROM frequents AS frequents1, frequents as frequents2
+  WHERE frequents1.bar=frequents2.bar
+  )T
+WHERE drinker1 = 'Dan' AND drinker2 = 'Ben';

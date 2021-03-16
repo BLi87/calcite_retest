@@ -1,0 +1,8 @@
+SELECT s.beer, s.bar
+FROM Serves s 
+WHERE s.beer 
+IN (SELECT beer FROM Likes WHERE drinker = 'Dan') AND NOT EXISTS 
+(SELECT price 
+FROM Serves 
+WHERE beer = s.beer 
+AND price > s.price)

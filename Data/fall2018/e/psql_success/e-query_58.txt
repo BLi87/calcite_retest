@@ -1,0 +1,13 @@
+SELECT f1.bar
+FROM frequents AS f1, frequents AS f2
+WHERE (f1.bar=f2.bar
+	AND (f1.drinker='Dan' OR f1.drinker='Ben')
+	AND NOT (f1.drinker=f2.drinker)
+	AND NOT (f1.drinker='Dan' AND f2.drinker='Ben')
+	AND NOT (f1.drinker='Ben' AND f2.drinker='Dan'))
+EXCEPT
+SELECT f1.bar
+FROM frequents f1, frequents f2
+WHERE (f1.bar=f2.bar
+	AND ((f1.drinker='Dan' AND f2.drinker='Ben')
+		OR f1.drinker='Ben' AND f1.drinker='Dan'));

@@ -1,0 +1,6 @@
+--(f) Find all (beer, bar) pairs where beer is served exclusively at bar; no other bar serves the same beer. 
+select beer, bar
+from serves as s
+where not exists 
+    (select * from serves
+     where beer = s.beer and bar != s.bar);

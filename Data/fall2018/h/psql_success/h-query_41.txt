@@ -1,0 +1,7 @@
+(SELECT DISTINCT name FROM Drinker)
+EXCEPT
+(SELECT Frequents.drinker FROM Frequents
+	WHERE NOT EXISTS (SELECT * FROM Serves, Likes
+						WHERE Frequents.bar = Serves.bar 
+						AND Frequents.drinker = Likes.drinker
+						AND Serves.beer = Likes.beer))

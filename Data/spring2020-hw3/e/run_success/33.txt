@@ -1,0 +1,8 @@
+SELECT name, bar
+FROM frequents f RIGHT OUTER JOIN drinker d
+ON f.drinker = d.name
+WHERE NOT EXISTS
+(SELECT *
+FROM frequents RIGHT OUTER JOIN drinker d
+ON f.drinker = d.name
+WHERE times_a_week>f.times_a_week and drinker=f.drinker)

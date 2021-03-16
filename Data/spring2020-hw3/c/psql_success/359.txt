@@ -1,0 +1,29 @@
+SELECT name 
+FROM drinker
+
+EXCEPT 
+
+(
+  SELECT a.drinker
+  FROM (
+    SELECT frequents.drinker, frequents.bar, serves.beer
+    FROM frequents, likes, serves
+    WHERE frequents.bar = serves.bar
+
+    EXCEPT
+  
+    SELECT frequents.drinker,frequents.bar,likes.beer
+    FROM frequents, likes, serves
+  )  a
+)
+
+EXCEPT
+
+SELECT drinker
+FROM frequents
+
+EXCEPT
+
+SELECT drinker
+FROM likes
+

@@ -1,0 +1,14 @@
+WITH maxrecorded AS
+(SELECT drinker, MAX(times_a_week) as maxTAW
+FROM frequents
+GROUP BY drinker),
+simplified AS
+(SELECT name, maxTAW FROM
+((SELECT name FROM drinker) AS uniqueNames
+LEFT OUTER JOIN
+maxRecorded ON (uniqueNames.name = maxRecorded.drinker)) AS Q1)
+
+SELECT name, bar
+FROM simplified
+LEFT OUTER JOIN
+frequents ON (simplified.name = frequents.drinker AND maxTAW = frequents.times_a_week);

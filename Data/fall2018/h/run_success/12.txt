@@ -1,0 +1,9 @@
+select name from drinker
+except
+select drinker from (
+(select drinker, bar from frequents)
+except
+(select distinct frequents.drinker, frequents.bar from frequents, likes, serves
+where frequents.drinker = likes.drinker 
+and frequents.bar = serves.bar 
+and likes.beer = serves.beer)) as foo;

@@ -1,0 +1,1 @@
+select name from Drinker where name not in (select l.drinker from Likes l,Frequents f, Serves s where l.drinker=f.drinker and f.bar=s.bar and s.beer not in (select beer from Likes l2 where l2.drinker=l.drinker));

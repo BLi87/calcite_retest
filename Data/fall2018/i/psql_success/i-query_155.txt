@@ -1,0 +1,10 @@
+SELECT DISTINCT name 
+FROM Drinker
+EXCEPT
+ SELECT DISTINCT a.drinker FROM
+ (
+  (SELECT Frequents.drinker, Serves.beer 
+   FROM Frequents INNER JOIN Serves ON Frequents.bar = Serves.bar)
+  EXCEPT
+  (SELECT * FROM Likes)
+ ) a;

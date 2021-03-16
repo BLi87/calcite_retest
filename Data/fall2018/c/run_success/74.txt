@@ -1,0 +1,3 @@
+SELECT DISTINCT b.name, b.address
+FROM Bar b, Serves s
+WHERE b.name = s.bar AND s.beer = 'Corona' AND s.price <= 3.00;

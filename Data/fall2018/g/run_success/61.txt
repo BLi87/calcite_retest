@@ -1,0 +1,6 @@
+SELECT s1.bar, s1.drinker
+FROM frequents s1
+WHERE NOT EXISTS(
+ SELECT s2.drinker
+ FROM frequents s2
+ WHERE s1.bar = s2.bar AND s2.times_a_week > s1.times_a_week);

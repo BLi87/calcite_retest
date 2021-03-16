@@ -1,0 +1,33 @@
+
+
+
+
+
+
+(SELECT bar2 AS bar1, bar1 AS bar2
+FROM	(SELECT bar1, bar2
+		FROM	((SELECT T1.bar AS bar1, T1.beer AS beer, T2.bar AS bar2
+				FROM (SELECT bar, beer FROM serves) AS T1,
+				     (SELECT bar FROM serves) AS T2)
+
+				EXCEPT
+
+				(SELECT bar2 AS bar1, beer, bar1 AS bar2
+				FROM (SELECT T11.bar AS bar1, T11.beer AS beer, T22.bar AS bar2
+					 FROM (SELECT bar, beer FROM serves) AS T11,
+					      (SELECT bar FROM serves) AS T22) AS T33)) AS T44) as T55)
+
+
+EXCEPT
+
+(SELECT bar1, bar2
+FROM	((SELECT T111.bar AS bar1, T111.beer AS beer, T222.bar AS bar2
+		FROM (SELECT bar, beer FROM serves) AS T111,
+		     (SELECT bar FROM serves) AS T222)
+
+		EXCEPT
+
+		(SELECT bar2 AS bar1, beer, bar1 AS bar2
+		FROM (SELECT T1111.bar AS bar1, T1111.beer AS beer, T2222.bar AS bar2
+			 FROM (SELECT bar, beer FROM serves) AS T1111,
+			      (SELECT bar FROM serves) AS T2222) AS T3333)) AS T4444);

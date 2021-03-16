@@ -1,0 +1,5 @@
+with 
+likedBeers as (select beer.name as beer, likes.drinker as drinker from beer left outer join likes on beer.name = likes.beer),
+beerCounts as (select beer, count(likedBeers.drinker) as cnt from likedBeers group by beer),
+beerPrices as (select beer.name as beer, avg(price) AS avg from beer left outer join serves on beer.name = serves.beer group by beer.name)
+select * from beerCounts natural join beerPrices order by cnt desc, beer asc;

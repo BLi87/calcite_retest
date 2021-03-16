@@ -1,0 +1,7 @@
+select beer, bar
+from serves
+where beer IN
+(select beer
+from serves
+group by beer
+having count(bar)=1);

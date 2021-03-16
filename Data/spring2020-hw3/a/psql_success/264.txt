@@ -1,0 +1,4 @@
+SELECT DISTINCT S1.beer, S1.bar
+FROM Likes L, Serves S1, Serves S2 
+WHERE L.drinker = 'Dan' AND L.beer = S1. beer AND S1.beer = S2.beer 
+      AND S1.price >= ALL(SELECT price FROM Serves s WHERE S1.beer = s.beer);

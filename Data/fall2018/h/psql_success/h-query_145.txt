@@ -1,0 +1,1 @@
+select name from drinker except (select drinker from (select drinker, bar from frequents except (select drinker,bar from (serves natural join likes) as joined)) as abc);

@@ -1,0 +1,8 @@
+WITH one AS (Select drinker as drinker1, bar, beer as beer1 From frequents NATURAL JOIN serves),
+two AS ((Select drinker.name as drinker2, beer.name as beer2 from drinker, beer) except all (select * from likes)),
+subtract as (Select drinker1 from one, two where drinker2 = drinker1 and beer2 = beer1)
+
+
+(SELECT name from drinker)
+Except all
+(Select drinker1 from subtract)

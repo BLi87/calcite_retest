@@ -1,0 +1,9 @@
+select beer, bar
+from serves
+where beer in (select beer from likes where drinker = 'Dan')
+except
+select s1.beer, s1.bar
+from serves s1, serves s2
+where s1.beer = s2.beer
+  and s1.price < s2.price
+  and s1.beer in (select beer from likes where drinker = 'Dan')

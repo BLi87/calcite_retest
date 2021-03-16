@@ -1,0 +1,16 @@
+((SELECT DISTINCT bar
+FROM Frequents
+WHERE drinker='Dan')
+EXCEPT
+(SELECT DISTINCT bar
+FROM Frequents
+WHERE drinker='Ben'))
+UNION
+((SELECT DISTINCT bar
+FROM Frequents
+WHERE drinker='Ben')
+EXCEPT
+(SELECT DISTINCT bar
+FROM Frequents
+WHERE drinker='Dan'));
+

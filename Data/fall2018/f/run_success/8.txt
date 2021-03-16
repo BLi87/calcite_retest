@@ -1,0 +1,12 @@
+/*Find all (beer, bar) pairs where beer is served exclusively at bar; no other bar serves the same beer*/
+
+(SELECT DISTINCT A.beer, A.bar
+FROM Serves A, Serves B
+WHERE A.beer = B.beer)
+EXCEPT
+(SELECT DISTINCT A.beer, A.bar
+FROM Serves A, Serves B
+WHERE A.beer = B.beer
+AND A.bar <> b.bar); 
+
+

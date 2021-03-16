@@ -1,0 +1,11 @@
+SELECT likes.beer, bar 
+FROM likes JOIN 
+(SELECT bar, serves.beer, price, prices.maximum
+FROM serves
+RIGHT JOIN (SELECT max(price) as maximum, beer
+FROM serves
+GROUP BY beer) AS prices
+ON serves.beer = prices.beer
+WHERE price = prices.maximum) AS bar_maxes
+ON bar_maxes.beer = likes.beer
+WHERE drinker = 'Dan'

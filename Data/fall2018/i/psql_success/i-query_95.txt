@@ -1,0 +1,1 @@
+select name from drinker except (select drinker from (((select frequents.drinker, serves.beer, frequents.bar from serves inner join frequents on frequents.bar = serves.bar) except all (select likes.drinker, likes.beer, serves.bar from likes inner join serves on serves.beer = likes.beer))) as changed_table);

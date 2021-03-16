@@ -1,0 +1,12 @@
+SELECT distinct name
+FROM drinker except
+(SELECT drinker
+FROM
+((SELECT drinker, beer, frequents.bar
+FROM frequents, serves
+WHERE frequents.bar = serves.bar
+)
+except
+(SELECT drinker, likes.beer, bar
+FROM likes, serves
+WHERE likes.beer = serves.beer)) as L)

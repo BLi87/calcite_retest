@@ -1,0 +1,23 @@
+(SELECT foo.bar2, foo.bar1
+FROM (SELECT s1.bar AS bar1, s2.bar AS bar2, s1.beer
+FROM serves AS s1, serves AS s2
+WHERE s1.bar <> s2.bar
+
+EXCEPT
+
+SELECT s2.bar AS bar1, s1.bar AS bar2, s1.beer
+FROM serves AS s1, serves AS s2
+WHERE s1.bar <> s2.bar) AS foo)
+
+EXCEPT
+
+(SELECT foo.bar1, foo.bar2
+FROM (SELECT DISTINCT s1.bar AS bar1, s2.bar AS bar2, s1.beer
+FROM serves AS s1, serves AS s2
+WHERE s1.bar <> s2.bar
+
+EXCEPT
+
+SELECT s2.bar AS bar1, s1.bar AS bar2, s1.beer
+FROM serves AS s1, serves AS s2
+WHERE s1.bar <> s2.bar) AS foo);

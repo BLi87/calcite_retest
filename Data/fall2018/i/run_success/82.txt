@@ -1,0 +1,7 @@
+select name from Drinker
+
+except
+
+Select distinct f1.drinker
+From Frequents as f1, Serves as s1
+Where (s1.bar=f1.bar and s1.beer not in (select l2.beer from Likes as l2 where l2.drinker=f1.drinker));

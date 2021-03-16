@@ -1,0 +1,39 @@
+with leftside(drinker) as
+(select name as drinker
+from drinker 
+),
+
+FreqServ(drinker, bar, beer) as
+(select frequents.drinker, serves.bar, serves.beer
+from frequents, serves
+where frequents.bar = serves.bar
+),
+
+likesServ(drinker, bar, beer) as
+(select likes.drinker, serves.bar, serves.beer
+from likes, serves
+where serves.beer = likes.beer
+),
+
+rightdif(drinker) as
+(select drinker, bar, beer
+from  FreqServ
+
+where not exists(
+
+select drinker, bar, beer
+from likesServ
+where likesServ.drinker = FreqServ.drinker and likesServ.bar = FreqServ.bar and likesServ.beer = FreqServ.beer
+)
+)
+
+
+select drinker
+from
+(select drinker
+from leftside
+
+except 
+
+select drinker
+from rightdif) as final

@@ -1,0 +1,4 @@
+select d1.drinker
+from frequents d1, frequents d2
+where d1.bar = 'Satisfaction' and d2.bar = 'James Joyce Pub'
+and d1.drinker = d2.drinker;

@@ -1,0 +1,16 @@
+SELECT
+TimeTable.bar,
+drinker
+FROM
+(SELECT
+bar,
+MAX(times_a_week) AS MaxTimes
+FROM
+Frequents
+GROUP BY
+bar) AS TimeTable
+JOIN
+Frequents ON TimeTable.MaxTimes = Frequents.times_a_week
+WHERE
+TimeTable.bar = Frequents.bar
+;

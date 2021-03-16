@@ -1,0 +1,4 @@
+SELECT bar, drinker FROM Frequents
+EXCEPT SELECT DISTINCT f.bar, f.drinker
+FROM Frequents f, Frequents g
+WHERE f.bar = g.bar AND f.times_a_week < g.times_a_week;

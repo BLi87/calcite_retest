@@ -1,0 +1,9 @@
+SELECT DISTINCT bar1, bar2 FROM ((SELECT bar1.bar as bar1, serves.bar as bar2, serves.beer FROM (SELECT name AS bar FROM bar) as bar1 JOIN serves ON (bar1.bar <> serves.bar)) 
+EXCEPT
+(SELECT serves.bar, bar1.bar, serves.beer FROM (SELECT name AS bar FROM bar) as bar1 JOIN serves ON (bar1.bar <> serves.bar))) as nobar1
+
+EXCEPT
+
+(SELECT DISTINCT bar1, bar2 FROM ((SELECT serves.bar as bar1, bar1.bar as bar2, serves.beer FROM (SELECT name AS bar FROM bar) as bar1 JOIN serves ON (bar1.bar <> serves.bar))
+EXCEPT
+(SELECT bar1.bar, serves.bar, serves.beer FROM (SELECT name AS bar FROM bar) as bar1 JOIN serves ON (bar1.bar <> serves.bar))) as nobar2);

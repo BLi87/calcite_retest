@@ -1,0 +1,1 @@
+(SELECT drinker FROM frequents WHERE bar = 'James Joyce Pub') INTERSECT (SELECT drinker FROM frequents WHERE bar = 'Satisfaction');

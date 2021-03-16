@@ -1,0 +1,4 @@
+select distinct f.drinker, b.name, b.address
+from frequents f, bar b
+where times_a_week < 2
+and f.bar = b.name

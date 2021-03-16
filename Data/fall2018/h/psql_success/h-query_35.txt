@@ -1,0 +1,15 @@
+SELECT name
+FROM Drinker
+-- keep only drinkers who don't frequent a bar that serves none of their likes
+WHERE name NOT IN (
+  SELECT drinker FROM (
+    -- frequents pairs
+    SELECT bar, drinker
+    FROM Frequents
+    -- subtract pairs st bar serves beer drinker likes
+    EXCEPT
+    SELECT bar, drinker
+    FROM Serves, Likes
+    WHERE Serves.beer = Likes.beer
+  ) as t
+);

@@ -1,0 +1,23 @@
+WITH bars(bar1, bar2) AS
+(SELECT DISTINCT s1.bar, s2.bar
+FROM serves s1, serves s2
+WHERE s2.beer NOT IN
+(SELECT DISTINCT beer
+FROM serves
+WHERE s1.bar = serves.bar)),
+allbars(bar1, bar2) AS
+(SELECT DISTINCT s1.bar, s2.bar
+FROM serves s1, serves s2
+WHERE s2.bar!=s1.bar),
+subsets(bar1, bar2) AS
+(SELECT *
+FROM allbars
+EXCEPT
+SELECT *
+FROM bars)
+SELECT bar2, bar1
+FROM subsets
+EXCEPT
+(SELECT b1.bar1, b1.bar2
+FROM subsets b1, subsets b2
+WHERE b1.bar1=b2.bar2 AND b1.bar2=b2.bar1);

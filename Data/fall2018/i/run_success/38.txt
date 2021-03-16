@@ -1,0 +1,3 @@
+select name from
+(select drinker as name,beer from frequents,serves where frequents.bar=serves.bar except
+select * from likes) as RES

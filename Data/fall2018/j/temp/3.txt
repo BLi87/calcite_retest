@@ -1,0 +1,66 @@
+SELECT bar2, bar1
+FROM (
+
+(SELECT * FROM (
+
+SELECT bar AS bar1, beer
+FROM serves
+CROSS JOIN (
+SELECT name AS bar2 FROM bar) AS tmp10
+
+) AS tmp2 )
+EXCEPT (
+SELECT bar2, beer, bar1 FROM (
+
+SELECT bar AS bar1, beer
+FROM serves
+CROSS JOIN (
+SELECT name AS bar2 FROM bar) AS tmp11
+
+) AS tmp3 )
+) AS tmp1
+
+EXCEPT(
+SELECT bar1, bar2
+FROM (
+
+(SELECT * FROM (
+
+SELECT bar AS bar1, beer
+FROM serves
+CROSS JOIN (
+SELECT name AS bar2 FROM bar) AS tmp12
+
+) AS tmp5 )
+EXCEPT (
+SELECT bar2, beer, bar1 FROM (
+
+SELECT bar AS bar1, beer
+FROM serves
+CROSS JOIN (
+SELECT name AS bar2 FROM bar) AS tmp13
+
+) AS tmp6 )
+) AS tmp7
+
+
+) AS tmp4;
+
+
+/*e1:
+SELECT bar AS bar1, beer
+FROM serves
+CROSS JOIN (
+SELECT name AS bar2 FROM bar) AS tmp1
+
+
+e2:
+(SELECT * FROM (
+e1
+) AS tmp2 )
+EXCEPT (
+SELECT bar2, beer, bar1 FROM (
+e1
+) AS tmp3 )
+) AS tmp1
+*/

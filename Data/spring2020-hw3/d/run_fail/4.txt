@@ -1,0 +1,4 @@
+SELECT l.beer, count(distinct l.drinker), avg(s.price)
+from likes l, serves s
+where l.beer = s.beer
+group by l.beer

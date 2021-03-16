@@ -1,0 +1,12 @@
+(select d1.name drinker1, d2.name drinker2 
+from drinker d1, drinker d2
+where d1.name <>d2.name)
+except
+(select l.drinker drinker1, d.name drinker2
+from likes as l, drinker as d 
+where l.beer not in (
+  select likes.beer 
+  from likes
+  where likes.drinker = d.name
+  )); 
+

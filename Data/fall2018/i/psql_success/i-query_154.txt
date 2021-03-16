@@ -1,0 +1,19 @@
+/*Find names of all drinkers who frequent only those bars that serve only beers they like*/
+
+(SELECT name FROM drinker)
+EXCEPT
+(SELECT DISTINCT sub2.drinker 
+FROM (frequents
+       NATURAL JOIN 
+       (SELECT DISTINCT sub1.drinker, sub1.bar
+        FROM ((SELECT drinker, serves.beer, bar FROM likes, serves WHERE likes.beer <> serves.beer)
+            EXCEPT
+            (SELECT drinker, likes.beer, bar FROM likes, serves WHERE likes.beer = serves.beer))
+            AS sub1)
+       AS sub)
+       AS sub2);
+
+
+
+
+

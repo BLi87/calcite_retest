@@ -1,0 +1,20 @@
+WITH UNIBEERS(beer) AS
+(
+  SELECT serves.beer
+  FROM serves
+  EXCEPT
+  SELECT T.beer1
+  FROM
+  (
+    SELECT serves1.bar AS bar1, serves2.bar AS bar2, serves1.beer AS beer1, serves2.beer AS beer2
+    FROM serves AS serves1, serves AS serves2
+    WHERE serves1.bar<>serves2.bar AND serves1.beer = serves2.beer
+  ) T
+)
+SELECT FINAL.beer, FINAL.bar
+FROM
+  (
+  SELECT serves.beer, serves.bar
+  FROM UNIBEERS, serves
+  WHERE UNIBEERS.beer=serves.beer
+  ) FINAL;

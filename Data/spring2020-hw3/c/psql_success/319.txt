@@ -1,0 +1,22 @@
+WITH Likes2 AS
+(SELECT L.drinker, S.bar, L.beer
+FROM Likes L, Serves S
+WHERE L.beer = S.beer),
+
+Bars2 AS
+(SELECT F.drinker, F.bar, S.beer
+FROM Frequents F, Serves S
+WHERE F.bar = S.bar),
+
+diff AS
+(SELECT *
+FROM Bars2
+EXCEPT 
+(SELECT * 
+FROM Likes2))
+
+SELECT D.name
+FROM drinker D
+EXCEPT 
+(SELECT diff.drinker
+FROM diff)

@@ -1,0 +1,3 @@
+select bar.name as bar
+from bar, serves, beer
+where serves.bar = bar.name and beer.brewer = 'Grupo Modelo' and serves.beer = beer.name

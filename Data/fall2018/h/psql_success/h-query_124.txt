@@ -1,0 +1,27 @@
+(
+  SELECT
+    name AS drinker
+  FROM
+    drinker
+)
+EXCEPT
+(
+  SELECT
+    s1.drinker
+  FROM
+  (
+    (
+      SELECT
+        drinker, bar
+      FROM
+        frequents
+    )
+    EXCEPT
+    (
+      SELECT
+        temp.drinker, temp.bar
+      FROM
+        (likes NATURAL JOIN serves) AS temp
+    )
+  ) AS s1
+);

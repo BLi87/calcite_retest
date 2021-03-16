@@ -1,0 +1,233 @@
+select distinct beforegroup.fbar, sum(beforegroup.famount) as amount
+from (select distinct finalsum.fbar, finalsum.fdrinker,
+		case
+			when (exists (select bar, drinker from frequents where finalsum.fbar = frequents.bar and finalsum.fdrinker = frequents.drinker)) 
+				then fsum * (select times_a_week from frequents where finalsum.fbar = frequents.bar and finalsum.fdrinker = frequents.drinker)
+			else 0
+		end as famount
+	from
+		(select fbar, fdrinker, 0 as fsum
+		from
+			(select distinct bar.name as fbar, drinker.name as fdrinker
+			from bar, drinker
+			except
+			(select distinct bar, drinker
+			from (select bar, drinker, likes.beer, price
+					from serves, likes
+					where serves.beer = likes.beer) as sum1
+			group by bar, drinker
+			order by bar)) as coy
+		union
+		(select distinct bar, drinker, sum(price) as sum
+		from (select bar, drinker, likes.beer, price
+				from serves, likes
+				where serves.beer = likes.beer) as sum1
+		group by bar, drinker
+		order by bar)) as finalsum
+	group by finalsum.fbar, finalsum.fdrinker, finalsum.fsum
+	order by famount desc, finalsum.fbar) as beforegroup
+group by beforegroup.fbar
+order by amount desc, beforegroup.fbar;
+
+--        fbar       | amount 
+-- ------------------+--------
+--  James Joyce Pub  |  40.75
+--  Satisfaction     |  31.00
+--  Down Under Pub   |  16.00
+--  Talk of the Town |  14.10
+--  The Edge         |   8.25
+-- (5 rows)
+
+---separate steps----
+
+-- select fbar, fdrinker, 0 as fsum
+-- from
+-- 	(select distinct bar.name as fbar, drinker.name as fdrinker
+-- 	from bar, drinker
+-- 	except
+-- 	(select distinct bar, drinker
+-- 	from (select bar, drinker, likes.beer, price
+-- 			from serves, likes
+-- 			where serves.beer = likes.beer) as sum1
+-- 	group by bar, drinker
+-- 	order by bar)) as coy
+-- union
+-- (select distinct bar, drinker, sum(price) as sum
+-- from (select bar, drinker, likes.beer, price
+-- 		from serves, likes
+-- 		where serves.beer = likes.beer) as sum1
+-- group by bar, drinker
+-- order by bar);
+
+--        fbar       | fdrinker |  sum  
+-- ------------------+----------+-------
+--  Down Under Pub   | Amy      |  5.75
+--  Down Under Pub   | Ben      |  5.00
+--  Down Under Pub   | Coy      |     0
+--  Down Under Pub   | Dan      |  8.00
+--  Down Under Pub   | Eve      |  5.75
+--  James Joyce Pub  | Amy      |  6.25
+--  James Joyce Pub  | Ben      |  3.00
+--  James Joyce Pub  | Coy      |  3.00
+--  James Joyce Pub  | Dan      | 12.75
+--  James Joyce Pub  | Eve      |  6.25
+--  Satisfaction     | Amy      |  5.50
+--  Satisfaction     | Ben      |  5.00
+--  Satisfaction     | Coy      |  2.75
+--  Satisfaction     | Dan      | 10.50
+--  Satisfaction     | Eve      |  5.50
+--  Talk of the Town | Amy      |  2.50
+--  Talk of the Town | Ben      |  4.70
+--  Talk of the Town | Coy      |     0
+--  Talk of the Town | Dan      |  4.70
+--  Talk of the Town | Eve      |  2.50
+--  The Edge         | Amy      |  5.75
+--  The Edge         | Ben      |  5.25
+--  The Edge         | Coy      |     0
+--  The Edge         | Dan      |  8.25
+--  The Edge         | Eve      |  5.75
+--  [25 rows]
+
+
+-- -- select distinct finalsum.fbar, finalsum.fdrinker,
+-- -- 	case
+-- -- 		when (exists (select bar, drinker from frequents where finalsum.fbar = frequents.bar and finalsum.fdrinker = frequents.drinker)) then times_a_week * fsum
+-- -- 		else 0
+-- -- 	end as amount
+-- -- from frequents natural join
+-- -- 	(select fbar, fdrinker, 0 as fsum
+-- -- 	from
+-- -- 		(select distinct bar.name as fbar, drinker.name as fdrinker
+-- -- 		from bar, drinker
+-- -- 		except
+-- -- 		(select distinct bar, drinker
+-- -- 		from (select bar, drinker, likes.beer, price
+-- -- 				from serves, likes
+-- -- 				where serves.beer = likes.beer) as sum1
+-- -- 		group by bar, drinker
+-- -- 		order by bar)) as coy
+-- -- 	union
+-- -- 	(select distinct bar, drinker, sum(price) as sum
+-- -- 	from (select bar, drinker, likes.beer, price
+-- -- 			from serves, likes
+-- -- 			where serves.beer = likes.beer) as sum1
+-- -- 	group by bar, drinker
+-- -- 	order by bar)) as finalsum
+-- -- -- where frequents.bar = finalsum.fbar and frequents.drinker = finalsum.fdrinker
+-- -- group by finalsum.fbar, finalsum.fdrinker, times_a_week, finalsum.fsum
+-- -- order by amount desc, finalsum.fbar;
+
+-- --        bar        | drinker | amount 
+-- -- ------------------+---------+--------
+-- --  Satisfaction     | Dan     |  21.00
+-- --  Down Under Pub   | Dan     |  16.00
+-- --  James Joyce Pub  | Dan     |  12.75
+-- --  James Joyce Pub  | Amy     |  12.50
+-- --  James Joyce Pub  | Eve     |  12.50
+-- --  Satisfaction     | Ben     |  10.00
+-- --  Talk of the Town | Dan     |   9.40
+-- --  The Edge         | Dan     |   8.25
+-- --  Talk of the Town | Ben     |   4.70
+-- --  James Joyce Pub  | Ben     |   3.00
+-- --  [10 rows]
+
+
+-- -- select fbar, fdrinker
+-- -- from
+-- -- 	(select distinct bar.name as fbar, drinker.name as fdrinker
+-- -- 	from bar, drinker
+-- -- 	except
+-- -- 	(select distinct bar, drinker
+-- -- 	from (select bar, drinker, likes.beer, price
+-- -- 			from serves, likes
+-- -- 			where serves.beer = likes.beer) as sum1
+-- -- 	group by bar, drinker
+-- -- 	order by bar)) as coy
+-- -- 	union
+-- -- 	(select distinct bar, drinker
+-- -- 	from (select bar, drinker, likes.beer, price
+-- -- 			from serves, likes
+-- -- 			where serves.beer = likes.beer) as sum1
+-- -- 	group by bar, drinker
+-- -- 	order by bar)
+-- -- except
+-- -- select distinct bar, drinker from frequents;
+
+-- --        fbar       | fdrinker 
+-- -- ------------------+----------
+-- --  Down Under Pub   | Amy
+-- --  Down Under Pub   | Ben
+-- --  Down Under Pub   | Eve
+-- --  James Joyce Pub  | Coy
+-- --  Satisfaction     | Amy
+-- --  Satisfaction     | Coy
+-- --  Satisfaction     | Eve
+-- --  Talk of the Town | Amy
+-- --  Talk of the Town | Coy
+-- --  Talk of the Town | Eve
+-- --  The Edge         | Amy
+-- --  The Edge         | Ben
+-- --  The Edge         | Eve
+-- -- (13 rows)
+
+
+
+-- select distinct finalsum.fbar, finalsum.fdrinker,
+-- 	case
+-- 		when (exists (select bar, drinker from frequents where finalsum.fbar = frequents.bar and finalsum.fdrinker = frequents.drinker)) 
+-- 			then fsum * (select times_a_week from frequents where finalsum.fbar = frequents.bar and finalsum.fdrinker = frequents.drinker)
+-- 		else 0
+-- 	end as famount
+-- from
+-- 	(select fbar, fdrinker, 0 as fsum
+-- 	from
+-- 		(select distinct bar.name as fbar, drinker.name as fdrinker
+-- 		from bar, drinker
+-- 		except
+-- 		(select distinct bar, drinker
+-- 		from (select bar, drinker, likes.beer, price
+-- 				from serves, likes
+-- 				where serves.beer = likes.beer) as sum1
+-- 		group by bar, drinker
+-- 		order by bar)) as coy
+-- 	union
+-- 	(select distinct bar, drinker, sum(price) as sum
+-- 	from (select bar, drinker, likes.beer, price
+-- 			from serves, likes
+-- 			where serves.beer = likes.beer) as sum1
+-- 	group by bar, drinker
+-- 	order by bar)) as finalsum
+-- -- where frequents.bar = finalsum.fbar and frequents.drinker = finalsum.fdrinker
+-- group by finalsum.fbar, finalsum.fdrinker, finalsum.fsum
+-- order by famount desc, finalsum.fbar;
+
+--        fbar       | fdrinker | amount 
+-- ------------------+----------+--------
+--  Satisfaction     | Dan      |  21.00
+--  Down Under Pub   | Dan      |  16.00
+--  James Joyce Pub  | Dan      |  12.75
+--  James Joyce Pub  | Amy      |  12.50
+--  James Joyce Pub  | Eve      |  12.50
+--  Satisfaction     | Ben      |  10.00
+--  Talk of the Town | Dan      |   9.40
+--  The Edge         | Dan      |   8.25
+--  Talk of the Town | Ben      |   4.70
+--  James Joyce Pub  | Ben      |   3.00
+--  Down Under Pub   | Amy      |      0
+--  Down Under Pub   | Ben      |      0
+--  Down Under Pub   | Coy      |      0
+--  Down Under Pub   | Eve      |      0
+--  James Joyce Pub  | Coy      |      0
+--  Satisfaction     | Amy      |      0
+--  Satisfaction     | Coy      |      0
+--  Satisfaction     | Eve      |      0
+--  Talk of the Town | Amy      |      0
+--  Talk of the Town | Coy      |      0
+--  Talk of the Town | Eve      |      0
+--  The Edge         | Amy      |      0
+--  The Edge         | Ben      |      0
+--  The Edge         | Coy      |      0
+--  The Edge         | Eve      |      0
+--  [25 rows]
+
+

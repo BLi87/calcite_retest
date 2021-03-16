@@ -1,0 +1,13 @@
+SELECT A.bar 
+FROM frequents A, frequents B
+WHERE A.bar = B.bar
+AND (A.drinker = 'Ben'
+OR B.drinker = 'Dan')
+
+EXCEPT
+
+SELECT A.bar 
+FROM frequents A, frequents B
+WHERE A.bar = B.bar
+AND A.drinker = 'Ben'
+AND B.drinker = 'Dan';

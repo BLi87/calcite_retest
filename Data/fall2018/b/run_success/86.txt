@@ -1,0 +1,2 @@
+ select f.drinker from frequents f, serves s where s.beer='Corona' and f.bar=s.bar group by
+ f.drinker;

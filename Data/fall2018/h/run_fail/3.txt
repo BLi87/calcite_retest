@@ -1,0 +1,11 @@
+SELECT DISTINCT name
+FROM drinker
+EXCEPT
+SELECT drinker as name
+FROM
+  -- Find drinkers who go to bars other than those that serve
+  -- beers they like
+  (SELECT bar, drinker FROM frequents EXCEPT
+    -- Find (bar, drinker) where bar serves beer drinker likes
+   (SELECT DISTINCT bar, drinker FROM likes NATURAL JOIN serves)
+  ) AS bardrinker;

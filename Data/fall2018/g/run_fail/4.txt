@@ -1,0 +1,9 @@
+
+WITH temp1 (bar2, maxTime) AS(
+SELECT bar, MAX(times_a_week)
+FROM frequents
+GROUP BY bar)
+
+SELECT DISTINCT bar, frequents.drinker
+FROM frequents, temp1
+WHERE times_a_week = maxTime AND bar = bar2; 

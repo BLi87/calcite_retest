@@ -1,0 +1,1 @@
+select bar from frequents where (drinker = 'Ben' or drinker = 'Dan') group by bar having count(bar) = 1;

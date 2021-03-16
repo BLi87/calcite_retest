@@ -1,0 +1,4 @@
+SELECT DISTINCT f.drinker
+	FROM serves AS s, frequents AS f
+	WHERE f.bar = s.bar 
+		AND s.beer = 'Corona';

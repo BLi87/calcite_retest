@@ -1,0 +1,11 @@
+SELECT name AS drinker FROM Drinker 
+EXCEPT 
+(SELECT drinker FROM 
+ (SELECT Frequents.bar, Frequents.drinker FROM Frequents, 
+  (SELECT Serves.bar, foo.drinker FROM Serves, 
+   (SELECT Drinker.name AS drinker, Beer.name AS beer FROM Drinker, Beer 
+	EXCEPT 
+	(SELECT * FROM Likes)) AS foo 
+   WHERE (Serves.beer = foo.beer)) AS moo 
+  WHERE (Frequents.bar = moo.bar AND Frequents.drinker = moo.drinker)) 
+ AS boo);

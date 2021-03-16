@@ -1,0 +1,16 @@
+(select name as drinker from drinker) 
+except (
+select drinker from (
+select drinker, bar from (
+((select drinker, beer from (
+(select name as drinker from drinker) as drinkers
+cross join 
+(select name as beer from beer) as beers))
+except
+(select * from likes)) as drinkerbeerpairs
+natural join
+serves
+)
+intersect 
+select drinker, bar from frequents 
+) nolikedbeerfrequenters);

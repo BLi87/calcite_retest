@@ -1,0 +1,5 @@
+/*(d) Find the names of drinkers who frequent both James Joyce Pub and Satisfaction.*/
+
+SELECT f1.drinker
+	FROM frequents f1 INNER JOIN frequents f2 ON f1.drinker = f2.drinker 
+	WHERE f1.bar = 'James Joyce Pub' and f2.bar = 'Satisfaction';

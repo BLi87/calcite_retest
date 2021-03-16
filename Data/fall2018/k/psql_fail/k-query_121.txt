@@ -1,0 +1,1 @@
+SELECT bar, amount FROM ((SELECT bar, SUM(price) FROM serves AS bar1 GROUP BY bar) LEFT JOIN (SELECT bar, times_a_week FROM (likes NATURAL JOIN (serves NATURAL JOIN frequents)) AS amount) ON bar1.bar=amount.bar ORDER BY name, amount DESC);

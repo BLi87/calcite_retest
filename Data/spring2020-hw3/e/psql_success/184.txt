@@ -1,0 +1,17 @@
+WITH Temp1 as
+  (
+    SELECT name, bar, times_a_week as times
+    FROM drinker
+    LEFT OUTER JOIN frequents on drinker.name = frequents.drinker
+  ),
+  hello as
+  (
+    SELECT name, max(times) as f
+    FROM Temp1
+    GROUP BY name
+  )
+
+SELECT Temp1.name, bar
+FROM Temp1
+FULL OUTER JOIN hello on Temp1.name = hello.name
+WHERE times = f or f IS NULL

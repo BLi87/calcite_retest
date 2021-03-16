@@ -1,0 +1,23 @@
+with pairs as
+(select drinker1.name d1, drinker2.name d2
+from drinker drinker1, drinker drinker2
+where drinker1.name <> drinker2.name), 
+
+one as
+(select pairs.d1, pairs.d2, l.beer
+from likes l, pairs
+where pairs.d1 = l.drinker),
+
+two as
+(select pairs.d1, pairs.d2, l.beer
+from likes l, pairs
+where pairs.d2 = l.drinker),
+
+difference as
+(select *
+from one
+except (select * from two))
+
+select *
+from pairs
+except (select difference.d1, difference.d2 from difference)

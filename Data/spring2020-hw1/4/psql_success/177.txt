@@ -1,0 +1,4 @@
+SELECT distinct name, address
+FROM drinker, frequents a, frequents b
+WHERE a.drinker = b.drinker and a.bar<>b.bar and drinker.name=a.drinker
+

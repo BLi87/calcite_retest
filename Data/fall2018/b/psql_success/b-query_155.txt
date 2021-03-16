@@ -1,0 +1,1 @@
+SELECT DISTINCT drinker FROM (frequents INNER JOIN serves ON serves.bar = frequents.bar) WHERE beer = 'Corona';

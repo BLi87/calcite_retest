@@ -1,0 +1,3 @@
+select distinct f.drinker as drinker1, s.drinker as drinker2, f.beer 
+from likes f, likes s 
+where f.beer = s.beer and f.drinker < s.drinker

@@ -1,0 +1,3 @@
+select L.drinker AS drinker1, Q.drinker AS drinker2, L.beer AS beer
+from Likes L, Likes Q
+where L.drinker != Q.drinker AND L.beer = Q.beer AND L.drinker < Q.drinker

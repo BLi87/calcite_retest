@@ -1,0 +1,15 @@
+--Take all drinkers
+(SELECT name
+FROM Drinker)
+--Remove drinkers who frequent bars serving drinks they don't like
+EXCEPT
+(SELECT drinker AS name
+FROM ((SELECT Frequents.drinker, Serves.beer --All drinker, beer pairs where the drinker goes to a bar that serves the beer
+		FROM Frequents, Likes, Serves
+		WHERE Frequents.drinker=Likes.drinker AND Frequents.bar=Serves.bar)
+		--Remove all drinker, beer pairs where drinker likes the beer
+		--Leaves us with all drinker, beer pairs where drinker doesn't like the beer but it is served in a bar they go to
+		EXCEPT
+		(SELECT Frequents.drinker, Likes.beer
+		FROM Frequents, Likes
+		WHERE Frequents.drinker=Likes.drinker)) AS M);

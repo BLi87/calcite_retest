@@ -1,0 +1,3 @@
+
+select distinct drinker from Frequents where bar in
+(select bar from Serves natural join Frequents where beer = 'Corona');

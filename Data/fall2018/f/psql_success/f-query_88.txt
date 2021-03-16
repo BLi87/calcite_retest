@@ -1,0 +1,1 @@
+select beer, bar from serves where not exists (select bar from serves as other where other.bar != serves.bar and other.beer = serves.beer);

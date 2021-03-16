@@ -1,0 +1,19 @@
+select first.drinker1, first.drinker2 
+from 
+(select d.name as drinker1, d2.name as drinker2 
+from drinker d, drinker d2
+where d.name != d2.name) as first
+
+except 
+
+select second.drinker2, second.drinker1
+from 
+(select d.name as drinker1, d2.name as drinker2, beer 
+from drinker d, drinker d2, likes l 
+where d.name !=d2.name and l.drinker = d2.name
+
+except
+
+select d.name as drinker1, d2.name as drinker2, beer 
+from drinker d, drinker d2, likes l 
+where d.name !=d2.name and l.drinker = d.name) as second ; 

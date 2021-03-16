@@ -1,0 +1,6 @@
+select D.name, F.bar
+from drinker D left outer join frequents F
+on D.name = F.drinker
+and F.times_a_week = (select max(times_a_week)
+                      from frequents F1
+                      where F1.drinker = D.name)

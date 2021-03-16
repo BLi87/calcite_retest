@@ -1,0 +1,2 @@
+SELECT name FROM drinker WHERE NOT EXISTS
+(SELECT f.bar FROM frequents f, serves s WHERE f.drinker = drinker.name AND f.bar = s.bar AND s.beer NOT IN (SELECT beer FROM likes WHERE drinker = drinker.name));

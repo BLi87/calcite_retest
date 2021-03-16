@@ -1,0 +1,2 @@
+(SELECT name, bar FROM serves CROSS JOIN bar WHERE name!=bar) EXCEPT (SELECT cj.bar, cj.name FROM ((SELECT bar, name, beer FROM serves CROSS JOIN bar WHERE name!=bar) EXCEPT (SELECT name, bar, 
+beer FROM serves CROSS JOIN bar WHERE name!=bar)) AS cj);

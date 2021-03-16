@@ -1,0 +1,5 @@
+select corona_bars_leq_3.bar, bar.address  
+from bar
+join 
+(select bar from serves where beer = 'Corona' and price <= 3.00) as corona_bars_leq_3
+on bar.name = corona_bars_leq_3.bar; 

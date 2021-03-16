@@ -1,0 +1,12 @@
+SELECT * FROM
+(SELECT DISTINCT serves.bar, CASE WHEN c.money IS NULL THEN 0 ELSE c.money END earnings FROM
+(SELECT b.bar, SUM(b.times_a_week * b.price) money FROM
+(SELECT a.drinker, a.bar, a.times_a_week, a.beer, serves.price
+FROM serves 
+JOIN
+(SELECT frequents.drinker, frequents.bar, frequents.times_a_week, likes.beer
+FROM frequents
+JOIN likes
+ON frequents.drinker = likes.drinker) a
+ON serves.bar = a.bar AND serves.beer = a.beer) b
+GROUP BY bar) c RIGHT JOIN serves ON c.bar = serves.bar) d ORDER BY earnings DESC, bar;

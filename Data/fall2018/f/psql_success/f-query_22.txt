@@ -1,0 +1,8 @@
+-- Find all (beer, bar) pairs where beer is served exclusively at bar; no other bar serves the same beer.
+
+(select beer, bar from serves)
+except
+(select beer, bar
+from serves as s1
+where exists (select beer, bar from serves
+              where beer=s1.beer and bar<>s1.bar));

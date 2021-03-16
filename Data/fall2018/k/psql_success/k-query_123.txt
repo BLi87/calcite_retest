@@ -1,0 +1,38 @@
+Select bar,amount
+from
+(
+	Select distinct bar, sum(price*times) amount
+	from
+	(
+		select tbl1.bar,tbl1.beer,tbl1.drinker,tbl1.price,frequents.times_a_week times
+		from
+		(
+			select serves.bar,likes.beer,likes.drinker,serves.price
+			from serves,likes
+			where serves.beer = likes.beer
+		) tbl1,
+		frequents
+		where frequents.drinker = tbl1.drinker
+		and frequents.bar = tbl1.bar
+	)a
+	group by bar
+	UNION
+	Select distinct name bar, 0 amount
+	from
+	(
+		Select bar.name
+		from bar
+		EXCEPT
+		select tbl1.bar
+		from
+		(
+			select serves.bar,likes.beer,likes.drinker,serves.price
+			from serves,likes
+			where serves.beer = likes.beer
+		) tbl1,
+		frequents
+		where frequents.drinker = tbl1.drinker
+		and frequents.bar = tbl1.bar
+	) tbl2
+) tbl3
+Order by amount desc, bar asc;

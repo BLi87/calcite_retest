@@ -1,0 +1,12 @@
+/* Find all (beer, bar) pairs where beer is served exclusively at bar. */
+
+SELECT beer, bar
+FROM serves
+EXCEPT
+(
+    SELECT s1.beer, s1.bar
+    FROM serves AS s1
+    CROSS JOIN serves AS s2
+    WHERE s1.bar <> s2.bar
+    AND s1.beer = s2.beer
+);

@@ -1,0 +1,6 @@
+SELECT name, address
+FROM Bar,
+  (SELECT bar FROM Serves
+  WHERE beer = 'Corona' AND Price <= 3.00)
+  AS T
+WHERE T.bar = Bar.name;

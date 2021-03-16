@@ -1,0 +1,8 @@
+WITH maxTimesAWeek AS (SELECT drinker, MAX(times_a_week) as mostVisits FROM frequents GROUP BY drinker),
+barMaxTimesAWeek AS (SELECT frequents.drinker, frequents.bar FROM maxTimesAWeek, frequents 
+WHERE maxTimesAWeek.drinker=frequents.drinker AND maxTimesAWeek.mostVisits=frequents.times_a_week)
+
+SELECT name,bar FROM drinker FULL OUTER JOIN
+barMaxTimesAWeek  
+ON drinker.name=barMaxTimesAWeek.drinker
+ 

@@ -1,0 +1,1 @@
+SELECT s1.bar , s2.bar FROM Serves s1, Serves s2 WHERE s1.bar <> s2.bar AND s1.beer IN (SELECT beer FROM Serves s3 WHERE s2.bar = s3.bar) GROUP BY s1.bar, s2.bar  HAVING COUNT(DISTINCT s1.beer) < (SELECT COUNT(DISTINCT s2.beer));

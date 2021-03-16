@@ -1,0 +1,18 @@
+SELECT
+   drinker.name as drinker,
+   maximums.bar 
+FROM drinker
+LEFT JOIN
+(SELECT drinker, bar
+FROM frequents
+WHERE (drinker, times_a_week)
+IN 
+   (
+      SELECT
+         drinker, max(times_a_week) as times_a_week
+      FROM
+         frequents 
+      GROUP BY
+      drinker
+   )) as maximums
+ON maximums.drinker = drinker.name

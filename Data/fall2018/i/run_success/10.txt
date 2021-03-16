@@ -1,0 +1,10 @@
+select distinct x.name
+from drinker x
+where x.name not in (
+	SELECT distinct drinker FROM (
+	SELECT drinker, beer
+	FROM frequents INNER JOIN serves ON frequents.bar = serves.bar
+	EXCEPT
+	SELECT drinker, beer
+	FROM likes) x
+);

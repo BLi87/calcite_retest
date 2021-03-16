@@ -1,0 +1,11 @@
+(select distinct s1.bar, s2.bar from serves as s1, serves as s2
+where s1.beer <> s2.beer and s1.bar <> s2.bar
+and (s1.bar, s2.bar, s2.beer) 
+not in (select s1.bar,s2.bar,s1.beer from serves as s1, serves as s2
+where s1.beer = s2.beer and s1.bar <> s2.bar))
+except
+(select distinct s2.bar, s1.bar from serves as s1, serves as s2
+where s1.beer <> s2.beer and s1.bar <> s2.bar
+and (s1.bar, s2.bar, s2.beer) 
+not in (select s1.bar,s2.bar,s1.beer from serves as s1, serves as s2
+where s1.beer = s2.beer and s1.bar <> s2.bar));

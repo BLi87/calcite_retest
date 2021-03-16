@@ -1,0 +1,5 @@
+SELECT DISTINCT A.drinker AS drinker1, B.drinker AS drinker2, A.beer
+FROM Likes A, Likes B 
+WHERE A.beer = B.beer
+AND A.drinker != B.drinker
+AND A.drinker < B.drinker

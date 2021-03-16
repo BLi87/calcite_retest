@@ -1,0 +1,19 @@
+
+
+SELECT fin.bar bar, SUM(fin.amount) amount FROM
+
+  ((SELECT b.bar bar, SUM(b.total) amount FROM
+
+  (SELECT t.bar, t.times, (t.times * t.price) total FROM
+
+      (SELECT f.drinker drinker, f.bar bar, f.times_a_week times, l.beer beer, s.price price
+      FROM Frequents f, Likes l, Serves s
+      WHERE f.drinker = l.drinker AND s.bar = f.bar AND l.beer = s.beer)
+        AS t
+        )
+
+    AS b GROUP BY b.bar)
+
+  UNION SELECT name, 0.0 amount FROM Bar) as fin GROUP BY fin.bar
+
+ORDER BY amount DESC, bar ASC;

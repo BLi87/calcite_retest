@@ -1,0 +1,10 @@
+WITH likesB as
+(SELECT DISTINCT name, count(l.drinker)
+FROM beer b LEFT OUTER JOIN likes l ON l.beer = b.name
+GROUP BY name),
+servesB as
+(SELECT beer, avg(price)
+FROM serves s 
+GROUP BY beer)
+SELECT l.name AS beer, count cnt, avg
+FROM likesB l FULL OUTER JOIN servesB s ON s.beer = l.name

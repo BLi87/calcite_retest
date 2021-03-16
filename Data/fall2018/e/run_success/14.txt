@@ -1,0 +1,16 @@
+/* Find the names of bars frequented by either Ben or Dan, but not both */
+/*all bars they visit*/
+(SELECT DISTINCT A.bar
+FROM Frequents A, Frequents B
+WHERE A.bar = B.bar
+AND (A.drinker = 'Ben' 
+OR A.drinker = 'Dan'))
+EXCEPT
+(SELECT DISTINCT A.bar
+FROM Frequents A, Frequents B
+WHERE A.bar = B.bar
+AND (A.drinker = 'Ben'
+AND B.drinker = 'Dan')); 
+/*bars that they both visit*/
+
+

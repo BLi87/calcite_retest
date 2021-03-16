@@ -1,0 +1,7 @@
+WITH TMP1(bar) AS 
+(SELECT bar
+FROM serves
+WHERE beer='Corona' AND price<=3.00)
+SELECT DISTINCT bar.name, bar.address
+FROM bar, TMP1
+WHERE TMP1.bar=bar.name;

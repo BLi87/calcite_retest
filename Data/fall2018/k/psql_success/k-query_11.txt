@@ -1,0 +1,12 @@
+with j as (select f.drinker, f.bar, f.times_a_week, sum(s.price) as con
+from frequents f, likes l, serves s
+where s.bar = f.bar and f.drinker = l.drinker and l.beer = s.beer
+group by f.drinker, f.bar, f.times_a_week)
+select final.bbar, final.dollars
+from (select distinct
+case when bar.name not in (select j.bar from j) then bar.name else j.bar end as bbar,
+case when bar.name not in (select j.bar from j) then 0
+when bar.name in (select j.bar from j) then sum(j.con * j.times_a_week) end as dollars
+from  j, bar
+group by bbar, bar.name
+order by dollars desc, bbar asc) as final;

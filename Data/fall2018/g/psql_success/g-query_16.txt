@@ -1,0 +1,6 @@
+SELECT A.bar, A.drinker FROM Frequents A WHERE
+(A.bar,A.drinker) NOT IN
+(SELECT B.bar,B.drinker FROM Frequents B
+INNER JOIN Frequents C ON
+B.bar = C.bar AND NOT B.drinker = C.drinker
+AND B.times_a_week < C.times_a_week);

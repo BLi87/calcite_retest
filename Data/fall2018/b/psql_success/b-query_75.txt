@@ -1,0 +1,1 @@
+select distinct drinker from Frequents left outer join Serves on Frequents.bar = Serves.bar where Serves.beer = 'Corona';

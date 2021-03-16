@@ -1,0 +1,1 @@
+SELECT bar FROM frequents WHERE drinker='Ben' or drinker='Dan' EXCEPT (SELECT bar FROM frequents WHERE drinker='Ben' AND bar IN (SELECT bar FROM frequents WHERE drinker='Dan'));

@@ -1,0 +1,1 @@
+SELECT DISTINCT A.beer, A.bar FROM Serves AS A WHERE NOT EXISTS(SELECT bar FROM Serves WHERE (NOT bar = A.bar AND beer = A.beer));

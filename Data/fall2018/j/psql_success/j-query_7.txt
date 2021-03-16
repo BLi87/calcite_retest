@@ -1,0 +1,2 @@
+SELECT b1.name, b2.name FROM bar as b1 JOIN bar as b2 ON b1 != b2 WHERE NOT EXISTS(SELECT beer FROM serves 
+WHERE bar = b1.name AND beer NOT IN (SELECT beer FROM serves WHERE bar = b2.name));

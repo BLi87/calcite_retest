@@ -1,0 +1,47 @@
+/*Suppose that each time a drinker visits a bar (according to the frequency in Frequents), he or she
+always buys one glass of each beer served at this bar that he or she likes; if no such beer exists, he or
+she will not buy anything. Calculate, for each bar, the total amount of money it expects to get per
+week (over all drinkers in our database). List the (drinker, amount) pairs in decreasing order of amount.
+Be sure to handle the case when a bar doesn’t expect to sell any beer to our drinkers—you need to
+show an amount of 0.
+Note: You might find SQL conditional expressions useful. For syntax and examples, see
+https://www.postgresql.org/docs/current/static/functions-conditional.htm
+*/
+/*
+WORKS:
+SELECT results.bar as bar, sum(results.sub_sum) as amount FROM (
+	SELECT drinker, bar, beer, price*count as sub_sum FROM (
+
+		SELECT frequents.drinker as drinker, frequents.bar as bar, A.beer as beer, A.price as price, frequents.times_a_week as count FROM 
+			
+			(SELECT likes.drinker as drinker, likes.beer as beer, serves.bar as bar, serves.price as price FROM likes INNER JOIN serves
+				ON likes.beer=serves.beer) as A
+
+		INNER JOIN frequents ON A.drinker=frequents.drinker AND A.bar=frequents.bar
+
+	) as step
+) AS results GROUP BY results.bar ORDER BY amount DESC, bar ASC
+
+
+Now.. 0s MUST BE ADDED:
+*/
+SELECT results.bar as bar, sum(results.sub_sum) as amount FROM (
+
+
+	SELECT bar, price*count as sub_sum FROM (
+
+		SELECT frequents.drinker as drinker, frequents.bar as bar, A.beer as beer, A.price as price, frequents.times_a_week as count FROM 
+			
+			(SELECT likes.drinker as drinker, likes.beer as beer, serves.bar as bar, serves.price as price FROM likes INNER JOIN serves
+				ON likes.beer=serves.beer) as A
+
+		INNER JOIN frequents ON A.drinker=frequents.drinker AND A.bar=frequents.bar
+
+	) as step
+	UNION ALL 
+	SELECT bar.name as bar, serves.price*0 as sub_sum FROM bar INNER JOIN serves ON bar.name=serves.bar
+
+
+) AS results GROUP BY results.bar ORDER BY amount DESC, bar ASC
+
+

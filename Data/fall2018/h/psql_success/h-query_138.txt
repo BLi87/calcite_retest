@@ -1,0 +1,7 @@
+SELECT name FROM drinker
+EXCEPT
+SELECT drinker FROM
+	(SELECT drinker, bar FROM frequents
+	EXCEPT
+	SELECT drinker, bar FROM (serves
+		NATURAL JOIN likes) as frequents2) AS frequents1;

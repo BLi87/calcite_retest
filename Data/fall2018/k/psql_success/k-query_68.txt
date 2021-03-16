@@ -1,0 +1,14 @@
+
+
+SELECT c.bar, c.amount FROM
+	(SELECT b.bar, SUM(b.times_a_week) as amount FROM
+		(SELECT name as bar, 0 as times_a_week FROM bar
+			UNION
+		SELECT a.bar, SUM(a.times_a_week*a.price) FROM
+			(SELECT frequents.bar, serves.price, frequents.times_a_week FROM serves, likes, frequents
+				WHERE serves.beer=likes.beer AND frequents.bar=serves.bar AND likes.drinker= frequents.drinker) a
+			GROUP BY a.bar) b
+			GROUP BY b.bar) c
+		ORDER BY c.amount DESC, c.bar ASC;
+	
+

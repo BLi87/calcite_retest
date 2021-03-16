@@ -1,0 +1,11 @@
+with validbars as (select distinct s2.beer, s2.bar, s2.price
+from likes l1, serves s1, serves s2
+where l1.drinker='Dan' and l1.beer = s1.beer and l1.beer = s2.beer and s1.price<=s2.price),
+
+maxbeers as (select validbars.beer, max(validbars.price)
+from validbars
+group by validbars.beer)
+
+select maxbeers.beer, serves.bar
+from maxbeers, serves
+where maxbeers.beer = serves.beer and maxbeers.max = serves.price

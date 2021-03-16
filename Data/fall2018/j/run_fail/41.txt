@@ -1,0 +1,2 @@
+with pairs (bar, bar1, beer) as (select s.bar, s1.bar, s.beer from serves s, serves s1 where s.bar<>s1.bar except (select s1.bar,s.bar,s.beer from serves s, serves s1 where s1.bar<>s.bar))
+select s.bar, s1.bar from serves s, serves s1 where s.bar<>s1.bar except (select bar, bar1 from pairs);

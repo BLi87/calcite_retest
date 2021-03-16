@@ -1,0 +1,7 @@
+
+
+WITH counts AS (SELECT beer.name as beer, count(likes.drinker) from beer left outer join likes on beer.name = likes.beer group by beer.name), 
+  avgprice AS (SELECT beer, avg(price) FROM serves GROUP BY beer)
+
+select counts.beer, count, avg from (counts left outer join avgprice on counts.beer = avgprice.beer) order by count desc, counts.beer
+

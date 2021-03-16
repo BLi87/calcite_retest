@@ -1,0 +1,14 @@
+SELECT name
+FROM drinker    --why not acceptable to do SELECT drinker FROM frequents?
+WHERE NOT EXISTS   
+	(SELECT frequents.bar
+		FROM frequents, serves
+		WHERE frequents.drinker = drinker.name and frequents.bar = serves.bar
+		AND serves.beer NOT IN (SELECT beer from likes WHERE drinker = drinker.name)); -- beer is NOT liked by drinker, 
+																					--so NOT IN implies ALL beers are LIKED by the drinker
+
+
+
+
+
+	

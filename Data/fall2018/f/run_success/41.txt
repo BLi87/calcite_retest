@@ -1,0 +1,2 @@
+select beer, bar from serves except (select s.beer, s.bar from serves s, serves s1 where 
+s.bar<>s1.bar and s.beer=s1.beer group by s.bar, s.beer);

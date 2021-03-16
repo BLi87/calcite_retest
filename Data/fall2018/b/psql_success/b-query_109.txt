@@ -1,0 +1,6 @@
+SELECT DISTINCT drinker
+FROM Frequents,
+  (SELECT bar FROM serves
+   WHERE beer = 'Corona')
+   AS T
+WHERE T.bar = Frequents.bar;

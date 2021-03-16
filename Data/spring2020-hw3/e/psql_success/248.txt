@@ -1,0 +1,9 @@
+SELECT ntemp.name, maxfreq.bar
+FROM 
+(SELECT d.name, MAX(times_a_week)
+FROM frequents f 
+RIGHT JOIN drinker d ON d.name = f.drinker
+GROUP BY d.name) AS ntemp
+LEFT JOIN frequents maxfreq ON ntemp.name = maxfreq.drinker AND maxfreq.times_a_week = ntemp.max
+
+

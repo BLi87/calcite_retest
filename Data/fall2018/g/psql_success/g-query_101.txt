@@ -1,0 +1,7 @@
+SELECT DISTINCT bar, drinker
+FROM frequents
+EXCEPT
+(SELECT DISTINCT s1.bar, s1.drinker
+FROM frequents s1, frequents s2
+WHERE s1.bar = s2.bar
+AND s1.times_a_week < s2.times_a_week);

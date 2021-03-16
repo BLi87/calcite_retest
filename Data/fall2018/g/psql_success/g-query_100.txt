@@ -1,0 +1,1 @@
+SELECT f1.bar, f1.drinker FROM (Frequents as f1 LEFT OUTER JOIN Frequents as f2 on f1.bar = f2.bar AND f2.times_a_week > f1.times_a_week) WHERE f2.times_a_week is NULL;

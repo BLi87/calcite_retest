@@ -1,0 +1,1 @@
+(SELECT bar FROM frequents WHERE drinker = 'Ben' OR drinker = 'Dan') EXCEPT ((SELECT bar FROM frequents WHERE drinker = 'Dan') INTERSECT (SELECT bar FROM frequents WHERE drinker = 'Ben'));

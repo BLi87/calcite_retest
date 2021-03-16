@@ -1,0 +1,19 @@
+-- Group by bar, use serves as the base, append a column of number of times a beer got ordered using frequents and likes
+
+SELECT bar, SUM(total) FROM
+
+(
+SELECT bar, SUM(amount) AS total FROM
+	(SELECT serves.bar, price * times_a_week AS amount FROM
+	serves,
+	(SELECT frequents.drinker, bar, times_a_week, beer FROM frequents, likes WHERE frequents.drinker = likes.drinker) AS T
+	WHERE T.beer = serves.beer AND T.bar = serves.bar) AS N
+	GROUP BY bar
+
+UNION ALL
+
+(Select name AS bar, 0.0 AS total FROM bar)
+) AS A
+
+GROUP BY bar
+ORDER BY SUM(total) DESC, bar ASC;

@@ -1,0 +1,19 @@
+
+
+SELECT total.t1, SUM(total.t4) FROM
+(SELECT t1, t2*t3 AS t4 FROM
+(SELECT Frequents.bar AS t1, Frequents.times_a_week AS t2, Serves.Price AS t3
+FROM Frequents, Likes, Serves
+WHERE Frequents.drinker=Likes.drinker
+AND Likes.beer=Serves.beer
+AND Frequents.bar=Serves.bar) As Vals) AS total
+GROUP BY total.t1 ORDER BY sum DESC;
+
+--Thus far, this code creates a table of frequents, likes, serves by merging like values (for beers and bars),
+-- multiplies the price per beer by the number of times a week the bar is frequented for a person,
+--then adds those values and groups  it by bar (in decscending order)
+--thus, it returns a table of beers bars and the amount of money they make per week
+
+--However, this code does not consider when a bar makes $0 a week
+--this could be fixed by adding a conditional in the initial joining of the table of Frequents, Likes, and Serves
+--This would solve the issue if a bar is not listed in "frequents" at all

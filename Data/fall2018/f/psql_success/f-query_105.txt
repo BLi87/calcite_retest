@@ -1,0 +1,6 @@
+SELECT DISTINCT beer, bar
+FROM Serves
+EXCEPT
+SELECT DISTINCT s1.beer, s1.bar
+FROM Serves s1, Serves s2
+WHERE s1.beer = s2.beer AND s1.bar != s2.bar;

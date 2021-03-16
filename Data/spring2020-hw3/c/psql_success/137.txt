@@ -1,0 +1,11 @@
+SELECT D.name
+FROM drinker as D
+WHERE NOT EXISTS
+  ((SELECT drinker, bar FROM frequents WHERE drinker = D.name)
+  EXCEPT
+  (SELECT drinker, bar
+    FROM frequents as F
+    WHERE NOT EXISTS
+      ((SELECT beer FROM serves WHERE bar = F.bar)
+      EXCEPT
+      (SELECT beer FROM likes WHERE drinker = F.drinker))))

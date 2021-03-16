@@ -1,0 +1,8 @@
+SELECT DISTINCT T.drinker
+FROM
+  (
+    SELECT frequents1.bar AS bar1, frequents2.bar AS bar2, frequents1.drinker AS drinker
+    FROM frequents AS frequents1, frequents as frequents2
+    WHERE frequents1.drinker=frequents2.drinker
+  ) T
+WHERE T.bar1 = 'James Joyce Pub' AND T.bar2 = 'Satisfaction';

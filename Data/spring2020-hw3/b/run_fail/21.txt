@@ -1,0 +1,4 @@
+with pairs as (SELECT d1.name drinker1, d2.name drinker2 FROM drinker d1 CROSS JOIN drinker d2 WHERE d1.name <> d2.name),
+d_one as (SELECT drinker1, drinker2, l.beer FROM pairs, likes l WHERE l.drinker = drinker1),
+d_two as (SELECT drinker1, drinker2, l.beer FROM pairs, likes l WHERE l.drinker = drinker2) 
+SELECT * FROM pairs EXCEPT SELECT drinker1, drinker2 FROM (SELECT * FROM d_one EXCEPT SELECT * FROM d_two) a

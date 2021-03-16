@@ -1,0 +1,4 @@
+with view1 as (select bar,beer,name from serves,bar),
+view2 as ((select bar,beer,name from view1) except (select name,beer,bar from view1)),
+view3 as (select bar,name from view2)
+select f1.name as bar1,f1.bar as bar2 from ((select bar,name from view3) except (select name,bar from view3)) as f1;

@@ -1,0 +1,1 @@
+select name from drinker where not exists(select beer from serves natural join frequents where name = frequents.drinker and beer not in (select beer from likes where drinker = name))

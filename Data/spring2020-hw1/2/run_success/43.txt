@@ -1,0 +1,4 @@
+select s.bar
+from beer AS b, serves AS s
+where s.beer = b.name
+AND b.brewer = 'Grupo Modelo'

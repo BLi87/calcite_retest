@@ -1,0 +1,7 @@
+(select s1.bar as bar1, s2.bar as bar2 from serves s1 join serves s2 on s1.bar!=s2.bar)
+except
+(with extradrinks as
+((select s1.bar as bar1, s2.bar as bar2, s1.beer from serves s1 join serves s2 on s1.bar!=s2.bar)
+except
+(select s1.bar as bar1, s2.bar as bar2, s2.beer from serves s1 join serves s2 on s1.bar!=s2.bar))
+select bar1, bar2 from extradrinks);

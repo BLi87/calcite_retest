@@ -1,0 +1,7 @@
+(SELECT name FROM Drinker)
+EXCEPT
+(SELECT drinker FROM ((SELECT drinker, beer
+FROM Frequents
+NATURAL JOIN Serves)
+EXCEPT
+(SELECT * FROM Likes)) AS foo);

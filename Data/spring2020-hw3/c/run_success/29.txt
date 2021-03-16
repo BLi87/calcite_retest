@@ -1,0 +1,30 @@
+select *
+from 
+
+(select a.drinker
+from frequents as a
+where a.drinker not in
+
+(select b.drinker
+from frequents as b
+where not exists 
+
+(select * 
+from serves, likes
+where b.bar=serves.bar 
+and b.drinker=likes.drinker
+and serves.beer = likes.beer))) 
+as beer_likes
+
+where beer_likes.drinker not in
+
+(select frequents.drinker
+from frequents, serves
+where frequents.bar = serves.bar
+and not exists 
+
+(select * 
+from likes
+where frequents.drinker=likes.drinker and serves.beer = likes.beer))
+                  
+  

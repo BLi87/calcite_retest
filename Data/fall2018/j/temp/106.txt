@@ -1,0 +1,47 @@
+with tmp1(bar1, bar2, beer2) as 
+(
+select distinct bar1, bar2, beer2 from (
+	(select bar as bar1, beer as beer1 from serves) as t1 
+	join 
+	(select bar as bar2, beer as beer2 from serves) as t2
+	on bar1 <> bar2
+) 
+),
+tmp2(bar1, bar2, beer1) as (
+(select * from tmp1)
+except 
+(
+select distinct bar1, bar2, beer1 from (
+	(select bar as bar1, beer as beer1 from serves) as t1 
+	join 
+	(select bar as bar2, beer as beer2 from serves) as t2
+	on bar1 <> bar2
+	) as t3 
+) 
+),
+tmp3(bar1, bar2, beer2) as 
+(
+select distinct bar1, bar2, beer1 from (
+	(select bar as bar1, beer as beer1 from serves) as t1 
+	join 
+	(select bar as bar2, beer as beer2 from serves) as t2
+	on bar1 <> bar2
+) 
+),
+tmp4(bar1, bar2, beer2) as (
+(select * from tmp3)
+except 
+(
+select distinct bar1, bar2, beer2 from (
+	(select bar as bar1, beer as beer1 from serves) as t1 
+	join 
+	(select bar as bar2, beer as beer2 from serves) as t2
+	on bar1 <> bar2
+	) as t3
+) 
+)
+select * from (
+	(select bar1, bar2 from tmp2)
+	except 
+	(select bar1, bar2 from tmp4) 
+) as res;

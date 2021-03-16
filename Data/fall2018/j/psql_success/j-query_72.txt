@@ -1,0 +1,1 @@
+SELECT a1.bar, a2.bar FROM (SELECT serves.bar, array_agg(serves.beer) as beerlist FROM serves GROUP BY serves.bar) a1, (SELECT serves.bar, array_agg(serves.beer) as beerlist FROM serves GROUP BY serves.bar) a2 WHERE a1.beerlist <@ a2.beerlist AND a1.beerlist <> a2.beerlist AND a1.bar <> a2.bar;

@@ -1,0 +1,3 @@
+SELECT DISTINCT x.bar
+from Serves x, Serves y
+where x.beer = y.beer and x.price < y.price

@@ -1,0 +1,11 @@
+select distinct a.name
+from drinker a, frequents b
+where a.name = b.drinker
+and b.bar = 'Satisfaction'
+and exists(
+	Select 1 
+	from drinker c, frequents d
+	where c.name = d.drinker
+	and a.name = c.name
+	and d.bar = 'James Joyce Pub'
+);

@@ -1,0 +1,3 @@
+select bar.name, b1.name from bar join bar as b1 on bar.name!=b1.name except (select distinct a, b from
+(select serves.bar as a , s1.bar as b, serves.beer from serves join serves as s1 on serves.bar!=s1.bar except(
+select serves.bar, s2.bar, s2.beer from serves join serves as s2 on serves.bar!=s2.bar)) as s3);

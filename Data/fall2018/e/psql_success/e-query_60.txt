@@ -1,0 +1,10 @@
+select distinct f1.bar
+from frequents f1
+full join frequents f2
+on f1.bar = f2.bar
+where f1.drinker = 'Ben' or f1.drinker = 'Dan'
+except select f1.bar
+from frequents f1
+full join frequents f2
+on f1.bar = f2.bar
+where f1.drinker = 'Ben' and f2.drinker = 'Dan';

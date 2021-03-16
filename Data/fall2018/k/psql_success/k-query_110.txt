@@ -1,0 +1,9 @@
+SELECT DISTINCT t.bar, SUM(t.amount) as amount
+FROM (SELECT bar, SUM(price * times_a_week) as amount
+FROM frequents NATURAL JOIN serves NATURAL JOIN likes
+GROUP BY bar
+UNION
+SELECT name as bar, 0 as amount
+FROM bar) as t
+GROUP BY t.bar
+ORDER BY amount DESC, bar;

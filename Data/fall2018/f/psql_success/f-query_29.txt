@@ -1,0 +1,13 @@
+-- Find all (beer,bar) pairs where beer is served exclusively at bar.
+-- No other bar serves the same beer.
+SELECT beer, bar 
+FROM serves 
+WHERE beer IN 
+(
+SELECT beer
+FROM serves 
+GROUP BY beer 
+HAVING COUNT(*)=1 
+);
+
+

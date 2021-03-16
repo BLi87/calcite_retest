@@ -1,0 +1,15 @@
+select bar, beer
+from Serves
+where beer IN
+(select beer
+from serves
+group by beer
+having count(bar) =1)
+INTERSECT ALL
+select bar, beer
+from Serves
+where beer IN
+(select beer
+from serves
+group by beer
+having count(beer) =1);

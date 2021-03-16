@@ -1,0 +1,23 @@
+(SELECT name from drinker)
+
+
+EXCEPT ALL
+
+(
+
+SELECT drinker from
+
+(
+
+(SELECT frequents.drinker, frequents.bar, serves.beer from frequents, serves WHERE frequents.bar = serves.bar)
+
+
+
+EXCEPT ALL
+
+
+(SELECT likes.drinker, serves.bar, likes.beer from serves,likes WHERE likes.beer = serves.beer)
+
+) as foo );
+
+/* Worked with Trilok Sadarangani */

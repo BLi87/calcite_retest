@@ -1,0 +1,6 @@
+select distinct bar, drinker
+from frequents
+except
+(select distinct drinker1.bar, drinker1.drinker
+from (select * from frequents) as drinker1, (select * from frequents) as drinker2
+where drinker1.times_a_week < drinker2.times_a_week and drinker1.bar = drinker2.bar);

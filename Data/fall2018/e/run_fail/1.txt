@@ -1,0 +1,10 @@
+/*(e) Find the names of bars frequented by either Ben or Dan, but not both.
+
+####bars frequented by Ben or dan, MINUS bars frequented by both*/
+SELECT frequents.bar
+	FROM frequents WHERE (drinker = 'Ben') or (drinker = 'Dan')
+
+EXCEPT 
+SELECT f1.bar
+	FROM frequents f1 INNER JOIN frequents f2 ON f1.bar=f2.bar
+	WHERE ((f1.drinker = 'Ben') and (f2.drinker = 'Dan')) OR ((f1.drinker = 'Dan') and (f2.drinker = 'Ben'));

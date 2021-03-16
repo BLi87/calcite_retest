@@ -1,0 +1,7 @@
+(SELECT DISTINCT bar 
+FROM frequents 
+WHERE drinker = 'Ben' EXCEPT (SELECT DISTINCT bar FROM frequents WHERE drinker = 'Dan'))
+     UNION
+(SELECT DISTINCT bar
+FROM frequents
+WHERE drinker = 'Dan' EXCEPT (SELECT DISTINCT bar FROM frequents WHERE drinker = 'Ben'));

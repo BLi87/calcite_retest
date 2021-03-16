@@ -1,0 +1,7 @@
+SELECT DISTINCT drinker1.name, drinker2.name
+FROM drinker AS drinker1, drinker AS drinker2
+WHERE drinker1.name <> drinker2.name AND 
+NOT EXISTS
+((SELECT beer FROM likes WHERE drinker = drinker1.name)
+EXCEPT
+(SELECT beer FROM likes WHERE drinker = drinker2.name))

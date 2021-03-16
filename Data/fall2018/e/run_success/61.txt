@@ -1,0 +1,7 @@
+SELECT DISTINCT C.bar FROM Frequents C
+WHERE C.drinker IN ('Ben','Dan')
+AND C.bar NOT IN
+(SELECT A.bar FROM Frequents A
+INNER JOIN Frequents B
+ON A.bar = B.bar AND
+A.drinker = 'Dan' AND B.drinker = 'Ben');

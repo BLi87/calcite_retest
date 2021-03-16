@@ -1,0 +1,15 @@
+select bigTable.bar, sum(bigTable.sum)
+from 
+
+((Select f1.bar, sum(s1.price*f1.times_a_week)
+From Frequents as f1, Likes as l1, Serves as s1
+Where f1.drinker=l1.drinker and l1.beer=s1.beer and f1.bar=s1.bar
+Group by f1.bar)
+union
+(select distinct b1.name, 0
+from Bar as b1)) as bigTable
+
+
+
+Group by bigTable.bar
+order by 2 desc, 1 asc;

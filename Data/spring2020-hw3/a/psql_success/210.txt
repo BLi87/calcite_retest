@@ -1,0 +1,9 @@
+(SELECT s.beer AS beer, s.bar AS bar
+FROM Serves s, Likes L
+WHERE L.drinker = 'Dan' AND L.beer = s.beer)
+
+EXCEPT
+
+(SELECT s.beer AS beer, s.bar AS bar
+FROM Serves s, Serves sec
+WHERE s.beer = sec.beer AND s.bar != sec.bar AND sec.price > s.price)

@@ -1,0 +1,14 @@
+SELECT DISTINCT name From Drinker
+
+EXCEPT (
+
+SELECT T.drinker FROM
+
+(SELECT Frequents.drinker, Frequents.bar FROM Frequents
+
+EXCEPT (
+SELECT Frequents.drinker, Frequents.bar FROM
+(Frequents NATURAL JOIN  Likes)
+
+JOIN Serves ON Serves.bar = Frequents.bar AND Likes.beer= Serves.beer
+)) AS T );

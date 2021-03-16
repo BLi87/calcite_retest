@@ -1,0 +1,4 @@
+SELECT DISTINCT drinker
+FROM frequents
+NATURAL JOIN serves
+WHERE serves.beer='Corona'; 

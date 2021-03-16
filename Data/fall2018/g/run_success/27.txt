@@ -1,0 +1,2 @@
+SELECT Frequents.bar, Frequents.drinker, Frequents.times_a_week FROM Frequents WHERE times_a_week >= ALL (SELECT times_a_week FROM Frequents);
+

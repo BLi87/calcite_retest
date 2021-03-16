@@ -1,0 +1,14 @@
+WITH serves1 AS (SELECT * FROM serves)
+SELECT bar2, bar1 
+	FROM (SELECT serves.bar bar1, beer, bar.name bar2
+		FROM serves CROSS JOIN bar
+	      EXCEPT
+	      SELECT bar.name bar1, beer, serves.bar bar2
+		FROM serves CROSS JOIN bar) AS t1
+EXCEPT
+SELECT bar1, bar2 
+	FROM (SELECT serves.bar bar1, beer, bar.name bar2
+		FROM serves CROSS JOIN bar
+	      EXCEPT
+	      SELECT bar.name bar1, beer, serves.bar bar2
+		FROM serves CROSS JOIN bar) AS t2;

@@ -1,0 +1,8 @@
+SELECT bar, SUM(contributes) FROM 
+(SELECT bar, contributes FROM 
+ (SELECT Serves.bar, Serves.beer, Serves.price, Frequents.drinker, Frequents.times_a_week, Serves.price*Frequents.times_a_week AS contributes FROM Serves, Frequents, Likes 
+  WHERE Serves.bar = Frequents.bar AND Frequents.drinker = Likes.drinker AND Serves.beer = Likes.beer) as moo
+ UNION ALL
+ (SELECT Bar.name AS bar, 0 AS contributes FROM Bar)) as foo
+GROUP BY bar
+ORDER BY sum DESC, bar ASC;

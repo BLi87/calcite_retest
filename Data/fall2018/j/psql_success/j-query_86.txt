@@ -1,0 +1,2 @@
+WITH bars(bar1,beer,bar2) AS (SELECT bar, beer, name FROM (serves CROSS JOIN bar) EXCEPT SELECT name, beer, bar FROM (serves CROSS JOIN bar))
+SELECT bar2,bar1 FROM bars EXCEPT (SELECT bar1,bar2 FROM bars);

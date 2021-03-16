@@ -1,0 +1,3 @@
+SELECT DISTINCT F2.bar, F2.drinker
+FROM Frequents as F1, Frequents as F2
+WHERE F1.times_a_week < F2.times_a_week;

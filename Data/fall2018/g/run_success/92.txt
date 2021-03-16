@@ -1,0 +1,1 @@
+SELECT t1.bar, t1.drinker FROM frequents as t1 WHERE t1.times_a_week >= ALL (SELECT times_a_week FROM frequents WHERE t1.bar=bar);

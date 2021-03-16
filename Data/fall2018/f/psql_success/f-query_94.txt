@@ -1,0 +1,3 @@
+(select distinct beer, bar from serves)
+except 
+(select distinct s1.beer, s1.bar from serves s1 join serves s2 on s1.bar<>s2.bar and s1.beer=s2.beer);

@@ -1,0 +1,18 @@
+select part1.beer as beer , part1.cnt as cnt, part2.avg as avg
+from 
+
+(select b.name as beer , count(l.beer) as cnt 
+from beer b 
+left join likes l 
+on b.name = l.beer 
+group by b.name 
+order by cnt DESC) as part1,
+
+(select b.name as beer, avg(s.price) as avg 
+from beer  b 
+left join serves s 
+on b.name = s.beer 
+group by b.name) as part2  
+
+where part1.beer = part2.beer
+order by cnt DESC;

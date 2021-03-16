@@ -1,0 +1,1 @@
+(SELECT name FROM drinker) EXCEPT (WITH temp AS ((SELECT drinker.name AS person, bar.name AS barr FROM drinker CROSS JOIN bar) EXCEPT (SELECT likes.drinker, serves.bar FROM likes, serves WHERE likes.beer=serves.beer)) SELECT temp.person FROM temp, frequents WHERE temp.person=frequents.drinker AND temp.barr=frequents.bar);

@@ -1,0 +1,27 @@
+SELECT drinker.name as drinker1, drinkers.name as drinker2
+      FROM drinker
+      CROSS JOIN drinker as drinkers
+      WHERE drinker.name <> drinkers.name
+EXCEPT
+SELECT subtract.drinker1, subtract.drinker2
+FROM
+(SELECT drinkers.drinker1, drinkers.drinker2, likes.beer
+FROM
+(SELECT drinker.name as drinker1, drinkers.name as drinker2
+      FROM drinker
+      CROSS JOIN drinker as drinkers) drinkers
+INNER JOIN likes
+ON likes.drinker = drinkers.drinker1
+EXCEPT
+SELECT drinker_list.drinker1, drinker_list2.drinker2, drinker_list2.beer
+FROM (SELECT drinker.name as drinker2, likes.beer
+FROM drinker
+LEFT JOIN likes
+ON drinker.name = likes.drinker) as drinker_list2
+JOIN 
+(SELECT drinker.name as drinker1, likes.beer
+FROM drinker
+LEFT JOIN likes
+ON drinker.name = likes.drinker) as drinker_list
+ON drinker_list2.beer = drinker_list.beer
+WHERE drinker_list.drinker1 <> drinker_list2.drinker2) as subtract

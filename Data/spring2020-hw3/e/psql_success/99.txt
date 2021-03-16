@@ -1,0 +1,11 @@
+with djf as
+  (select name, bar, times_a_week
+    from drinker left outer join frequents
+      on drinker.name = frequents.drinker)
+select name, bar
+  from djf djf1
+    where djf1.times_a_week >= all(
+      select times_a_week
+        from djf djf2
+          where djf2.name = djf1.name
+    ) or djf1.bar is null

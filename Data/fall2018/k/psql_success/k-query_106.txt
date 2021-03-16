@@ -1,0 +1,6 @@
+select nbar, sum(foo.case) from 
+	(select nbar, likes.beer, foo.beer, amount, case when likes.beer <> foo.beer then 0 when likes.beer = foo.beer then amount end from 
+		likes inner join (select drinker, frequents.bar as nbar, beer, frequents.times_a_week*serves.price as amount from 
+			frequents inner join serves on frequents.bar = serves.bar) as foo on likes.drinker = foo.drinker) as foo group by nbar order by sum desc, nbar;
+
+--I think my problem is that there are some bars that has no person frequenting those bars. My query seems to omit those bars, thus missing some values with 0 sales.

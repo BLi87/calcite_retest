@@ -1,0 +1,13 @@
+SELECT drinker.name -- List of drinkers except for those frequenting a bar with no beer they like
+FROM drinker 
+
+EXCEPT 
+
+SELECT freqbad.drinker 
+FROM
+	(SELECT frequents.drinker, frequents.bar FROM frequents -- List of drinkers frequenting a bar with no beer they like
+	EXCEPT
+	SELECT DISTINCT frequents.drinker, frequents.bar -- List of drinkers frequenting a bar with a beer they like
+	FROM frequents JOIN likes ON frequents.drinker = likes.drinker
+	JOIN serves ON frequents.bar = serves.bar
+	WHERE likes.beer = serves.beer) AS freqbad;

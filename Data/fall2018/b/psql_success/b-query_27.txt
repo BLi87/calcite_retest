@@ -1,0 +1,4 @@
+SELECT DISTINCT drinker
+FROM serves AS s, frequents AS f
+WHERE s.beer='Corona'
+AND s.bar=f.bar;

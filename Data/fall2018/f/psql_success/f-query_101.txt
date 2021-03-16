@@ -1,0 +1,12 @@
+SELECT beer,bar
+FROM Serves
+EXCEPT
+(
+  SELECT Serves.beer, Serves.bar
+  FROM
+  Serves
+  JOIN
+  Serves as s1 ON Serves.beer = s1.beer
+  WHERE
+  Serves.bar != s1.bar
+);

@@ -1,0 +1,1 @@
+SELECT b2, b1 FROM ( SELECT Serves.bar b1, beer, Bar.name b2 FROM Serves  CROSS JOIN  Bar EXCEPT SELECT Bar.name b1, beer, Serves.bar b2 FROM Serves   CROSS JOIN   Bar) AS C1  EXCEPT  SELECT b1, b2 FROM ( SELECT Serves.bar b1, beer, Bar.name b2 FROM Serves  CROSS JOIN  Bar  EXCEPT SELECT bar.name b1, beer, Serves.bar b2 FROM  Serves   CROSS JOIN  Bar) AS C2;

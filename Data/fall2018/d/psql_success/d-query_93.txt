@@ -1,0 +1,7 @@
+(SELECT DISTINCT frequents.drinker
+FROM frequents
+WHERE frequents.bar = 'James Joyce Pub')
+INTERSECT ALL 
+(SELECT DISTINCT frequents.drinker 
+FROM frequents
+WHERE frequents.bar = 'Satisfaction');

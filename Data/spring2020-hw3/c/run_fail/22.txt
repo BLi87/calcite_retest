@@ -1,0 +1,4 @@
+With c1 AS (Select frequents.drinker, frequents.bar, likes.beer From frequents, likes Where likes.drinker = frequents.drinker),
+c2 AS (Select frequents.drinker, frequents.bar, serves.beer From frequents, serves Where frequents.bar = serves.bar),
+c3 AS ((Select * From c2) Except (Select * From c1))
+(Select drinker.name AS drinker From Drinker) Except (Select drinker From c3);

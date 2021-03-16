@@ -1,0 +1,11 @@
+SELECT DISTINCT A.name AS bar1,B.name AS bar2 FROM Bar A, Bar B
+WHERE NOT A.name = B.name
+Except
+SELECT DISTINCT bar1,bar2 FROM
+((SELECT SA.bar AS bar1, SB.bar AS bar2, SA.beer FROM Serves SA
+INNER JOIN Serves SB ON
+NOT SB.bar = SA.bar AND NOT SB.beer = SA.beer)
+EXCEPT
+(SELECT SA.bar AS bar1, SB.bar AS bar2, SA.beer FROM Serves SA
+INNER JOIN Serves SB ON
+NOT SB.bar = SA.bar AND SB.beer = SA.beer)) foo;

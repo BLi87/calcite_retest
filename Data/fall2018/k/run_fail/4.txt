@@ -1,0 +1,13 @@
+WITH Money_table AS
+(SELECT Frequents.bar, Serves.price * times_a_week AS money
+FROM Frequents, Likes, Serves
+WHERE Frequents.drinker = Likes.drinker
+AND Serves.bar = Frequents.bar
+AND Serves.beer = Likes.beer
+UNION ALL
+SELECT name AS bar, 0 AS money
+FROM Bar)
+SELECT bar, SUM(money) AS money
+FROM Money_table
+GROUP BY bar
+ORDER BY money DESC, bar;

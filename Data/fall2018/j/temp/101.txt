@@ -1,0 +1,14 @@
+/*Find all (bar1, bar2) pairs where the set of beer served at bar1 is a proper subset of those served at
+bar2; i.e., bar2 serves every beer that bar1 serves and plus some more. */ 
+
+SELECT final.name, final.bar FROM(
+(SELECT sub.name, sub.bar FROM(
+(SELECT serves.bar, beer, bar.name FROM serves, bar)
+EXCEPT
+(SELECT bar.name, beer, serves.bar FROM serves, bar))sub)
+EXCEPT
+(SELECT sub1.bar, sub1.name FROM(
+(SELECT serves.bar, beer, bar.name FROM serves, bar)
+EXCEPT
+(SELECT bar.name, beer, serves.bar FROM serves, bar))sub1))final;
+

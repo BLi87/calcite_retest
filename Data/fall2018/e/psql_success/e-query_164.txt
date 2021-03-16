@@ -1,0 +1,17 @@
+Select Distinct F1.bar
+From frequents, ((Select bar
+	From frequents
+	Where drinker = 'Ben')
+	UNION ALL 
+	(Select bar
+	From frequents
+	Where drinker = 'Dan'))
+	AS F1
+EXCEPT ALL
+((Select bar
+From frequents
+Where drinker = 'Ben')
+INTERSECT ALL 
+(Select bar
+From frequents
+Where drinker = 'Dan'));

@@ -1,0 +1,17 @@
+SELECT DISTINCT bars1.name AS bar1, bars2.name as bar2
+FROM (SELECT name FROM bar) AS bars1 JOIN (SELECT name FROM bar) AS bars2 ON
+  -- For all pairs of bars
+  bars1.name <> bars2.name
+WHERE NOT exists (
+  -- There doesn't exist a beer served by bar1 but not served by bar2
+  SELECT beer from serves WHERE bar = bars1.name
+  EXCEPT (
+    SELECT beer from serves WHERE bar = bars2.name
+  )
+) AND exists(
+  -- And there exists beer(s) served by bar2 but not served by bar1
+  SELECT beer from serves WHERE bar = bars2.name
+  EXCEPT (
+    SELECT beer from serves WHERE bar = bars1.name
+  )
+);

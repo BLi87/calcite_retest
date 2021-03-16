@@ -1,0 +1,6 @@
+SELECT name as drinker from drinker EXCEPT (SELECT DISTINCT drinker FROM
+  (SELECT bar, drinker, beer
+   FROM frequents
+     NATURAL JOIN serves
+   EXCEPT
+   (SELECT DISTINCT bar, drinker, beer FROM frequents NATURAL JOIN serves NATURAL JOIN likes)) AS fsl);

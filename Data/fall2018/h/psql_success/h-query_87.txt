@@ -1,0 +1,16 @@
+WITH likebeer AS (
+  SELECT drinker, bar
+  FROM
+  (SELECT *
+   FROM likes, serves
+   WHERE likes.beer = serves.beer) temp),
+notlike AS (
+  SELECT drinker
+  FROM
+  ((SELECT drinker, bar FROM frequents)
+   EXCEPT
+   (SELECT * FROM likebeer)) temp)
+
+(SELECT name drinker FROM drinker)
+EXCEPT
+(SELECT * FROM notlike);

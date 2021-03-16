@@ -1,0 +1,14 @@
+with table1 as (select DISTINCT bar, bar3 
+from (
+	select bar as bar3, beer as beer2
+	from(
+	(select DISTINCT c.bar, d.beer from serves c, serves d)
+	 except 
+	 (select bar, beer from serves))D)
+	A, (
+	select barA as bar, beer as beer1, bar2 as bar2
+	from(
+	select DISTINCT a.bar as barA, a.beer, b.bar as bar2 
+	from serves a, serves b where a.bar <> b.bar) B) C
+where beer1 = beer2 and bar3 = bar2)
+(select bar3, bar from table1) except (select bar, bar3 from table1);

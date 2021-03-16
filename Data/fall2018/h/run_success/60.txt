@@ -1,0 +1,1 @@
+SELECT name FROM Drinker WHERE NOT EXISTS (SELECT bar FROM Frequents WHERE drinker = name AND bar NOT IN (SELECT bar FROM Likes INNER JOIN Serves ON Likes.beer = Serves.beer AND drinker = name));

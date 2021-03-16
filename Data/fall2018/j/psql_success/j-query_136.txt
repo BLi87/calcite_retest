@@ -1,0 +1,26 @@
+(select distinct bar1, bar2
+from 
+((select distinct b1.name AS bar1, b2.name AS bar2, s1.beer AS beer
+from bar AS b1, bar AS b2, serves as s1
+where b1.name <> b2.name
+and b2.name = s1.bar
+)
+EXCEPT
+(select distinct b1.name AS bar1, b2.name AS bar2, s1.beer AS beer
+from bar AS b1, bar AS b2, serves as s1
+where b1.name <> b2.name
+and b1.name = s1.bar)) AS sub)
+EXCEPT 
+(select distinct bar2, bar1
+from 
+((select distinct b1.name AS bar1, b2.name AS bar2, s1.beer AS beer
+from bar AS b1, bar AS b2, serves as s1
+where b1.name <> b2.name
+and b2.name = s1.bar
+)
+EXCEPT
+(select distinct b1.name AS bar1, b2.name AS bar2, s1.beer AS beer
+from bar AS b1, bar AS b2, serves as s1
+where b1.name <> b2.name
+and b1.name = s1.bar)) AS sub)
+;

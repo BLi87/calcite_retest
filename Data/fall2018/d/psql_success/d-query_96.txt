@@ -1,0 +1,8 @@
+SELECT f1.drinker 
+FROM frequents AS f1
+WHERE f1.bar = 'James Joyce Pub'
+INTERSECT
+SELECT f2.drinker 
+FROM frequents AS f2
+WHERE f2.bar = 'Satisfaction'
+;

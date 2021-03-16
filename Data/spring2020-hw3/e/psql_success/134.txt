@@ -1,0 +1,4 @@
+SELECT name,bar FROM Drinker FULL OUTER JOIN
+(SELECT Frequents.drinker,Frequents.bar FROM (SELECT drinker, MAX(times_a_week) FROM Frequents GROUP BY drinker)AS drinkerFrequencies,
+ Frequents WHERE drinkerFrequencies.drinker=Frequents.drinker AND drinkerFrequencies.max=Frequents.times_a_week) AS B ON Drinker.name=B.drinker
+

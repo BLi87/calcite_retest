@@ -1,0 +1,13 @@
+WITH beer_names AS  (SELECT B.name AS beer
+                    FROM beer B),
+  Temp1 AS  (SELECT BN.beer, COUNT(L.drinker) AS cnt
+            FROM Likes L FULL OUTER JOIN beer_names BN ON L.beer = BN.beer
+            GROUP BY BN.beer),
+  Temp2 AS  (SELECT S.beer, AVG(price) AS avg
+            FROM serves S
+            GROUP BY S.beer)
+SELECT Temp1.beer, Temp1.cnt, Temp2.avg 
+FROM  
+  Temp1 FULL OUTER JOIN Temp2
+  ON Temp1.beer = Temp2.beer
+ORDER BY Temp1.cnt DESC, Temp1.beer ASC

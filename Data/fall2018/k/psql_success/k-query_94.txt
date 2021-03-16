@@ -1,0 +1,14 @@
+
+SELECT bar, SUM (sum1) as sum2
+FROM	((SELECT bar, SUM(price * times_a_week) AS sum1
+		FROM	(SELECT frequents.bar, serves.price, frequents.times_a_week
+				FROM frequents, likes, serves
+				WHERE frequents.drinker = likes.drinker AND likes.beer = serves.beer AND frequents.bar = serves.bar) as T1
+		GROUP BY T1.bar)
+
+		UNION 
+
+		(SELECT bar.name, 0 AS sum1 
+		 FROM bar)) AS T2
+GROUP BY bar
+ORDER BY sum2 DESC, bar ASC;

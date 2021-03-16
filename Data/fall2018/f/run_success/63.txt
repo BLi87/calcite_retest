@@ -1,0 +1,1 @@
+SELECT beer, bar FROM Serves EXCEPT (SELECT Serves1.beer, Serves1.bar FROM Serves AS Serves1, Serves AS Serves2 WHERE (NOT Serves1.bar = Serves2.bar and Serves1.beer = Serves2.beer));

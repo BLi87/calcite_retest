@@ -1,0 +1,19 @@
+-- worked with Diane Hu --
+SELECT * FROM
+(SELECT DISTINCT serves.bar, CASE WHEN set3.money IS NULL THEN 0 ELSE set3.money END profits FROM
+(SELECT
+   set2.bar, SUM(set2.times_a_week * set2.price) money FROM
+(SELECT set1.drinker, set1.bar, set1.times_a_week, set1.beer, serves.price
+FROM serves
+JOIN
+(SELECT frequents.drinker, frequents.bar, frequents.times_a_week, likes.beer
+FROM frequents
+JOIN likes
+ON frequents.drinker = likes.drinker) set1
+ON serves.bar = set1.bar AND serves.beer = set1.beer) set2
+GROUP BY bar)
+set3
+RIGHT JOIN
+serves
+ON set3.bar = serves.bar) set4
+ORDER BY profits DESC, bar;

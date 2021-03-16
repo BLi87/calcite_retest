@@ -1,0 +1,3 @@
+SELECT DISTINCT L1.drinker,L2.drinker,L1.beer
+  FROM Likes L1,Likes L2
+  WHERE L1.drinker < L2.drinker AND L1.beer = L2.beer

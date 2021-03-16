@@ -1,0 +1,3 @@
+select L.drinker as drinker1, dup.drinker as drinker2, L.beer
+from likes L, likes dup
+where L.drinker != dup.drinker and L.beer = dup.beer and L.drinker < dup.drinker

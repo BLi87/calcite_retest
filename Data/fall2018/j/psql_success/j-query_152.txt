@@ -1,0 +1,29 @@
+WITH e1 AS (SELECT serves.bar AS bar1, beer AS beer, bar.name AS bar2
+FROM serves
+CROSS JOIN
+bar
+EXCEPT
+SELECT bar.name AS bar2, beer AS beer, serves.bar AS bar1
+FROM serves
+CROSS JOIN
+bar
+)
+(SELECT bar2, bar1 
+FROM e1)
+EXCEPT
+(SELECT bar1, bar2
+FROM e1);
+
+
+
+--drinkers, bar they frequent, drink that bar serves
+--drinkers, bar, drinks they like
+
+--if bar doesn't serve drink they like, name, bar, beer they like pairs will all be in result
+--Pelham, BarOne, Stag
+--Pelham, BarOne, Epi 
+ 
+--They serve it but he doesn't like it
+
+--complement is they frequent bars that serves no drinks they like
+--you have drinkers and bars that serve something they like

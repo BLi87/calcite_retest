@@ -1,0 +1,7 @@
+SELECT name, COALESCE(sum(price * times_a_week), 0) 
+FROM Bar LEFT OUTER JOIN 
+	(SELECT Serves.bar AS bar, price, times_a_week FROM Serves, Frequents, Likes
+	WHERE Serves.bar = Frequents.bar AND Frequents.drinker = Likes.drinker AND Serves.beer = Likes.beer) AS S
+ON name = bar
+GROUP BY name
+ORDER BY COALESCE(sum(price * times_a_week), 0) DESC, name;

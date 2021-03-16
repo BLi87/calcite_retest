@@ -1,0 +1,14 @@
+select name
+from drinker
+except
+select f1.drinker
+from (
+select frequents.drinker, frequents.bar, serves.beer
+from frequents
+full join serves
+on frequents.bar = serves.bar
+except
+select frequents.drinker, frequents.bar, likes.beer
+from frequents
+full join likes
+on frequents.drinker = likes.drinker) as f1

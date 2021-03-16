@@ -1,0 +1,15 @@
+SELECT bar1,bar2
+    FROM
+        (SELECT bar1,bar2
+            FROM
+              (SELECT name AS bar1 FROM bar) AS f,(SELECT name AS bar2 FROM bar) AS g
+              EXCEPT
+              SELECT bar1,bar2
+                  FROM (SELECT serves.bar AS bar1,beer,name AS bar2
+                            FROM serves,bar
+                        EXCEPT
+                        SELECT s1.bar AS bar1,s1.beer,s2.bar AS bar2
+                            FROM serves AS s1,serves AS s2 WHERE s1.beer=s2.beer
+                        ) AS help
+        )
+AS ans WHERE bar1<>bar2;

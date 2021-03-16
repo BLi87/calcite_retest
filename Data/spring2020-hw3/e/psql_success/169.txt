@@ -1,0 +1,26 @@
+with drinkerTimes(drinker, times) as (
+  select
+    drinker,
+    MAX(times_a_week)
+  from
+    Frequents
+  group by
+    drinker
+),
+freqMax (drinker, bar) as (
+  select
+    Frequents.drinker,
+    Frequents.bar
+  from
+    drinkerTimes DT,
+    Frequents
+  where
+    DT.drinker = Frequents.drinker
+    and DT.times = Frequents.times_a_week
+)
+select
+  D1.name,
+  bar
+from
+  Drinker D1 full
+  join freqMax on D1.name = freqMax.drinker

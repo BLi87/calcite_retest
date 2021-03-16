@@ -1,0 +1,17 @@
+select sc1.bar, sc2.bar
+from (select distinct bar, count(beer) from serves group by bar) as sc1, (select distinct bar, count(beer) from serves group by bar) as sc2
+where sc1.count < sc2.count and sc1.bar <> sc2.bar
+except
+(select sc1.bar, sc2.bar
+from (select distinct bar, count(beer) from serves group by bar) as sc1, (select distinct bar, count(beer) from serves group by bar) as sc2
+where sc1.count < sc2.count and sc1.bar <> sc2.bar
+intersect
+select distinct s.bar, ns.bar
+from 
+	(
+		(select distinct bar, beer
+		 from (select distinct bar from serves) as one, (select distinct beer from serves) as two)
+		except
+		(select distinct bar, beer from serves)
+	) as ns, (select distinct bar, beer from serves) as s
+where ns.beer = s.beer and ns.bar <> s.bar);

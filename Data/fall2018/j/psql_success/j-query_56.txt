@@ -1,0 +1,1 @@
+(select bar2, bar1 from ((select s1.bar as bar1, s1.beer, s2.bar as bar2 from serves s1, serves s2) except (select s2.bar, s1.beer, s1.bar from serves s1, serves s2)) as foo) except (select bar1, bar2 from ((select s1.bar as bar1, s1.beer, s2.bar as bar2 from serves s1, serves s2) except (select s2.bar, s1.beer, s1.bar from serves s1, serves s2)) as foo);

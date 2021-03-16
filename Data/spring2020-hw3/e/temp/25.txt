@@ -1,0 +1,14 @@
+SELECT d.name, tab2.bar
+FROM Drinker d
+LEFT OUTER JOIN 
+(Select * 
+FROM Frequents f2
+EXCEPT ALL 
+SELECT tab1.drinker, tab1.bar, tab1.times_a_week
+FROM Frequents f1
+LEFT JOIN 
+(SELECT f2.drinker, f2.bar, f2.times_a_week
+FROM Frequents f2) tab1
+ON tab1.drinker= f1.drinker and f1.times_a_week > tab1.times_a_week) tab2
+ON d.name = tab2.drinker;
+

@@ -1,0 +1,6 @@
+SELECT Frequents.bar, SUM(Frequents.times_a_week * Serves.price)
+FROM Frequents
+NATURAL JOIN Likes 
+NATURAL JOIN Serves
+GROUP BY Frequents.bar
+ORDER BY SUM(Frequents.times_a_week * Serves.price) DESC, Frequents.bar ASC;

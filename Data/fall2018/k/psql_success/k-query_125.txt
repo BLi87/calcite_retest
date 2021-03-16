@@ -1,0 +1,15 @@
+with abc as (select serves.bar as moneyBars, SUM(frequents.times_a_week*serves.price) as amount
+	from serves, frequents, likes 
+	where frequents.bar = serves.bar and 
+			serves.beer = likes.beer and 
+			likes.drinker = frequents.drinker
+	group by serves.bar
+	)
+select bar.name, 
+	case 
+		when bar.name in (select moneyBars from abc) then (select amount from abc where abc.moneyBars = bar.name)
+		else 0
+	end as value
+from bar, abc
+group by bar.name
+order by value desc, bar asc;

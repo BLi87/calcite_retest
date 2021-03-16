@@ -1,0 +1,26 @@
+/*
+Suppose that each time a drinker visits a bar (according to the frequency in Frequents),
+her or she always buys one glass of each beer served at this bar that he or she likes;
+if no such beer exists, he or she will not buy anything. Calculate, for each bar, the total
+amount of money it expects to get per week (over all drinkers).
+List the (bar, amount) pairs in decreasing order of amount.
+In case of ties, sort alphabetically by bar.
+Be sure to handle the case when a bar doesn't expect to sell any beer to our drinkers –
+you should show an amount of 0.
+*/
+
+WITH t AS (
+    SELECT frequents.bar AS bar, SUM(serves.price * frequents.times_a_week) AS total
+    FROM frequents, serves, likes
+    WHERE frequents.bar = serves.bar
+    AND frequents.drinker = likes.drinker
+    AND serves.beer = likes.beer
+    GROUP BY frequents.bar
+)
+SELECT DISTINCT name AS bar,
+    CASE WHEN (name NOT IN (SELECT bar FROM t)) THEN 0
+        ELSE (SELECT t.total FROM t WHERE t.bar = name)
+    END AS value
+FROM bar, t
+ORDER BY value DESC, bar ASC;
+

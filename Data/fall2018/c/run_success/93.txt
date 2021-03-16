@@ -1,0 +1,1 @@
+SELECT name, address FROM bar WHERE name in (SELECT bar FROM serves WHERE serves.beer='Corona' AND serves.price<=3);

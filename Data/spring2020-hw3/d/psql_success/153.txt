@@ -1,0 +1,34 @@
+with beer_count as 
+(select beer, count(*)
+from likes
+group by beer),
+
+allbeers as (
+select name
+from beer
+),
+
+avg_price as 
+(select beer, avg(price)
+from serves
+group by beer
+),
+
+f as (select name, count
+from allbeers
+left join beer_count 
+on beer_count.beer = allbeers.name
+),
+
+final as (
+select *
+from f
+left outer join avg_price
+on avg_price.beer = f.name
+)
+
+
+select name, coalesce(count, 0) as count, avg
+from final
+order by count desc, name
+

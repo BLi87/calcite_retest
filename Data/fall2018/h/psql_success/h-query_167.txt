@@ -1,0 +1,14 @@
+/*
+SELECT drinker, bar FROM serves NATURAL JOIN likes;
+
+SELECT drinker, bar FROM frequents;
+
+SELECT drinker FROM (SELECT drinker, bar FROM frequents) AS foo EXCEPT (SELECT drinker, bar FROM serves NATURAL JOIN likes);
+
+SELECT drinker FROM ((SELECT drinker, bar FROM frequents) EXCEPT (SELECT drinker, bar FROM serves NATURAL JOIN likes)) AS foo;
+
+SELECT a.name AS drinker FROM drinker AS a
+
+*/
+
+SELECT a.name AS drinker FROM drinker AS a EXCEPT SELECT drinker FROM ((SELECT drinker, bar FROM frequents) EXCEPT (SELECT drinker, bar FROM serves NATURAL JOIN likes)) AS foo;

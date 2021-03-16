@@ -1,0 +1,2 @@
+select distinct name,address from bar,serves 
+where beer = 'Corona' and price<=3 and bar=name;

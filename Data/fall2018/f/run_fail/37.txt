@@ -1,0 +1,9 @@
+WITH pairs1(bar, beer) AS
+	(SELECT  bar, beer FROM serves)
+SELECT serves.beer, serves.bar
+FROM serves
+WHERE NOT EXISTS (SELECT * 
+	FROM pairs1
+	WHERE serves.beer=pairs1.beer 
+		AND serves.bar<>pairs1.bar);
+/* consulted UTA Daniel*/

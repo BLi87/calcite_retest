@@ -1,0 +1,1 @@
+select name from drinker except (select distinct r.drinker from (select frequents.drinker,frequents.bar,serves.beer from frequents,serves where frequents.bar = serves.bar except (select likes.drinker, frequents.bar, likes.beer from likes,frequents where likes.drinker = frequents.drinker)) as r);

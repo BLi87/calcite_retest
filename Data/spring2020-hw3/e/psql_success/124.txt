@@ -1,0 +1,12 @@
+WITH myMax AS
+(SELECT frequents.drinker as drinker, frequents.bar as bar
+FROM
+  (SELECT drinker, MAX(times_a_week) as maxTime
+FROM frequents
+GROUP BY drinker) AS Times
+INNER JOIN frequents ON frequents.drinker = Times.drinker AND frequents.times_a_week = Times.maxTime)
+
+SELECT drinker.name, myMax.bar
+FROM drinker
+LEFT OUTER JOIN myMax
+ON myMax.drinker = drinker.name;

@@ -1,0 +1,3 @@
+SELECT DISTINCT drinker
+FROM (Frequents NATURAL JOIN Serves)
+WHERE beer = 'Corona';

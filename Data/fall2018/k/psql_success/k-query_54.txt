@@ -1,0 +1,9 @@
+SELECT bar.name, COALESCE(temp.amount, 0) AS amount
+FROM bar LEFT OUTER JOIN 
+	(SELECT bar.name, SUM(frequents.times_a_week * serves.price) AS amount
+	FROM bar JOIN serves ON bar.name = serves.bar 
+	JOIN frequents ON bar.name = frequents.bar
+	JOIN likes ON likes.drinker = frequents.drinker
+	WHERE serves.beer = likes.beer
+	GROUP BY bar.name) AS temp ON bar.name = temp.name
+ORDER BY amount DESC, bar.name

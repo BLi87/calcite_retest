@@ -1,0 +1,30 @@
+/* 
+Find all (bar1, bar2) pairs where the set of beer served at bar1 is a proper subset of those served at bar2.
+Can you find (bar1, bar2) pairs where there is some beer served at bar1 not served at bar2? 
+*/
+
+WITH subset AS (
+    SELECT b1.name AS bar1, b2.name AS bar2
+    FROM bar AS b1, bar AS b2
+    WHERE b1.name <> b2.name
+    AND NOT EXISTS (
+        SELECT DISTINCT s1.bar, s2.bar
+        FROM serves AS s1, serves AS s2
+        WHERE s1.bar <> s2.bar
+        AND 
+        s1.beer NOT IN (
+            SELECT beer
+            FROM serves
+            WHERE serves.bar = s2.bar
+        )
+        AND b1.name = s1.bar
+        AND b2.name = s2.bar
+    )
+)
+SELECT t1.bar1, t1.bar2
+FROM subset AS t1
+WHERE NOT EXISTS (
+    SELECT *
+    FROM subset AS t2
+    WHERE t2.bar1 = t1.bar2 AND t2.bar2 = t1.bar1
+);

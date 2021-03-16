@@ -1,0 +1,1 @@
+Select Distinct A.drinker, C.address from frequents A, frequents B, drinker C WHERE A.drinker = B.drinker AND B.drinker = C.name AND A.bar < B.bar;

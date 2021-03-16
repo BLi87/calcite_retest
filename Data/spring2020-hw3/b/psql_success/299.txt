@@ -1,0 +1,18 @@
+WITH allPossiblePairs (drinker1, drinker2) AS (SELECT drinker1.name as drinker1, drinker2.name as drinker2 FROM drinker as drinker1, drinker as drinker2 
+WHERE drinker1.name != drinker2.name),
+
+allWrongPairs (drinker1, drinker2) AS (SELECT X.drinkerA, X.drinkerB 
+FROM ((SELECT L1.drinker as drinkerA, allPossiblePairs.drinker2 as drinkerB, L1.beer as beer1 
+      FROM allPossiblePairs, likes L1 
+      WHERE allPossiblePairs.drinker1 = L1.drinker) 
+EXCEPT
+(SELECT allPossiblePairs.drinker1 as drinkerA, L2.drinker as drinkerB, L2.beer as beer2 
+      FROM allPossiblePairs, likes L2 
+      WHERE allPossiblePairs.drinker2 = L2.drinker)
+) as X
+)
+
+(SELECT drinker1, drinker2 FROM allPossiblePairs)
+EXCEPT
+(SELECT drinker1, drinker2 FROM allWrongPairs)
+

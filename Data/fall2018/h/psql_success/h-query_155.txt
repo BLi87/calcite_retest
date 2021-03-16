@@ -1,0 +1,12 @@
+
+(select distinct name as drinker from drinker)
+
+except
+
+
+
+(select distinct list.drinker from
+
+((select distinct frequents.drinker, frequents.bar from frequents join serves on frequents.bar = serves.bar)
+except
+(select distinct likes.drinker, serves.bar from serves join likes on serves.beer = likes.beer)) list);

@@ -1,0 +1,1 @@
+SELECT barNames, revenue FROM (SELECT a.bar as barNames, SUM(a.price*a.times_a_week) as revenue FROM (SELECT * FROM ((frequents NATURAL JOIN serves) NATURAL JOIN likes) AS b) as a GROUP BY a.bar) as c ORDER BY revenue DESC, barNames;

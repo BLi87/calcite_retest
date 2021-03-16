@@ -1,0 +1,4 @@
+select bar
+from serves AS b
+where b.beer = 'Corona'
+

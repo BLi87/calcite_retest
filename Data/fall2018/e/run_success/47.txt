@@ -1,0 +1,13 @@
+(SELECT DISTINCT bar
+FROM frequents
+WHERE drinker IN ('Dan', 'Ben')
+)
+
+EXCEPT 
+
+(SELECT DISTINCT bar
+FROM frequents
+WHERE drinker = 'Dan' AND bar IN (
+	SELECT bar 
+	FROM frequents 
+	WHERE drinker = 'Ben'));

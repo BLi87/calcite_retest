@@ -1,0 +1,1 @@
+SELECT drinker FROM (SELECT drinker, COUNT(*) FROM frequents WHERE bar='James Joyce Pub' OR bar='Satisfaction' GROUP BY drinker) as bitch WHERE count=2;

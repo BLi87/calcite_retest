@@ -1,0 +1,15 @@
+WITH temp1 AS (
+SELECT beer.name AS beerName, avg(serves.price) AS avgPrice
+FROM beer LEFT OUTER JOIN serves
+ON beer.name=serves.beer
+GROUP BY beer.name 
+), temp2 AS (
+SELECT beer.name as beerName, count(likes.drinker) AS countLikes
+FROM beer LEFT OUTER JOIN likes
+ON beer.name=likes.beer
+GROUP BY beer.name
+)
+SELECT t1.beerName AS beer, t2.countLikes AS cnt, t1.avgPrice AS avg
+FROM  temp1 t1, temp2 t2
+WHERE t1.beerName=t2.beerName 
+ORDER BY t2.countLikes, t1.beerName;

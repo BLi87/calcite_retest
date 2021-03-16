@@ -1,0 +1,4 @@
+((Select drinker.name from drinker) except (select frequents.drinker from frequents)) union
+(((Select bar.name from bar) except (select serves.bar from serves)) union
+ ((Select drinker.name from drinker) except
+(select T1.drinker from ((Select frequents.drinker, serves. beer from frequents, serves where frequents.bar = serves.bar) except (select * from likes)) as T1)));

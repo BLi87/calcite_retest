@@ -1,0 +1,13 @@
+Select distinct drinker.name as drinker from drinker 
+Except
+(
+	Select distinct T.drinker from 
+
+	(
+		(
+		Select distinct frequents.drinker as drinker, serves.beer as beer from 			serves, frequents where serves.bar=frequents.bar
+		)
+	Except
+		select likes.drinker as drinker, likes.beer as beer from likes
+	) as T
+) 

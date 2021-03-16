@@ -1,0 +1,3 @@
+from likes likea, likes likeb
+select likea.drinker as drinkera, likeb.drinker as drinkerb, likea.beer as beer 
+where likea.beer = likeb.beer and likea.drinker != likeb.drinker and likea.drinker < likeb.drinker

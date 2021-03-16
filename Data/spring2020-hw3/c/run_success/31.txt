@@ -1,0 +1,10 @@
+(SELECT name FROM drinker)
+except
+(SELECT DISTINCT frequenter FROM
+(SELECT DISTINCT servesDontLike.bar, servesDontLike.beer, servesDontLike.drinker, servesDontLike.beer1, frequents.drinker as frequenter FROM frequents,
+(SELECT serves.bar, serves.beer, dontLike.drinker, dontLike.beer1 FROM serves,
+(SELECT DISTINCT drinker, beer.name as beer1 FROM beer, likes L1
+WHERE (beer.name NOT IN (SELECT beer FROM likes L2 WHERE L1.drinker = L2.drinker))) as dontLike
+WHERE serves.beer = dontLike.beer1) as servesDontLike
+WHERE frequents.drinker = servesDontLike.drinker AND servesDontLike.bar = frequents.bar) as frequentsServesDontLike)
+

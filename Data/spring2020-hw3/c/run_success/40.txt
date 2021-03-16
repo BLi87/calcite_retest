@@ -1,0 +1,9 @@
+SELECT f.drinker
+FROM frequents f
+WHERE NOT EXISTS (SELECT *
+	 	  		  FROM serves s
+	 	  		  WHERE f.bar = s.bar AND 
+	 	  		  		EXISTS (SELECT *
+							    FROM likes l
+							    WHERE l.drinker = f.drinker AND 
+								      s.beer <> l.beer));

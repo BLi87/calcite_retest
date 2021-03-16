@@ -1,0 +1,11 @@
+(SELECT f.bar bar1, SUM(s.price*f.times_a_week) AS amount FROM Frequents f, Serves s, Likes l
+WHERE f.bar = s.bar AND s.beer = l.beer AND l.drinker = f.drinker
+GROUP BY f.bar
+ORDER BY amount DESC, f.bar)
+UNION
+(SELECT name AS bar1, 0 AS amount FROM
+(SELECT name FROM bar EXCEPT SELECT bar1 FROM (SELECT f.bar bar1, SUM(s.price*f.times_a_week) AS foo FROM Frequents f, Serves s, Likes l
+WHERE f.bar = s.bar AND s.beer = l.beer AND l.drinker = f.drinker GROUP BY f.bar) AS foo) AS foo1)
+ORDER BY amount DESC, bar1;
+
+

@@ -1,0 +1,12 @@
+
+
+
+(select f1.drinker
+from frequents as f1
+where f1.bar = 'Satisfaction')
+
+intersect
+
+(select f2.drinker
+from frequents as f2
+where f2.bar = 'James Joyce Pub')

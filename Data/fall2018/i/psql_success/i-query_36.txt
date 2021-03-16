@@ -1,0 +1,2 @@
+with drink(drinker, bar, times_a_week, bar, beer, price) as (select * from frequents f, serves s where f.bar=s.bar except (select f.drinker, f.bar, f.times_a_week, s.bar, s.beer, s.price from frequents f, likes l, serves s where f.drinker=l.drinker and f.bar=s.bar and s.beer=l.beer)) 
+select d.name from drinker d group by d.name except (select drinker from drink group by drinker);

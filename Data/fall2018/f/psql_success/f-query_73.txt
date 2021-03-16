@@ -1,0 +1,1 @@
+SELECT beer, bar FROM serves EXCEPT (SELECT serves1.beer, serves2.bar FROM serves AS serves1, serves AS serves2 WHERE serves1.beer = serves2.beer AND serves1.bar != serves2.bar);

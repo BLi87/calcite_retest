@@ -1,0 +1,32 @@
+/* Collaborated during UTA office hours */
+WITH Earnings AS ((WITH id AS
+
+	(WITH LikesFrequents AS (SELECT likes.drinker, beer, bar, times_a_week
+		FROM likes INNER JOIN frequents ON likes.drinker = frequents.drinker)
+		SELECT drinker,
+		LikesFrequents.beer, LikesFrequents.bar, times_a_week, price
+		FROM LikesFrequents JOIN serves ON serves.beer = LikesFrequents.beer
+		AND serves.bar = LikesFrequents.bar)
+
+	SELECT bar, SUM(times_a_week*price) AS dollars FROM id GROUP BY bar)
+
+	UNION
+
+	(WITH zeros AS
+	(SELECT name FROM Bar
+
+	EXCEPT
+
+	(WITH id AS
+
+		(WITH LikesFrequents AS (SELECT likes.drinker, beer, bar, times_a_week
+			FROM likes JOIN frequents ON likes.drinker = frequents.drinker)
+			SELECT drinker, LikesFrequents.beer, LikesFrequents.bar, times_a_week, price
+			FROM LikesFrequents INNER JOIN serves ON serves.beer = LikesFrequents.beer
+			AND serves.bar = LikesFrequents.bar)
+
+		SELECT bar AS name FROM id GROUP BY bar))
+
+	SELECT name, 0.0 AS dollars FROM zeros))
+
+SELECT * FROM Earnings ORDER BY dollars desc, bar;

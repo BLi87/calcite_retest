@@ -1,0 +1,3 @@
+select bar.name as bar
+from bar, serves
+where serves.bar = bar.name and serves.beer = 'Corona'

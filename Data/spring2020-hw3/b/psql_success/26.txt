@@ -1,0 +1,1 @@
+select * from ((select d.name drinker1, d2.name drinker2 from drinker d, drinker d2) except (with notlikes as ((select drinker.name drinker,beer.name beer from drinker, beer) except (select * from likes)) select distinct l.drinker drinker1, nl.drinker drinker2 from likes l, notlikes nl where l.beer=nl.beer and l.drinker<>nl.drinker)) as subsets where drinker1<>drinker2;

@@ -1,0 +1,4 @@
+WITH ben(bar) AS (SELECT bar FROM frequents WHERE drinker = 'Ben'), 
+dan(bar) AS (SELECT bar FROM frequents WHERE drinker = 'Dan'), 
+sym(bar) AS (SELECT dan.bar from  dan, ben WHERE (dan.bar = ben.bar)) 
+(SELECT * FROM dan UNION SELECT * FROM ben) EXCEPT SELECT * FROM sym;

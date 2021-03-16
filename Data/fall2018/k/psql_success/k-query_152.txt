@@ -1,0 +1,23 @@
+WITH temp1 (drinker, bar, beer, price, times_a_week) AS 
+(SELECT drinker, bar, beer, price, times_a_week FROM frequents NATURAL JOIN serves),
+
+temp2(drinker, bar, beer, price, times_a_week) AS 
+(SELECT drinker, bar, beer, price, times_a_week FROM temp1 NATURAL JOIN likes),
+
+temp3(name, profit) AS (
+SELECT bar, SUM(price*times_a_week) AS profit
+FROM temp2
+GROUP BY bar
+ORDER BY profit DESC, bar ASC),
+
+temp4(bar, profit) AS (
+SELECT bar.name, profit
+FROM temp3 RIGHT OUTER JOIN bar ON temp3.name = bar.name
+ORDER BY profit DESC, name ASC)
+
+SELECT bar,
+CASE WHEN profit ISNULL THEN 0
+ELSE profit 
+END
+FROM temp4
+ORDER BY profit DESC, bar ASC;

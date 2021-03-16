@@ -1,0 +1,12 @@
+WITH Should_not AS
+(SELECT bar, drinker
+FROM Frequents
+EXCEPT
+SELECT Serves.bar, Likes.drinker
+FROM Likes, Serves
+WHERE Likes.beer = Serves.beer)
+SELECT name AS drinker
+FROM Drinker
+EXCEPT
+SELECT drinker
+FROM Should_not;

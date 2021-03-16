@@ -1,0 +1,58 @@
+SELECT
+  *
+FROM
+(
+  SELECT
+    temp4.name AS bar,
+    CASE WHEN temp4.amount IS NULL THEN 0
+         ELSE temp4.amount
+    END
+  FROM
+  (
+    (
+      SELECT
+        name
+      FROM
+        bar
+    ) AS temp5
+    LEFT OUTER JOIN
+    (
+      SELECT
+        temp3.bar,
+        SUM(temp3.price * temp3.times_a_week) as amount
+      FROM
+      (
+        frequents
+          NATURAL JOIN
+        (
+          SELECT
+            temp.bar,
+            temp.drinker,
+            SUM(temp.price) as price
+          FROM
+          (
+            likes
+              INNER JOIN
+            serves
+              ON
+            likes.beer = serves.beer
+          ) AS temp
+          WHERE
+            temp.bar IS NOT NULL
+          and
+            temp.drinker IS NOT NULL
+          GROUP BY
+            temp.bar, temp.drinker
+        ) AS temp2
+      ) AS temp3
+      GROUP BY
+        temp3.bar
+    ) AS temp6
+    ON
+      temp5.name = temp6.bar
+  ) AS temp4
+) AS temp7
+WHERE
+  temp7.bar IS NOT NULL
+ORDER BY
+  temp7.amount DESC, temp7.bar;

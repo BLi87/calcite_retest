@@ -1,0 +1,4 @@
+SELECT name,address FROM Serves, Bar
+WHERE Serves.beer = 'Corona'
+AND Serves.price <= 3.00
+AND Serves.bar = Bar.name;

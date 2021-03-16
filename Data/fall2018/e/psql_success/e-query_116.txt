@@ -1,0 +1,1 @@
+SELECT bar FROM frequents WHERE (drinker='Ben' or drinker='Dan') and bar NOT IN (SELECT f1.bar FROM frequents AS f1, frequents AS f2 WHERE f1.drinker='Ben' and f2.drinker='Dan' and f1.bar=f2.bar);

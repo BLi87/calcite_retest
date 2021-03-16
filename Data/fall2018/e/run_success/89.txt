@@ -1,0 +1,15 @@
+((SELECT bar
+  FROM Frequents
+  WHERE drinker = 'Ben')
+ UNION
+ (SELECT bar
+  FROM Frequents
+  WHERE drinker = 'Dan'))
+EXCEPT
+((SELECT bar
+  FROM Frequents
+  WHERE drinker = 'Ben')
+ INTERSECT
+ (SELECT bar
+  FROM Frequents
+  WHERE drinker = 'Dan'));

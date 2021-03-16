@@ -1,0 +1,58 @@
+/*
+can't use views in online SQL tester
+
+CREATE VIEW PairCountNoNull AS
+SELECT L1.drinker AS drinker1, L2.drinker AS drinker2, count(*) AS counter
+FROM likes L1, likes L2
+WHERE L1.beer = L2.beer and L1.drinker <> L2.drinker
+GROUP BY drinker1, drinker2;
+
+CREATE VIEW NoLikesPairs AS
+SELECT Numliked.name AS drinker1, Drinker.name AS drinker2, Numliked.counter AS counter
+FROM 
+  (SELECT name, count(drinker) AS counter
+  FROM likes FULL OUTER JOIN drinker
+    ON likes.drinker = drinker.name
+  GROUP BY name) NumLiked JOIN Drinker
+    ON Numliked.counter = 0;
+
+CREATE VIEW PairCount AS
+(NoLikesPairs
+UNION ALL
+PairCountNoNull)
+
+SELECT drinker1, drinker2
+FROM PairCount P
+WHERE EXISTS
+  (SELECT *
+  FROM NumLiked N
+  WHERE (P.drinker1 = N.drinker and P.counter = N.counter)
+    OR P.counter = 0);
+*/
+
+
+WITH PairCount AS
+  ((SELECT Numliked.name AS drinker1, Drinker.name AS drinker2, Numliked.counter AS counter
+    FROM 
+      (SELECT name, count(drinker) AS counter
+      FROM likes FULL OUTER JOIN drinker
+        ON likes.drinker = drinker.name
+      GROUP BY name) NumLiked JOIN Drinker
+        ON Numliked.counter = 0)
+  UNION ALL
+  (SELECT L1.drinker AS drinker1, L2.drinker AS drinker2, count(*) AS counter
+  FROM likes L1, likes L2
+  WHERE L1.beer = L2.beer and L1.drinker <> L2.drinker
+  GROUP BY drinker1, drinker2))
+
+SELECT drinker1, drinker2
+FROM PairCount P
+WHERE EXISTS
+  (SELECT *
+  FROM (SELECT name, count(drinker) AS counter
+       FROM likes FULL OUTER JOIN drinker
+         ON likes.drinker = drinker.name
+       GROUP BY name) N
+  WHERE ((P.drinker1 = N.name and P.counter = N.counter)
+    OR P.counter = 0))
+    AND P.drinker1 <> P.drinker2;

@@ -1,0 +1,1 @@
+SELECT BAR, SUM(SUM) FROM ((SELECT BAR, SUM(PRICE*TIMES_A_WEEK) FROM (select * from likes natural join serves natural join frequents) F GROUP BY BAR) UNION (SELECT NAME,0 FROM BAR)) G GROUP BY BAR ORDER BY SUM DESC, BAR ASC;

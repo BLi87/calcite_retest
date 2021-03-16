@@ -1,0 +1,17 @@
+
+
+SELECT T3.name, T3.totals
+FROM (SELECT T2.name, SUM(T2.NOdrinks) as TOTALS
+	FROM (SELECT name, 0 as NOdrinks
+			FROM bar
+
+			UNION
+
+			SELECT T1.bar, SUM(T1.times_a_week*T1.price)
+				FROM (SELECT frequents.bar, serves.price, frequents.times_a_week
+						FROM serves, likes, frequents
+						WHERE serves.beer=likes.beer AND frequents.bar=serves.bar AND likes.drinker=frequents.drinker) as T1
+				GROUP BY T1.bar) as T2
+				GROUP BY T2.name) as T3
+			ORDER BY T3.TOTALS DESC, T3.name ASC;
+

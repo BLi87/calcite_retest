@@ -1,0 +1,6 @@
+select d1.name 
+from drinker d1
+except (SELECT distinct sub1.dink
+from ((SELECT f1.drinker as dink, f1.bar, s1.beer from serves s1 left join frequents f1 on s1.bar = f1.bar) as sub1 
+except (Select l1.drinker, s2.bar, l1.beer from likes l1 left join serves s2 on l1.beer = s2.beer)  
+    ) )

@@ -1,0 +1,5 @@
+SELECT f1.drinker as drinker
+FROM frequents f1 JOIN frequents f2 ON
+  f1.drinker = f2.drinker AND
+    f1.bar = 'James Joyce Pub' AND
+    f2.bar = 'Satisfaction'

@@ -1,0 +1,5 @@
+WITH pairs AS (SELECT d1.name AS n1, d2.name AS n2 FROM drinker d1, drinker d2 WHERE d1.name != d2.name),
+p1like AS (SELECT pairs.n1, pairs.n2, beer FROM pairs, likes WHERE pairs.n1 = likes.drinker),
+p2like AS (SELECT pairs.n1, pairs.n2, beer FROM pairs, likes WHERE pairs.n2 = likes.drinker),
+likeDIFF AS ((Select * FROM p1like) EXCEPT (Select * FROM p2like))
+(SELECT * FROM pairs) EXCEPT (SELECT n1, n2 FROM likediff);

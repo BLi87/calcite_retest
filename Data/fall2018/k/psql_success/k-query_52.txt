@@ -1,0 +1,10 @@
+SELECT name, CASE
+             WHEN amount IS NULL THEN 0
+             WHEN amount IS NOT NULL THEN amount
+             END AS amount
+FROM bar LEFT OUTER JOIN (
+SELECT bar, SUM(times_a_week * price) as amount
+FROM frequents NATURAL JOIN serves NATURAL JOIN likes
+GROUP BY bar) AS revenue
+ON name = revenue.bar
+ORDER BY amount DESC, name;

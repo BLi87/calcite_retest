@@ -1,0 +1,50 @@
+
+SELECT DISTINCT bar2, bar1 from 
+
+(
+
+
+(SELECT rpairdiff1.bar2, rpairdiff1.bar1 FROM 
+((SELECT pair.bar AS bar1, pair.beer AS beer, pair.name AS bar2
+FROM (SELECT serves.bar, serves.beer, foo.name FROM serves CROSS JOIN (SELECT name FROM bar) as foo) as pair)
+
+EXCEPT ALL
+
+(SELECT rpair.name AS bar1, rpair.beer AS beer, rpair.bar AS bar2
+FROM (SELECT serves.bar, serves.beer, foo.name FROM serves CROSS JOIN (SELECT name FROM bar) as foo) as rpair)
+) AS rpairdiff1)
+
+
+EXCEPT ALL
+
+
+
+(SELECT bar1, bar2 from 
+
+(SELECT rpairdiff1.bar2, rpairdiff1.bar1 FROM 
+((SELECT pair.bar AS bar1, pair.beer AS beer, pair.name AS bar2
+FROM (SELECT serves.bar, serves.beer, foo.name FROM serves CROSS JOIN (SELECT name FROM bar) as foo) as pair)
+
+EXCEPT ALL
+
+(SELECT rpair.name AS bar1, rpair.beer AS beer, rpair.bar AS bar2
+FROM (SELECT serves.bar, serves.beer, foo.name FROM serves CROSS JOIN (SELECT name FROM bar) as foo) as rpair)
+) AS rpairdiff1) as rdiff, 
+
+
+(SELECT pairdiff2.bar3, pairdiff2.bar4 FROM
+
+(SELECT helppairdiff2.bar1 AS bar3, helppairdiff2.beer AS beer, helppairdiff2.bar2 AS bar4 FROM
+((SELECT pair.bar AS bar1, pair.beer AS beer, pair.name AS bar2
+FROM (SELECT serves.bar, serves.beer, foo.name FROM serves CROSS JOIN (SELECT name FROM bar) as foo) as pair)
+
+EXCEPT ALL
+
+(SELECT rpair.name AS bar1, rpair.beer AS beer, rpair.bar AS bar2
+FROM (SELECT serves.bar, serves.beer, foo.name FROM serves CROSS JOIN (SELECT name FROM bar) as foo) as rpair)) as helppairdiff2) as pairdiff2) as diff
+
+WHERE
+
+bar1= bar4 and bar3=bar2)) AS ans;
+
+/* Worked with Trilok Sadarangani */

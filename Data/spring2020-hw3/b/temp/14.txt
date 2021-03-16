@@ -1,0 +1,37 @@
+WITH subsubq AS (
+                SELECT l1.drinker, l2.drinker, l1.beer
+		FROM likes l1, likes l2
+		WHERE l1.drinker <> l2.drinker
+		AND l1.beer = l2.beer
+),
+
+subq AS (
+	SELECT l1.drinker, l2.drinker
+	FROM likes l1, likes l2
+	WHERE l1.drinker <> l2.drinker
+	AND l1.beer <> l2.beer
+	AND (l1.drinker, l2.drinker,l1.beer) NOT IN
+	(SELECT * FROM subsubq)
+),
+
+nolikes AS (
+        SELECT name
+        FROM drinker
+        WHERE name NOT IN (SELECT drinker FROM likes)
+),
+
+leftlikerightnolike AS (
+        SELECT d1.name, d2.name
+        FROM drinker d1, drinker d2
+        WHERE d1.name IN (SELECT drinker FROM likes)
+        AND d2.name IN (SELECT * FROM nolikes)
+)
+
+SELECT DISTINCT d1.name, d2.name
+FROM drinker d1, drinker d2
+WHERE d1.name <> d2.name
+EXCEPT 
+(
+        (SELECT * FROM subq)
+        UNION (SELECT * FROM leftlikerightnolike)
+)

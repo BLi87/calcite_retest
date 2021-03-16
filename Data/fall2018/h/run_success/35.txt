@@ -1,0 +1,10 @@
+select distinct name
+from drinker
+where drinker.name not in
+(select drinker
+  from frequents
+  where not exists
+  (
+  select * from serves, likes
+  where frequents.bar=serves.bar and frequents.drinker=likes.drinker and likes.beer=serves.beer
+));

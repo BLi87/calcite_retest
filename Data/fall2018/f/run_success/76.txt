@@ -1,0 +1,4 @@
+SELECT C.bar,C.beer FROM Serves C EXCEPT
+(SELECT DISTINCT A.bar, A.beer FROM Serves A
+INNER JOIN Serves B
+ON NOT A.bar = B.bar AND B.beer =  A.beer);

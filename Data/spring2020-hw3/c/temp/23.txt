@@ -1,0 +1,15 @@
+with likes_serves as
+  (select serves.bar, likes.drinker, serves.beer
+  from serves, likes
+  where serves.beer = likes.beer),
+  frequents_serves as
+  (select frequents.bar, frequents.drinker, serves.beer
+  from frequents, serves
+  where frequents.bar = serves.bar),
+  not_bar_drinker as
+  (select fs.bar, fs.drinker
+  from frequents_serves as fs
+  where (fs.bar, fs.drinker, fs.beer) not in (select * from likes_serves))
+select distinct drinker.name
+from drinker, not_bar_drinker
+where drinker.name not in (select not_bar_drinker.drinker as name from not_bar_drinker);

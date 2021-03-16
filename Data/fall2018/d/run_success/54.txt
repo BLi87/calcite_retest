@@ -1,0 +1,22 @@
+SELECT 
+jdrinker AS drinker
+FROM(
+SELECT DISTINCT
+*
+FROM
+(SELECT DISTINCT
+drinker AS jdrinker
+FROM
+Frequents
+WHERE
+bar = 'James Joyce Pub' ) AS JJP
+JOIN
+(SELECT DISTINCT
+drinker as sdrinker
+FROM
+Frequents
+WHERE
+bar = 'Satisfaction' ) AS Satis
+ON
+JJP.jdrinker = Satis.sdrinker) VAMOS
+;

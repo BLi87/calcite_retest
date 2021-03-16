@@ -1,0 +1,30 @@
+SELECT *
+FROM (
+SELECT t.name, 
+CASE 
+	WHEN t.profit IS NULL THEN 0
+	ELSE t.profit
+END
+FROM (
+SELECT bn.name AS name, bp.profit AS profit
+FROM (
+	SELECT DISTINCT name
+	FROM bar
+) AS bn
+
+LEFT OUTER JOIN 
+
+(SELECT bar, SUM(custSpend) AS profit
+FROM (
+	SELECT bar, price * times_a_week AS custSpend
+	FROM frequents NATURAL JOIN serves NATURAL JOIN likes
+) AS bpp
+GROUP BY bar
+) as bp
+
+ON bn.name = bp.bar
+) AS t
+) s
+
+ORDER BY s.profit DESC, s.name ASC
+;

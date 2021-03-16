@@ -1,0 +1,1 @@
+select name, address from serves join bar on serves.bar= bar.name where beer = 'Corona' and price <=3;

@@ -1,0 +1,11 @@
+--select bar,sum(times_a_week*price) from (select likes.drinker, frequents.bar, likes.beer, times_a_week, price from likes, frequents, serves where frequents.drinker = likes.drinker and frequents.bar = serves.bar and likes.beer = serves.beer) as LFW group by LFW.bar order by sum desc, bar;
+
+
+SELECT bar, sum(amount) from 
+	(SELECT bar, sum(times_a_week*price) as amount from
+		 (SELECT likes.drinker, frequents.bar, likes.beer, times_a_week, price from likes
+			, frequents, serves where frequents.drinker = likes.drinker and frequents.bar 
+			= serves.bar and likes.beer = serves.beer) AS LFW group by LFW.bar
+			UNION  
+			SELECT name, sum(0) from bar group by name) as SumLFW group by SUMLFW.bar 
+	ORDER BY sum DESC, bar;

@@ -1,0 +1,15 @@
+WITH B AS( SELECT FS.drinker, FS.beer, FS.bar
+FROM
+  (SELECT frequents.drinker, serves.beer, frequents.bar
+    FROM frequents, serves
+    WHERE frequents.bar = serves.bar) FS
+)
+SELECT drinker.name as drinker1
+FROM drinker EXCEPT
+SELECT C.drinker FROM
+(SELECT frequents.drinker, frequents.bar
+FROM frequents EXCEPT
+  SELECT T.drinker, T.bar
+  FROM(SELECT B.bar, B.drinker, B.beer
+  FROM B, likes
+  WHERE B.drinker = likes.drinker AND B.beer = likes.beer) T) C;

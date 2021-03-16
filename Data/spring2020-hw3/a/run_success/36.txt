@@ -1,0 +1,7 @@
+select distinct L.beer, S.bar
+from likes L, serves S
+where L.drinker = 'Dan'
+  and L.beer = S.beer
+  and S.price = (select max(price)
+  from serves
+  where beer = L.beer);

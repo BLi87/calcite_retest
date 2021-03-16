@@ -1,0 +1,28 @@
+SELECT DISTINCT View6.bar, View6.amount
+FROM ((SELECT DISTINCT View3.bar, SUM(View3.amount) as amount
+FROM (SELECT DISTINCT View2.bar, View2.drinker, View2.sum * Frequents.times_a_week AS amount
+FROM Frequents, (SELECT bar, drinker, SUM(price)
+FROM (SELECT bar, drinker, price
+FROM Serves, Likes
+WHERE Serves.beer = Likes.beer) as View1
+GROUP BY bar, drinker) AS View2
+WHERE Frequents.bar = View2.bar
+AND Frequents.drinker = View2.drinker) AS View3
+GROUP BY View3.bar)
+UNION ALL
+(SELECT DISTINCT View5.name as bar, Serves.price*0 as amount
+FROM Serves, ((SELECT DISTINCT name 
+FROM Bar)
+EXCEPT ALL
+(SELECT DISTINCT View4.bar
+FROM (SELECT DISTINCT View3.bar, SUM(View3.amount) as amount
+FROM (SELECT DISTINCT View2.bar, View2.drinker, View2.sum * Frequents.times_a_week AS amount
+FROM Frequents, (SELECT bar, drinker, SUM(price)
+FROM (SELECT bar, drinker, price
+FROM Serves, Likes
+WHERE Serves.beer = Likes.beer) as View1
+GROUP BY bar, drinker) AS View2
+WHERE Frequents.bar = View2.bar
+AND Frequents.drinker = View2.drinker) AS View3
+GROUP BY View3.bar) AS View4)) as View5)) AS View6
+ORDER BY View6.amount DESC, View6.bar;

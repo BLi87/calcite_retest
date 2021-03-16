@@ -1,0 +1,5 @@
+SELECT name FROM Drinker EXCEPT
+
+SELECT sec.drinker FROM (SELECT drinker, bar FROM Frequents EXCEPT
+
+SELECT l1.drinker, s2.bar FROM Likes l1 JOIN Serves s2 ON l1.beer = s2.beer) AS sec;

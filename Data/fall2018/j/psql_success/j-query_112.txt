@@ -1,0 +1,24 @@
+WITH TMP1 (bar1, beer1, price1, bar2, beer2, price2) AS 
+(SELECT serves1.bar AS bar1, serves1.beer AS beer1, serves1.price AS price1, serves2.bar AS bar2, serves2.beer AS beer2, serves2.price AS price2 
+FROM serves AS serves1 CROSS JOIN serves AS serves2),
+
+TMP2 (bar1,bar2,beer1) AS
+(SELECT bar1,bar2,beer1
+FROM TMP1),
+
+TMP3 (bar1,bar2,beer2) AS
+(SELECT bar1,bar2,beer2
+FROM TMP1),
+
+TMP4 (bar1,bar2,beer1) AS
+(SELECT * 
+FROM TMP2
+EXCEPT 
+SELECT * 
+FROM TMP3)
+
+SELECT bar2,bar1 
+FROM TMP4
+EXCEPT
+SELECT bar1,bar2 
+FROM TMP4;

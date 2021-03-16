@@ -1,0 +1,36 @@
+select distinct fr.bar
+From frequents fr
+where 
+(
+	exists 
+	(
+		select 1
+        From frequents fr_ben
+        Where fr_ben.drinker = 'Ben'
+        And fr_ben.bar = fr.bar
+    )
+	and not exists 
+	(
+  		select 1
+    	From frequents fr_dan
+    	Where fr_dan.drinker = 'Dan'
+ 		And fr_dan.bar = fr.bar
+	)
+)
+or
+(
+	exists 
+	(
+		select 1
+        From frequents fr_dan
+        Where fr_dan.drinker = 'Dan'
+    	And fr_dan.bar = fr.bar
+    )
+	and not exists 
+	(
+		select 1
+        From frequents fr_ben
+        Where fr_ben.drinker = 'Ben'
+        And fr_ben.bar = fr.bar
+    )
+);

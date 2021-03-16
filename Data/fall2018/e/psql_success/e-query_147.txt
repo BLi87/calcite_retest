@@ -1,0 +1,9 @@
+Select f1.bar
+From Frequents as f1
+Where f1.drinker='Ben' or f1.drinker='Dan'
+
+except
+
+Select f1.bar
+From Frequents as f1, Frequents as f2
+Where f1.drinker='Ben' and f2.drinker='Dan' and f1.bar=f2.bar;

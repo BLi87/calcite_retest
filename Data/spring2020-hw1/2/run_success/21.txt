@@ -1,0 +1,3 @@
+select S.bar
+from serves S, beer B
+where B.brewer = 'Grupo Modelo' and S.beer = B.name

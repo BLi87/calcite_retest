@@ -1,0 +1,23 @@
+-- e2 view
+SELECT bar2, bar1
+FROM
+(SELECT serves.bar AS bar1, serves.beer, bar.name AS bar2 
+FROM serves, bar
+
+EXCEPT
+
+SELECT bar.name as bar1, serves.beer, serves.bar AS bar2
+FROM serves, bar) AS temp
+
+EXCEPT 
+
+SELECT bar1, bar2
+FROM
+(SELECT serves.bar AS bar1, serves.beer, bar.name AS bar2 
+FROM serves, bar
+
+EXCEPT
+
+SELECT bar.name as bar1, serves.beer, serves.bar AS bar2
+FROM serves, bar) AS temp
+

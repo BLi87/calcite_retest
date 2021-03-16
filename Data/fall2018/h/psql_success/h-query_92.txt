@@ -1,0 +1,1 @@
+SELECT name FROM drinker WHERE name NOT IN (SELECT DISTINCT t2.drinker FROM (SELECT frequents.drinker, frequents.bar FROM frequents LEFT JOIN (SELECT DISTINCT likes.drinker, serves.bar FROM serves INNER JOIN likes ON serves.beer=likes.beer) AS t1 ON (frequents.drinker=t1.drinker AND frequents.bar=t1.bar) WHERE (t1.drinker IS NULL OR t1.bar IS NULL)) as t2);

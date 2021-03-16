@@ -1,0 +1,8 @@
+SELECT DISTINCT T.drinker
+FROM
+  (
+    SELECT serves.bar, serves.beer, frequents.drinker
+    FROM serves, frequents
+    WHERE serves.bar = frequents.bar
+  ) T
+WHERE T.beer = 'Corona';

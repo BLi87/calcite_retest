@@ -1,0 +1,10 @@
+SELECT frequents.bar
+FROM frequents
+WHERE frequents.drinker = 'Ben'
+OR frequents.drinker = 'Dan'
+EXCEPT 
+SELECT f1.bar
+FROM frequents AS f1, frequents AS f2
+WHERE f1.bar = f2.bar
+AND f1.drinker = 'Ben'
+AND f2.drinker = 'Dan';

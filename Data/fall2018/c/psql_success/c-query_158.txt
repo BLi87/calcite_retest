@@ -1,0 +1,2 @@
+SELECT name, address FROM bar JOIN serves s2 ON bar.name = s2.bar
+WHERE beer = 'Corona' AND price <= 3;

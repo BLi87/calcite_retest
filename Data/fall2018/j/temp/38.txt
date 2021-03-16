@@ -1,0 +1,9 @@
+WITH temp AS
+(SELECT bar, array_agg(beer)
+FROM Serves
+GROUP BY bar)
+
+SELECT temp1.bar, temp2.bar
+FROM temp AS temp1, temp AS temp2
+WHERE temp1.array_agg <@ temp2.array_agg
+AND temp1.bar <> temp2.bar;

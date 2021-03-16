@@ -1,0 +1,4 @@
+select distinct beer,bar from ((select * from serves) EXCEPT 
+(select s1.bar,s1.beer,s1.price 
+from serves as s1, serves as s2 
+where s1.bar<>s2.bar and s1.beer=s2.beer)) as foo;

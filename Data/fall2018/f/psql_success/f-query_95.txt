@@ -1,0 +1,7 @@
+SELECT beer, bar
+FROM Serves
+WHERE beer IN 
+(SELECT beer
+FROM Serves
+GROUP BY beer
+HAVING COUNT(*) = 1);

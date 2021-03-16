@@ -1,0 +1,7 @@
+select bar, amount from ((select bar, sum(times_a_week*price) as amount from(select distinct l.drinker, l.beer, f.bar, f.times_a_week, s.price from likes l, frequents f, serves s where l.drinker=f.drinker and f.bar=s.bar and l.beer=s.beer) as N group by bar order by amount desc, bar) union (select distinct bar, sum(price*0) as amount from(select bar, beer, price from serves where bar in (((select name as bar from bar) except (select distinct bar from (select distinct l.drinker, l.beer, f.bar, f.times_a_week, s.price from likes l, frequents f, serves s where l.drinker=f.drinker and f.bar=s.bar and l.beer=s.beer) as T)))) as E group by bar order by bar)) as W order by amount desc, bar;
+
+
+
+
+
+

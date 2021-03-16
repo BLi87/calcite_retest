@@ -1,0 +1,4 @@
+SELECT S.beer, S.bar
+FROM likes L, serves S
+WHERE L.drinker = 'Dan' and L.beer=S.beer 
+and S.price >= ALL(SELECT price from serves S1 WHERE S1.beer=S.beer);

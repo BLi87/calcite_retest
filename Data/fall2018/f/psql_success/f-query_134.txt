@@ -1,0 +1,6 @@
+select distinct s1.beer, s1.bar
+from serves as s1
+where s1.beer not in
+(select s2.beer
+from serves as s2
+where s2.bar <> s1.bar);

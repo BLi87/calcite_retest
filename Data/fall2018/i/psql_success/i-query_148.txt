@@ -1,0 +1,20 @@
+((SELECT name
+FROM drinker)
+EXCEPT
+(SELECT drinker
+FROM frequents))
+
+UNION
+
+((SELECT drinker
+FROM frequents)
+
+EXCEPT
+
+(SELECT frequents.drinker 
+FROM frequents, (SELECT serves.bar AS b, d 
+		FROM serves, ((SELECT drinker.name AS d, beer.name 
+				FROM Beer, Drinker)  
+				EXCEPT (SELECT drinker, beer FROM Likes)) AS dislike 
+		WHERE serves.beer=dislike.name) AS dislikedBars
+WHERE frequents.bar=b AND frequents.drinker=d));

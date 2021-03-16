@@ -1,0 +1,45 @@
+/*WITH a AS (
+    SELECT a1.drinker AS drinker1, a1.beer AS beer1, b.drinker AS drinker2, b.beer as beer2
+    FROM likes a1, likes b
+    WHERE a1.drinker <> b.drinker AND a1.beer = b.beer
+  ),
+  b AS (
+    SELECT a.drinker AS drinker1, a.beer AS beer1, b.drinker AS drinker2, b.beer as beer2
+    FROM likes a, likes b
+    WHERE a.drinker <> b.drinker
+  ),
+  c AS (
+    (SELECT * FROM b)
+    EXCEPT ALL
+    (SELECT * FROM a)
+  ),
+  d AS (
+    SELECT * 
+    FROM c c1, c c2
+    WHERE c1.drinker1 = c2.drinker1 AND c1.drinker2 = c2.drinker2 AND c1.beer1 = c2.beer2 AND c1.beer2 = c2.beer1
+  )
+  SELECT *
+  FROM d*/
+WITH a AS (
+  SELECT name as drinker1, drinker as drinker2, beer
+  FROM likes l, drinker d 
+  WHERE l.drinker <> d.name
+),
+b AS (
+  SELECT DISTINCT drinker1, drinker2, a.beer
+  FROM a, likes l
+  WHERE a.drinker1 = l.drinker AND a.beer = l.beer
+),
+c AS (
+  SELECT drinker1, drinker2, count(beer)
+  FROM b
+  GROUP BY drinker1, drinker2
+),
+d AS (
+  SELECT name as drinker, count(beer)
+  FROM likes FULL OUTER JOIN drinker on likes.drinker = drinker.name
+  GROUP BY name
+)
+SELECT c.drinker1, c.drinker2
+FROM c, d
+WHERE (c.count >= d.count OR (c.count IS NULL AND d.count IS NULL)) AND c.drinker1 = d.drinker

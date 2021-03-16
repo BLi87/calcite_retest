@@ -1,0 +1,9 @@
+/* Collaborated during UTA office hours */
+
+SELECT DISTINCT name FROM Drinker EXCEPT(
+SELECT Frequents.drinker FROM 
+Frequents JOIN Serves ON Serves.bar = Frequents.bar
+LEFT JOIN Likes ON Likes.drinker = Frequents.drinker and Likes.beer = Serves.beer
+GROUP BY Frequents.drinker, Frequents.bar
+HAVING COUNT(Likes.drinker) = 0
+);

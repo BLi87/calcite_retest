@@ -1,0 +1,1 @@
+select distinct(drinker) from serves s join frequents f on f.bar = s.bar where beer = 'Corona';

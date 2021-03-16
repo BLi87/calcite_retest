@@ -1,0 +1,44 @@
+--Find who frequents a bar that serves beer they like
+--Find what beer that is
+--Find the price the bar serves that beer for, total that, print
+
+
+-- I Know this did not account for edge case, however it passed the most number of tests
+SELECT DISTINCT freq1.bar, SUM(times_a_week*serv1.price) AS sum
+			FROM Frequents freq1, Serves serv1, Likes like1
+			WHERE freq1.drinker = like1.drinker AND serv1.beer = like1.beer AND
+			serv1.bar = freq1.bar AND
+			EXISTS (SELECT * FROM Serves, Likes
+								WHERE freq1.bar = Serves.bar 
+								AND freq1.drinker = Likes.drinker
+								AND Serves.beer = Likes.beer)
+GROUP BY freq1.bar
+ORDER BY sum DESC, freq1.bar ASC
+
+--This was my attempt at using those bars that were not frequented, and so could
+--Not expect to make money. In this way, however, I did not have them sorted yet 
+--(although I knew I would be able to figure that out) and also gave an empty
+--row due to the first case giving empty rows for those bars that were frequented.
+--The problem with the first switch was that although I could give the amount
+--they would make as 0, if they would make money (they were frequented) I could not
+--take the data from the second part statement to make it work.
+/*
+(SELECT CASE 
+		WHEN Bar.name NOT IN (SELECT bar FROM Frequents) THEN Bar.name
+		END AS bar,
+		CASE
+		WHEN Bar.name NOT IN (SELECT bar FROM Frequents) THEN 0 
+		END AS sum
+		FROM Bar)
+UNION
+(SELECT DISTINCT freq1.bar, SUM(times_a_week*serv1.price) AS sum
+			FROM Frequents freq1, Serves serv1, Likes like1
+			WHERE freq1.drinker = like1.drinker AND serv1.beer = like1.beer AND
+			serv1.bar = freq1.bar AND
+			EXISTS (SELECT * FROM Serves, Likes
+								WHERE freq1.bar = Serves.bar 
+								AND freq1.drinker = Likes.drinker
+								AND Serves.beer = Likes.beer)
+GROUP BY freq1.bar
+ORDER BY sum DESC, freq1.bar ASC)
+*/

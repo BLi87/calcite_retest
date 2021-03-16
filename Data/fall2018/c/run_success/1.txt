@@ -1,0 +1,1 @@
+select distinct serves1.bar,bar.address From bar, serves AS serves1 where serves1.beer = 'Corona'  and serves1.price <=3 and serves1.bar = bar.name;

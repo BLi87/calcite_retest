@@ -1,0 +1,12 @@
+SELECT D1.name AS drinker1, D2.name AS drinker2
+FROM drinker D1, drinker D2
+WHERE D1.name<>D2.name AND
+(D2.name IN (SELECT drinker as name FROM likes) OR (D1.name NOT IN (SELECT drinker as name FROM likes) AND D2.name NOT IN (SELECT drinker as name FROM likes)))
+EXCEPT
+SELECT D.drinker1, D.drinker2
+FROM (SELECT L1.drinker AS drinker1, L1.beer, L2.drinker AS drinker2
+FROM likes L1, likes L2
+WHERE L1.drinker <> L2.drinker 
+EXCEPT SELECT L1.drinker, L1.beer, L2.drinker
+FROM likes L1, likes L2
+WHERE L1.drinker<>L2.drinker AND L1.beer=L2.beer) AS D;

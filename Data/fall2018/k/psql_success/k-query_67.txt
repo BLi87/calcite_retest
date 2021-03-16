@@ -1,0 +1,14 @@
+SELECT bar, SUM(subtotal) AS amount 
+FROM 
+	(
+		SELECT Serves.bar, Likes.drinker, Serves.beer, 
+			CASE 
+				WHEN times_a_week IS NOT NULL THEN (price * times_a_week) 
+				ELSE 0 
+			END 
+			AS subtotal 
+		FROM Serves LEFT OUTER JOIN (Frequents JOIN Likes ON Frequents.drinker = Likes.drinker) ON Serves.beer = Likes.beer AND Serves.bar = Frequents.bar
+	) 
+	AS T 
+GROUP BY bar 
+ORDER BY amount DESC, bar;

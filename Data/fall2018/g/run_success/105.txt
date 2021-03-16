@@ -1,0 +1,10 @@
+SELECT bar, drinker
+FROM frequents
+
+EXCEPT 
+
+SELECT DISTINCT f1.bar, f1.drinker
+FROM frequents AS f1, frequents AS f2
+WHERE NOT(f2.drinker = f1.drinker) AND (f1.bar = f2.bar) AND (f1.times_a_week < f2.times_a_week);
+
+

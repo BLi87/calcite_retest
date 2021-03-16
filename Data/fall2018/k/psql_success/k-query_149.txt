@@ -1,0 +1,12 @@
+(select distinct bar.name, sum(frequents.times_a_week*serves.price) as amount
+from bar, frequents, likes, serves 
+where (bar.name=frequents.bar and frequents.bar=serves.bar and serves.beer=likes.beer and likes.drinker=frequents.drinker)
+group by name)
+
+union
+
+(select distinct bar.name, 0 as amount
+from bar
+where (bar.name in (select D.name from ((select name from bar)except(select distinct serves.bar from likes, serves, frequents where likes.beer=serves.beer 
+and likes.drinker=frequents.drinker and frequents.bar=serves.bar)) as D)) group by name)
+order by amount DESC, name ASC;

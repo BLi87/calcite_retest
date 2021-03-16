@@ -1,0 +1,6 @@
+SELECT DISTINCT f1.bar, drinker
+FROM frequents f1
+  JOIN (
+    SELECT bar, max(times_a_week) AS max_freq FROM frequents GROUP BY bar
+  ) AS f2
+    ON f1.bar = f2.bar AND f1.times_a_week = max_freq;

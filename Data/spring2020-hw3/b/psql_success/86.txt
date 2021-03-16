@@ -1,0 +1,18 @@
+WITH temp1 AS (
+SELECT d1.name AS drinker1, d2.name AS drinker2
+FROM drinker d1, drinker d2
+WHERE d1.name!=d2.name
+), temp2 AS (
+(SELECT p1.drinker1 AS secondDrinker1, p1.drinker2 AS secondDrinker2, l1.beer AS beerName
+FROM temp1 p1, likes l1
+WHERE p1.drinker1=l1.drinker)
+EXCEPT
+(SELECT p2.drinker1 AS secondDrinker1, p2.drinker2 AS secondDrinker2, l2.beer AS beerName
+FROM temp1 p2, likes l2
+WHERE p2.drinker2=l2.drinker))
+
+SELECT drinker1, drinker2
+FROM temp1
+EXCEPT
+(SELECT secondDrinker1, secondDrinker2
+FROM temp2);

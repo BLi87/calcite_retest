@@ -1,0 +1,27 @@
+-- Find all (bar1, bar2) pairs where the set of beer served at bar1 is a proper subset of those served at
+-- bar2; i.e., bar2 serves every beer that bar1 serves and plus some more.
+
+-- (\project_{bar_1, bar_2}
+-- ((\rename_{bar_1,beer_1,price_1} serves) \join_{bar_1<>bar_2}
+-- (\rename_{bar_2,beer_2,price_2} serves)))
+-- \diff
+-- (\project_{bar_1,bar_2}
+-- 	(\rename_{bar_1,beer,bar_2} ( // bar_2 serves a beer that bar_1 doesn't
+-- 		(\project_{bar_1,beer,bar_2} (\rename_{bar_1,beer,bar_2}
+-- 		(\project_{bar,beer,name} (serves \cross bar))))
+-- 		\diff
+-- 		(\project_{bar_1,beer,bar_2} (\rename_{bar_2,beer,bar_1}
+-- 		(\project_{bar,beer,name} (serves \cross bar)))))));
+
+(select s1.bar, s2.bar from serves as s1
+join serves as s2
+on s1.bar<>s2.bar)
+except
+(select distinct bar, name from
+  ((select serves.bar, beer, bar.name
+  from serves
+  cross join bar)
+  except
+  (select bar.name, beer, serves.bar
+  from serves
+  cross join bar)) as t);

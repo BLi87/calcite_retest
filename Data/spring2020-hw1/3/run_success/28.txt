@@ -1,0 +1,1 @@
+select a.drinker as drinker1, b.drinker as drinker2, a.beer from likes a, likes b where a.beer = b.beer and a.drinker < b.drinker

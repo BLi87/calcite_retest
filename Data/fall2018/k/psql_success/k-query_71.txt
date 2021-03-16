@@ -1,0 +1,1 @@
+SELECT bar, SUM(total) AS total2 FROM ((SELECT serves.bar, serves.price * frequents.times_a_week AS total FROM likes, serves, frequents WHERE likes.drinker=frequents.drinker AND serves.bar=frequents.bar AND likes.beer=serves.beer) UNION ALL (SELECT name, 0 FROM bar)) AS t1 GROUP BY bar ORDER BY total2 DESC, bar;

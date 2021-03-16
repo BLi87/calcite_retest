@@ -1,0 +1,4 @@
+select b.beer, c.bar from
+(select a.beer as beer from 
+(Select beer, count(bar) as count from serves group by beer) a where count = 1) b LEFT JOIN
+(select beer, bar from serves) c ON b.beer = c.beer;

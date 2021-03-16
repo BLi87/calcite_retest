@@ -1,0 +1,9 @@
+SELECT DISTINCT serves.beer, serves.bar
+FROM serves
+
+EXCEPT
+
+SELECT DISTINCT s1.beer, s1.bar
+FROM serves AS s1, serves AS s2
+WHERE s1.bar <> s2.bar AND
+      s1.beer = s2.beer;

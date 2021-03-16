@@ -1,0 +1,9 @@
+WITH notLoyalDrinkerBeerBar AS
+((SELECT drinker, s1.beer, bar FROM serves AS s1, likes AS l1 WHERE s1.beer <> l1.beer)
+EXCEPT
+((SELECT drinker, s1.beer, bar FROM serves AS s1, likes AS l1 WHERE s1.beer = l1.beer))),
+
+notLoyalDrinkerBar AS
+((SELECT drinker, bar FROM frequents) INTERSECT (SELECT drinker, bar FROM notLoyalDrinkerBeerBar))
+
+(SELECT name FROM drinker) EXCEPT (SELECT drinker FROM notLoyalDrinkerBar);

@@ -1,0 +1,8 @@
+SELECT serves.beer as beer, bar
+FROM 
+  (SELECT serves.beer, MAX(serves.price) as maxprice
+  FROM likes, serves
+  WHERE drinker = 'Dan' and likes.beer = serves.beer
+  GROUP BY serves.beer
+  ) as expensive, serves 
+WHERE serves.beer = expensive.beer and serves.price = expensive.maxprice;

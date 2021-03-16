@@ -1,0 +1,8 @@
+--(k) Suppose that each time a drinker visits a bar (according to the frequency in Frequents), he or she always buys one glass of each beer served at this bar that he or she likes; if no such beer exists, he or she will not buy anything. Calculate, for each bar, the total amount of money it expects to get per week (over all drinkers in our database). List the (bar, amount) pairs in decreasing order of amount; in case of ties, sort alphabetically by bar. Be sure to handle the case when a bar doesn’t expect to sell any beer to our drinkers—you need to show an amount of 0.
+select bar, coalesce(amount, 0) as amount  -- Replace null with 0
+from ((select name as bar from bar) as bar_names  -- Rename
+      natural left outer join  -- Bars that do not appear in the huge natural-join table will have amount as null
+      (select bar, sum(times_a_week * price) as amount  -- Sum up all drinkers' amount on all beers spent at each bar
+       from (frequents natural join likes natural join serves)  -- For each bar, lists each drinker (can repeat) and each beer he'll buy, with times_a_week and price
+       group by bar) as amounts)
+order by amount desc, bar;

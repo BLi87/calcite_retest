@@ -1,0 +1,14 @@
+with servedbeers as (select b1.name, avg(price)
+from serves as s1 right outer join beer as b1
+on s1.beer=b1.name
+group by b1.name),
+
+likedbeers as (select b1.name, count(distinct drinker)
+from likes as l1 right outer join beer as b1
+on l1.beer=b1.name
+group by b1.name)
+
+select servedbeers.name, count, avg
+from servedbeers, likedbeers
+where servedbeers.name=likedbeers.name
+

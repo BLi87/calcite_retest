@@ -1,0 +1,9 @@
+select distinct f1.bar, f1.drinker
+from frequents as f1
+full join (
+select distinct bar, max(times_a_week)
+from frequents
+group by bar) as f2
+on f1.bar = f2.bar
+group by f1.bar, f1.drinker, f2.max
+having f1.times_a_week = f2.max;

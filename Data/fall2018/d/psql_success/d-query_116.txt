@@ -1,0 +1,2 @@
+select distinct f1.drinker from frequents as f1,frequents as f2 where f1.bar = 'James Joyce Pub' and f2.bar = 'Satisfaction' and f1.drinker = f2.drinker;
+

@@ -1,0 +1,13 @@
+WITH one AS
+(SELECT joined1.name, count(joined1.drinker)
+ FROM (beer LEFT JOIN likes on beer.name = likes.beer) joined1
+ GROUP BY joined1.name),
+
+two AS
+(SELECT joined2.name, avg(joined2.price)
+ FROM (beer LEFT JOIN serves on beer.name = serves.beer) joined2
+ GROUP BY joined2.name)
+
+SELECT *
+FROM one NATURAL JOIN two
+ORDER BY count DESC, avg

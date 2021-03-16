@@ -1,0 +1,10 @@
+select z.bar2, z.bar1 from
+((select x.bar1, x.bar2 from ((select serves.bar as bar1, bar.name as bar2, serves.beer from serves cross join bar)
+except
+(select bar.name as bar1, serves.bar as bar2, serves.beer from serves cross join bar)) x)
+
+except
+
+(select y.bar1, y.bar2 from ((select bar.name as bar1, serves.bar as bar2, serves.beer from serves cross join bar)
+except
+(select serves.bar as bar1, bar.name as bar2, serves.beer from serves cross join bar)) y)) z;

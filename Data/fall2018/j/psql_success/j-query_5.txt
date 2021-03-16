@@ -1,0 +1,11 @@
+SELECT b1.name, b2.name FROM Bar AS b1, Bar AS b2
+WHERE NOT EXISTS
+	(SELECT * FROM Serves
+	WHERE bar = b1.name AND beer NOT IN
+		(SELECT beer FROM Serves
+		WHERE bar = b2.name))
+AND EXISTS
+	(SELECT * FROM Serves
+	WHERE bar = b2.name AND beer NOT IN
+		(SELECT beer FROM Serves
+		WHERE bar = b1.name));
